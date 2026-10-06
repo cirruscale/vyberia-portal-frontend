@@ -74,7 +74,7 @@ export function CategorySidebar() {
   const allActive = !activeCatId
 
   return (
-    <aside className="hidden md:block w-52 flex-shrink-0">
+    <aside className="hidden md:block w-52 flex-shrink-0" style={{ zoom: 1.4 }}>
       <div className="bg-white rounded-xl border overflow-hidden sticky top-20" style={{ borderColor: '#D4B88A' }}>
         <div className="px-4 py-3" style={{ background: `linear-gradient(135deg, ${BRAND} 0%, ${BRAND_DARK} 100%)` }}>
           <h2 className="text-sm font-bold text-white tracking-wide uppercase">Categories</h2>

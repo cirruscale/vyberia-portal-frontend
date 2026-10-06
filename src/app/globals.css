@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #B8CEDC;
+  --background: #ffffff;
   --foreground: #000000;
-  --vyberia-bg: #B8CEDC;
+  --vyberia-bg: #ffffff;
 }
 
 @theme inline {
@@ -18,6 +18,7 @@ body {
   background: var(--vyberia-bg);
   color: #000000;
   font-family: Arial, Helvetica, sans-serif;
+  zoom: 0.75;
 }
 
 input,

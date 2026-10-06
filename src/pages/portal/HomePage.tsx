@@ -91,7 +91,7 @@ export default function HomePage() {
           </div>
         ) : visibleOthers.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" style={{ zoom: 0.95 }}>
               {visibleOthers.map(p => <ProductCard key={p.id} product={p} />)}
             </div>
 
