@@ -10,9 +10,9 @@ export default function PortalLayout() {
       <CartProvider>
         <div className="min-h-screen flex flex-col" style={{ background: '#B8CEDC' }}>
           <Header />
-          <div className="flex-1 flex max-w-7xl mx-auto w-full px-4 py-6 gap-6">
+          <div className="flex-1 flex pl-4">
             <CategorySidebar />
-            <main className="flex-1 min-w-0">
+            <main className="flex-1 min-w-0 py-6 px-6">
               <Outlet />
             </main>
           </div>
