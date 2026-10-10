@@ -5,9 +5,9 @@ import { CMSSidebar } from '../components/layout/CMSSidebar'
 export default function CMSLayout() {
   return (
     <CmsAuthProvider>
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen" style={{ background: '#F1F5F9' }}>
         <CMSSidebar />
-        <main className="flex-1 ml-60 overflow-auto p-8" style={{ zoom: 0.85 }}>
+        <main className="flex-1 ml-56 min-h-screen overflow-auto">
           <Outlet />
         </main>
       </div>

@@ -7,6 +7,8 @@ import { Pagination } from '@/components/ui/Pagination'
 import { Button } from '@/components/ui/Button'
 import type { Order } from '@/lib/types'
 
+const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500'
+
 export default function CMSOrdersPage() {
   const { user, loading: authLoading } = useCmsAuth()
   const navigate = useNavigate()
@@ -40,11 +42,14 @@ export default function CMSOrdersPage() {
   useEffect(() => { if (user) load() }, [user, load])
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Orders ({total})</h1>
+    <div className="p-8 max-w-7xl mx-auto">
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-slate-900">Orders</h1>
+        <p className="text-slate-500 text-sm mt-0.5">{total} total orders</p>
+      </div>
 
-      <div className="flex gap-3 mb-6">
-        <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1) }} className="border border-gray-300 rounded-md px-4 py-2 text-sm">
+      <div className="flex gap-3 mb-5">
+        <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1) }} className={inputCls}>
           <option value="">All Statuses</option>
           <option value="pending">Pending</option>
           <option value="processing">Processing</option>
@@ -52,8 +57,8 @@ export default function CMSOrdersPage() {
           <option value="delivered">Delivered</option>
           <option value="cancelled">Cancelled</option>
         </select>
-        <select value={advanceFilter} onChange={e => { setAdvanceFilter(e.target.value); setPage(1) }} className="border border-gray-300 rounded-md px-4 py-2 text-sm">
-          <option value="">All Advance Status</option>
+        <select value={advanceFilter} onChange={e => { setAdvanceFilter(e.target.value); setPage(1) }} className={inputCls}>
+          <option value="">All Advance</option>
           <option value="pending">Pending</option>
           <option value="submitted">Submitted</option>
           <option value="verified">Verified</option>
@@ -61,38 +66,41 @@ export default function CMSOrdersPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-gray-500">Loading...</div>
+          <div className="p-12 text-center text-slate-400">
+            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            Loading...
+          </div>
         ) : items.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">No orders found.</div>
+          <div className="p-12 text-center text-slate-400">No orders found.</div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead style={{ background: '#F8FAFC' }}>
               <tr>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Order #</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Customer</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-gray-500">Total</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Status</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Advance</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-gray-500">Date</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-gray-500">Actions</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Order #</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Customer</th>
+                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Total</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Advance</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Date</th>
+                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-slate-50">
               {items.map(o => (
-                <tr key={o.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-mono text-xs">{o.order_number}</td>
-                  <td className="px-4 py-3">
-                    <p className="font-medium">{o.shipping_address?.full_name}</p>
-                    <p className="text-xs text-gray-500">{o.shipping_address?.phone}</p>
+                <tr key={o.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-5 py-3.5 font-mono text-xs text-slate-500">{o.order_number}</td>
+                  <td className="px-5 py-3.5">
+                    <p className="font-medium text-slate-900">{o.shipping_address?.full_name}</p>
+                    <p className="text-xs text-slate-400">{o.shipping_address?.phone}</p>
                   </td>
-                  <td className="px-4 py-3 text-right font-medium">৳{o.total_amount.toLocaleString()}</td>
-                  <td className="px-4 py-3"><OrderStatusBadge status={o.status} /></td>
-                  <td className="px-4 py-3"><AdvanceStatusBadge status={o.advance_payment_status} /></td>
-                  <td className="px-4 py-3 text-xs text-gray-500">{new Date(o.created_at).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-right">
-                    <button onClick={() => setSelectedOrder(o)} className="text-indigo-600 hover:underline text-xs">Manage</button>
+                  <td className="px-5 py-3.5 text-right font-semibold text-slate-900">৳{o.total_amount.toLocaleString()}</td>
+                  <td className="px-5 py-3.5"><OrderStatusBadge status={o.status} /></td>
+                  <td className="px-5 py-3.5"><AdvanceStatusBadge status={o.advance_payment_status} /></td>
+                  <td className="px-5 py-3.5 text-xs text-slate-400">{new Date(o.created_at).toLocaleDateString()}</td>
+                  <td className="px-5 py-3.5 text-right">
+                    <button onClick={() => setSelectedOrder(o)} className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors">Manage</button>
                   </td>
                 </tr>
               ))}
@@ -119,13 +127,15 @@ function OrderManageModal({ order, onClose, onSaved }: { order: Order; onClose: 
   const [updatingAdvance, setUpdatingAdvance] = useState(false)
   const [msg, setMsg] = useState('')
 
+  const inputCls = 'w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+
   const handleStatusUpdate = async (e: React.FormEvent) => {
     e.preventDefault()
     setUpdatingStatus(true)
     try {
       await cmsOrders.updateStatus(order.id, newStatus, notes)
-      setMsg('Status updated!')
-      setTimeout(onSaved, 1000)
+      setMsg('Status updated successfully')
+      setTimeout(onSaved, 1200)
     } finally { setUpdatingStatus(false) }
   }
 
@@ -134,62 +144,71 @@ function OrderManageModal({ order, onClose, onSaved }: { order: Order; onClose: 
     setUpdatingAdvance(true)
     try {
       await cmsOrders.verifyAdvance(order.id, advanceStatus, advanceNotes)
-      setMsg('Advance payment ' + advanceStatus + '!')
-      setTimeout(onSaved, 1000)
+      setMsg(`Advance payment ${advanceStatus}`)
+      setTimeout(onSaved, 1200)
     } finally { setUpdatingAdvance(false) }
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b">
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
           <div>
-            <h2 className="text-lg font-semibold">{order.order_number}</h2>
-            <p className="text-sm text-gray-500">৳{order.total_amount.toLocaleString()}</p>
+            <h2 className="text-base font-bold text-slate-900">{order.order_number}</h2>
+            <p className="text-sm text-slate-500">৳{order.total_amount.toLocaleString()}</p>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-700 text-2xl leading-none">×</button>
+          <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
         </div>
 
-        <div className="p-6 space-y-6">
-          <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Items</p>
+        <div className="p-6 space-y-5">
+          {/* Items */}
+          <div className="bg-slate-50 rounded-xl p-4">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Order Items</p>
             {order.items.map(item => (
-              <div key={item.id} className="flex justify-between text-sm py-1">
-                <span className="text-gray-600">{item.product_title} ×{item.quantity}</span>
-                <span>৳{item.subtotal.toLocaleString()}</span>
+              <div key={item.id} className="flex justify-between text-sm py-1.5">
+                <span className="text-slate-700">{item.product_title} <span className="text-slate-400">×{item.quantity}</span></span>
+                <span className="font-medium text-slate-900">৳{item.subtotal.toLocaleString()}</span>
               </div>
             ))}
           </div>
 
-          <form onSubmit={handleStatusUpdate} className="border rounded-lg p-4">
-            <p className="text-sm font-medium text-gray-700 mb-3">Update Status</p>
-            <select value={newStatus} onChange={e => setNewStatus(e.target.value as typeof newStatus)} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-3">
+          {/* Status update */}
+          <form onSubmit={handleStatusUpdate} className="border border-slate-200 rounded-xl p-4">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Update Status</p>
+            <select value={newStatus} onChange={e => setNewStatus(e.target.value as typeof newStatus)} className={`${inputCls} mb-3`}>
               <option value="pending">Pending</option>
               <option value="processing">Processing</option>
               <option value="shipped">Shipped</option>
               <option value="delivered">Delivered</option>
               <option value="cancelled">Cancelled</option>
             </select>
-            <input value={notes} onChange={e => setNotes(e.target.value)} placeholder="Notes (optional)" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-3" />
+            <input value={notes} onChange={e => setNotes(e.target.value)} placeholder="Notes (optional)" className={`${inputCls} mb-3`} />
             <Button type="submit" loading={updatingStatus} size="sm">Update Status</Button>
           </form>
 
+          {/* Advance verification */}
           {['submitted', 'pending'].includes(order.advance_payment_status) && order.payment_method === 'delivery_advance_cod' && (
-            <form onSubmit={handleAdvanceVerify} className="border border-blue-200 bg-blue-50 rounded-lg p-4">
-              <p className="text-sm font-medium text-blue-900 mb-2">Verify Advance Payment</p>
+            <form onSubmit={handleAdvanceVerify} className="border border-indigo-200 rounded-xl p-4" style={{ background: '#EEF2FF' }}>
+              <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-3">Verify Advance Payment</p>
               {order.advance_transaction_id && (
-                <p className="text-xs text-blue-700 mb-3">TRX: {order.advance_transaction_id} via {order.advance_payment_method}</p>
+                <p className="text-xs text-indigo-600 mb-3 font-medium">TRX: {order.advance_transaction_id} via {order.advance_payment_method}</p>
               )}
-              <select value={advanceStatus} onChange={e => setAdvanceStatus(e.target.value as 'verified' | 'rejected')} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-3">
+              <select value={advanceStatus} onChange={e => setAdvanceStatus(e.target.value as 'verified' | 'rejected')} className={`${inputCls} mb-3`}>
                 <option value="verified">Verified</option>
                 <option value="rejected">Rejected</option>
               </select>
-              <input value={advanceNotes} onChange={e => setAdvanceNotes(e.target.value)} placeholder="Notes" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm mb-3" />
+              <input value={advanceNotes} onChange={e => setAdvanceNotes(e.target.value)} placeholder="Notes" className={`${inputCls} mb-3`} />
               <Button type="submit" loading={updatingAdvance} size="sm">Submit Verification</Button>
             </form>
           )}
 
-          {msg && <p className="text-sm text-green-700 font-medium">{msg}</p>}
+          {msg && (
+            <div className="rounded-lg px-4 py-3 text-sm text-green-700 font-medium" style={{ background: '#F0FDF4', border: '1px solid #BBF7D0' }}>
+              {msg}
+            </div>
+          )}
         </div>
       </div>
     </div>
