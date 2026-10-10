@@ -7,7 +7,7 @@ export default function CMSLayout() {
     <CmsAuthProvider>
       <div className="flex min-h-screen bg-gray-50">
         <CMSSidebar />
-        <main className="flex-1 ml-64 overflow-auto p-6" style={{ zoom: 0.9 }}>
+        <main className="flex-1 ml-60 overflow-auto p-8" style={{ zoom: 0.85 }}>
           <Outlet />
         </main>
       </div>
