@@ -67,13 +67,13 @@ export default function HomePage() {
       {/* ── Trending Now ── */}
       <section>
         {loadingTrending ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="bg-gray-200 animate-pulse rounded-lg aspect-square" />
             ))}
           </div>
         ) : trending.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {trending.map(p => <ProductCard key={p.id} product={p} />)}
           </div>
         ) : (
@@ -84,14 +84,14 @@ export default function HomePage() {
       {/* ── All Products ── */}
       <section>
         {loadingOthers ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="bg-gray-200 animate-pulse rounded-lg aspect-square" />
             ))}
           </div>
         ) : visibleOthers.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" style={{ zoom: 0.95 }}>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" style={{ zoom: 0.95 }}>
               {visibleOthers.map(p => <ProductCard key={p.id} product={p} />)}
             </div>
 
