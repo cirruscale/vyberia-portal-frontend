@@ -116,18 +116,13 @@ export default function CheckoutPage() {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
               <h2 className="font-semibold text-gray-900 mb-4">Payment Method</h2>
               <div className="space-y-3">
-                {[
-                  { value: 'delivery_advance_cod', label: 'Cash on Delivery + Advance (Recommended)', desc: 'Pay a small advance via bKash/Nagad, rest on delivery' },
-                  { value: 'cash_on_delivery', label: 'Cash on Delivery', desc: 'Pay full amount when your order arrives' },
-                ].map(opt => (
-                  <label key={opt.value} className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="radio" name="payment" value={opt.value} checked={paymentMethod === opt.value} onChange={e => setPaymentMethod(e.target.value as PaymentMethod)} className="mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{opt.label}</p>
-                      <p className="text-xs text-gray-500">{opt.desc}</p>
-                    </div>
-                  </label>
-                ))}
+                <label className="flex items-start gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                  <input type="radio" name="payment" value="delivery_advance_cod" checked readOnly className="mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Advance + COD <span className="text-brand">(Recommended)</span></p>
+                    <p className="text-xs text-gray-500">Send ৳150 advance via bKash/Nagad, rest on delivery</p>
+                  </div>
+                </label>
               </div>
 
               {paymentMethod === 'delivery_advance_cod' && (
