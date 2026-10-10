@@ -34,7 +34,7 @@ export default function GuestCheckoutModal({ product, initialQty, isOpen, onClos
     postal_code: '',
     country: 'Bangladesh',
   })
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash_on_delivery')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('delivery_advance_cod')
   const [advanceMethod, setAdvanceMethod] = useState('bkash')
   const [advanceTrxId, setAdvanceTrxId] = useState('')
   const [notes, setNotes] = useState('')
@@ -192,19 +192,13 @@ export default function GuestCheckoutModal({ product, initialQty, isOpen, onClos
             <div>
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Payment Method</h3>
               <div className="space-y-2">
-                {[
-                  { value: 'cash_on_delivery', label: 'Cash on Delivery', desc: 'Pay full amount when your order arrives' },
-                  { value: 'delivery_advance_cod', label: 'Advance + COD (Recommended)', desc: 'Send ৳150 advance via bKash/Nagad, rest on delivery' },
-                ].map(opt => (
-                  <label key={opt.value} className="flex items-start gap-3 p-3 border rounded-xl cursor-pointer hover:bg-gray-50 has-[:checked]:border-brand has-[:checked]:bg-brand/5">
-                    <input type="radio" name="payment_method" value={opt.value} checked={paymentMethod === opt.value}
-                      onChange={e => setPaymentMethod(e.target.value as PaymentMethod)} className="mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{opt.label}</p>
-                      <p className="text-xs text-gray-500">{opt.desc}</p>
-                    </div>
-                  </label>
-                ))}
+                <label className="flex items-start gap-3 p-3 border rounded-xl cursor-pointer border-brand bg-brand/5">
+                  <input type="radio" name="payment_method" value="delivery_advance_cod" checked readOnly className="mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Advance + COD <span className="text-brand">(Recommended)</span></p>
+                    <p className="text-xs text-gray-500">Send ৳150 advance via bKash/Nagad, rest on delivery</p>
+                  </div>
+                </label>
               </div>
 
               {paymentMethod === 'delivery_advance_cod' && (
