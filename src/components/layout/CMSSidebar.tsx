@@ -15,7 +15,7 @@ export function CMSSidebar() {
   const { user, logout } = useCmsAuth()
 
   return (
-    <aside className="w-64 bg-gray-900 text-white flex flex-col min-h-screen">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-gray-900 text-white flex flex-col overflow-y-auto z-40">
       <div className="p-6 border-b border-gray-700">
         <Link to="/cms/dashboard" className="text-xl font-bold text-indigo-400">
           Vyberia CMS
@@ -45,8 +45,8 @@ export function CMSSidebar() {
         ))}
       </nav>
 
-      <div className="p-4 border-t border-gray-700">
-        <Link to="/" className="block text-xs text-gray-400 hover:text-gray-200 mb-2">
+      <div className="p-4 border-t border-gray-700 mt-auto">
+        <Link to="/" className="block text-xs text-gray-400 hover:text-gray-200 mb-3">
           ← Back to Portal
         </Link>
         <button
