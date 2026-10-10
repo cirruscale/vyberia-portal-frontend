@@ -7,10 +7,10 @@ const BRAND = '#C4A87A'
 const BRAND_DARK = '#9A7A5A'
 const BRAND_LIGHT = '#F5EDE0'
 
-function CategoryItem({ cat, activeCatId }: { cat: Category; activeCatId: string }) {
+function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; activeCatId: string; activeSubId: string }) {
   const hasSubs = (cat.subcategories?.length ?? 0) > 0
-  const isActive = activeCatId === cat.id
-  const subIsActive = cat.subcategories?.some(s => s.id === activeCatId) ?? false
+  const isActive = activeCatId === cat.id && !activeSubId
+  const subIsActive = cat.subcategories?.some(s => s.id === activeSubId) ?? false
   const [open, setOpen] = useState(subIsActive)
 
   return (
@@ -46,11 +46,11 @@ function CategoryItem({ cat, activeCatId }: { cat: Category; activeCatId: string
           {cat.subcategories!.map(sub => (
             <Link
               key={sub.id}
-              to={`/products?category_id=${sub.id}`}
+              to={`/products?subcategory_id=${sub.id}`}
               className="block pl-7 pr-4 py-2 text-xs border-t border-gray-100 transition-colors"
-              style={activeCatId === sub.id ? { color: BRAND_DARK, fontWeight: 600, background: BRAND_LIGHT } : { color: '#4B5563' }}
-              onMouseEnter={e => { if (activeCatId !== sub.id) { (e.currentTarget as HTMLElement).style.color = BRAND_DARK; (e.currentTarget as HTMLElement).style.background = BRAND_LIGHT } }}
-              onMouseLeave={e => { if (activeCatId !== sub.id) { (e.currentTarget as HTMLElement).style.color = '#4B5563'; (e.currentTarget as HTMLElement).style.background = '' } }}
+              style={activeSubId === sub.id ? { color: BRAND_DARK, fontWeight: 600, background: BRAND_LIGHT } : { color: '#4B5563' }}
+              onMouseEnter={e => { if (activeSubId !== sub.id) { (e.currentTarget as HTMLElement).style.color = BRAND_DARK; (e.currentTarget as HTMLElement).style.background = BRAND_LIGHT } }}
+              onMouseLeave={e => { if (activeSubId !== sub.id) { (e.currentTarget as HTMLElement).style.color = '#4B5563'; (e.currentTarget as HTMLElement).style.background = '' } }}
             >
               ↳ {sub.name}
             </Link>
@@ -65,6 +65,7 @@ export function CategorySidebar() {
   const [cats, setCats] = useState<Category[]>([])
   const [searchParams] = useSearchParams()
   const activeCatId = searchParams.get('category_id') ?? ''
+  const activeSubId = searchParams.get('subcategory_id') ?? ''
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export function CategorySidebar() {
             All Products
           </Link>
           {cats.map(cat => (
-            <CategoryItem key={cat.id} cat={cat} activeCatId={activeCatId} />
+            <CategoryItem key={cat.id} cat={cat} activeCatId={activeCatId} activeSubId={activeSubId} />
           ))}
         </nav>
       </div>

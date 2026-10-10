@@ -18,6 +18,7 @@ export default function ProductsPage() {
 
   const page = Number(searchParams.get('page') || 1)
   const category_id = searchParams.get('category_id') || ''
+  const subcategory_id = searchParams.get('subcategory_id') || ''
   const search = searchParams.get('search') || ''
   const sort_by = searchParams.get('sort_by') || 'newest'
 
@@ -29,6 +30,7 @@ export default function ProductsPage() {
       sort_by: sort_by as ProductFilters['sort_by'],
     }
     if (category_id) filters.category_id = category_id
+    if (subcategory_id) filters.subcategory_id = subcategory_id
     if (search) filters.search = search
     try {
       const res = await products.list(filters)
@@ -38,7 +40,7 @@ export default function ProductsPage() {
     } finally {
       setLoading(false)
     }
-  }, [page, category_id, search, sort_by])
+  }, [page, category_id, subcategory_id, search, sort_by])
 
   useEffect(() => { load() }, [load])
   useEffect(() => { categories.list().then(r => { if (r.data) setCats(r.data) }) }, [])
