@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 export default function RegisterPage() {
   const { register, user } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' })
+  const [form, setForm] = useState({ name: '', phone: '', email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -17,7 +17,7 @@ export default function RegisterPage() {
     setError('')
     setLoading(true)
     try {
-      await register(form.name, form.email, form.password, form.phone || undefined)
+      await register(form.name, form.phone, form.password, form.email || undefined)
       navigate('/')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Registration failed')
@@ -41,8 +41,8 @@ export default function RegisterPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {[
             { key: 'name', label: 'Full Name', type: 'text', required: true },
-            { key: 'email', label: 'Email', type: 'email', required: true },
-            { key: 'phone', label: 'Phone (optional)', type: 'tel', required: false },
+            { key: 'phone', label: 'Phone', type: 'tel', required: true },
+            { key: 'email', label: 'Email (optional)', type: 'email', required: false },
             { key: 'password', label: 'Password', type: 'password', required: true },
           ].map(({ key, label, type, required }) => (
             <div key={key}>

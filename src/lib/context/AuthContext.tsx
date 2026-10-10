@@ -6,8 +6,8 @@ import { portalAuth } from '../api/auth'
 interface AuthContextType {
   user: User | null
   loading: boolean
-  login: (email: string, password: string) => Promise<void>
-  register: (name: string, email: string, password: string, phone?: string) => Promise<void>
+  login: (phone: string, password: string) => Promise<void>
+  register: (name: string, phone: string, password: string, email?: string) => Promise<void>
   logout: () => void
 }
 
@@ -29,8 +29,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const login = async (email: string, password: string) => {
-    const res = await portalAuth.login({ email, password })
+  const login = async (phone: string, password: string) => {
+    const res = await portalAuth.login({ phone, password })
     if (res.data) {
       setToken(res.data.tokens.access_token, false)
       setRefreshToken(res.data.tokens.refresh_token, false)
@@ -38,8 +38,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const register = async (name: string, email: string, password: string, phone?: string) => {
-    const res = await portalAuth.register({ name, email, password, phone })
+  const register = async (name: string, phone: string, password: string, email?: string) => {
+    const res = await portalAuth.register({ name, phone, password, email })
     if (res.data) {
       setToken(res.data.tokens.access_token, false)
       setRefreshToken(res.data.tokens.refresh_token, false)

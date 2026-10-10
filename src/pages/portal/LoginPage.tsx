@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 export default function LoginPage() {
   const { login, user } = useAuth()
   const navigate = useNavigate()
-  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,7 +18,7 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
     try {
-      await login(email, password)
+      await login(phone, password)
       navigate('/')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Login failed')
@@ -38,11 +38,11 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-black mb-1">Email</label>
+            <label className="block text-sm font-medium text-black mb-1">Phone</label>
             <input
-              type="email" required value={email} onChange={e => setEmail(e.target.value)}
+              type="tel" required value={phone} onChange={e => setPhone(e.target.value)}
               className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand"
-              placeholder="customer@vyberia.com"
+              placeholder="+8801700000004"
             />
           </div>
           <div>
@@ -60,7 +60,7 @@ export default function LoginPage() {
 
         <div className="mt-6 p-3 bg-blue-50 rounded-lg text-xs text-gray-700">
           <p className="font-medium mb-1 text-black">Test credentials:</p>
-          <p>customer@vyberia.com / Customer@123456</p>
+          <p>+8801700000004 / Customer@123456</p>
         </div>
       </div>
     </div>

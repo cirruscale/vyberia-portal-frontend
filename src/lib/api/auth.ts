@@ -3,10 +3,10 @@ import type { ApiResponse, AuthOutput, User } from '../types'
 
 // Portal Auth
 export const portalAuth = {
-  register: (data: { name: string; email: string; phone?: string; password: string }) =>
+  register: (data: { name: string; phone: string; email?: string; password: string }) =>
     api.post<ApiResponse<AuthOutput>>('/api/v1/auth/register', data),
 
-  login: (data: { email: string; password: string }) =>
+  login: (data: { phone: string; password: string }) =>
     api.post<ApiResponse<AuthOutput>>('/api/v1/auth/login', data),
 
   refresh: (refresh_token: string) =>
