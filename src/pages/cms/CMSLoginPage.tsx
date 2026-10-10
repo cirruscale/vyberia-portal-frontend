@@ -46,11 +46,6 @@ export default function CMSLoginPage() {
           <Button type="submit" size="lg" className="w-full" loading={loading}>Sign in to CMS</Button>
         </form>
 
-        <div className="mt-6 p-3 bg-gray-50 rounded-lg text-xs text-gray-500">
-          <p className="font-medium mb-1">Test credentials:</p>
-          <p>admin@vyberia.com / Admin@123456</p>
-          <p>operator@vyberia.com / Operator@123456</p>
-        </div>
       </div>
     </div>
   )
