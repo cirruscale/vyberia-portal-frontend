@@ -155,7 +155,7 @@ export default function ProductFormModal({ product, onClose, onSaved }: Props) {
             <div className="col-span-2">
               <label className="text-sm text-gray-600">Image (primary)</label>
               <input value={form.image_url} onChange={f('image_url')} placeholder="https://... or /uploads/..." className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm" />
-              <label className="mt-1 flex items-center gap-2 cursor-pointer text-xs text-indigo-600 hover:underline">
+              <label className="mt-1 flex items-center gap-2 cursor-pointer text-xs text-brand hover:underline">
                 <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
                 {uploading ? 'Uploading...' : 'or upload image file'}
               </label>

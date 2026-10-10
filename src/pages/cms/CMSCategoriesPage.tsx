@@ -6,7 +6,7 @@ import { cmsUpload } from '@/lib/api/upload'
 import { Button } from '@/components/ui/Button'
 import type { Category } from '@/lib/types'
 
-const inputCls = 'w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500'
+const inputCls = 'w-full border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand'
 
 function slugify(name: string) {
   return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
@@ -100,7 +100,7 @@ export default function CMSCategoriesPage() {
 
   if (loading) return (
     <div className="p-8 flex items-center justify-center">
-      <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
     </div>
   )
 
@@ -121,7 +121,7 @@ export default function CMSCategoriesPage() {
             <input placeholder="Description" value={catForm.description} onChange={e => setCatForm(p => ({ ...p, description: e.target.value }))} className={inputCls} />
             <div>
               <input placeholder="Image URL" value={catForm.image_url} onChange={e => setCatForm(p => ({ ...p, image_url: e.target.value }))} className={inputCls} />
-              <label className="mt-1.5 inline-flex items-center gap-1.5 cursor-pointer text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+              <label className="mt-1.5 inline-flex items-center gap-1.5 cursor-pointer text-xs text-brand hover:text-brand-dark font-medium">
                 <input type="file" accept="image/*" className="hidden" onChange={handleCatImageUpload} />
                 {catUploading ? 'Uploading...' : 'Upload image instead'}
               </label>
@@ -145,7 +145,7 @@ export default function CMSCategoriesPage() {
             <input placeholder="Description" value={subForm.description} onChange={e => setSubForm(p => ({ ...p, description: e.target.value }))} className={inputCls} />
             <div>
               <input placeholder="Image URL" value={subForm.image_url} onChange={e => setSubForm(p => ({ ...p, image_url: e.target.value }))} className={inputCls} />
-              <label className="mt-1.5 inline-flex items-center gap-1.5 cursor-pointer text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+              <label className="mt-1.5 inline-flex items-center gap-1.5 cursor-pointer text-xs text-brand hover:text-brand-dark font-medium">
                 <input type="file" accept="image/*" className="hidden" onChange={handleSubImageUpload} />
                 {subUploading ? 'Uploading...' : 'Upload image instead'}
               </label>
@@ -181,7 +181,7 @@ export default function CMSCategoriesPage() {
                   <td className="px-5 py-3.5 font-mono text-xs text-slate-400">{cat.slug}</td>
                   <td className="px-5 py-3.5 text-slate-500">{subcategories.filter(s => s.parent_id === cat.id).length}</td>
                   <td className="px-5 py-3.5 text-right">
-                    <button onClick={() => editCat(cat)} className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors mr-4">Edit</button>
+                    <button onClick={() => editCat(cat)} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors mr-4">Edit</button>
                     <button onClick={() => handleCatDelete(cat.id)} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
                   </td>
                 </tr>
@@ -213,9 +213,10 @@ export default function CMSCategoriesPage() {
                 <tr key={sub.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-5 py-3.5 font-medium text-slate-900">{sub.name}</td>
                   <td className="px-5 py-3.5">
-                    <span className="text-xs px-2 py-1 rounded-md font-medium" style={{ background: '#EEF2FF', color: '#4338CA' }}>
+                    <span className="text-xs px-2 py-1 rounded-md font-medium" style={{ background: '#F5EDE0', color: '#9A7A5A' }}>
                       {categories.find(c => c.id === sub.parent_id)?.name ?? 'Unknown'}
                     </span>
+
                   </td>
                   <td className="px-5 py-3.5 font-mono text-xs text-slate-400">{sub.slug}</td>
                   <td className="px-5 py-3.5 text-right">

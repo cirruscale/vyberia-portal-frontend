@@ -30,12 +30,12 @@ export function CMSSidebar() {
       {/* Logo */}
       <div className="px-5 pt-5 pb-4 border-b border-slate-100">
         <Link to="/cms/dashboard" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#C4A87A' }}>
             <span className="text-white text-xs font-bold">V</span>
           </div>
           <div>
             <p className="text-slate-900 text-sm font-bold leading-tight">Vyberia</p>
-            <p className="text-indigo-500 text-xs font-medium">CMS Panel</p>
+            <p className="text-xs font-medium" style={{ color: '#C4A87A' }}>CMS Panel</p>
           </div>
         </Link>
       </div>
@@ -44,8 +44,8 @@ export function CMSSidebar() {
       {user && (
         <div className="px-5 py-3 border-b border-slate-100">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-              <span className="text-indigo-700 text-xs font-bold">{initials}</span>
+            <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#F5EDE0' }}>
+              <span className="text-xs font-bold" style={{ color: '#9A7A5A' }}>{initials}</span>
             </div>
             <div className="min-w-0">
               <p className="text-slate-800 text-xs font-semibold truncate">{user.name}</p>
@@ -66,13 +66,13 @@ export function CMSSidebar() {
               to={item.href}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
               style={active
-                ? { background: '#EEF2FF', color: '#4338CA' }
+                ? { background: '#F5EDE0', color: '#9A7A5A' }
                 : { color: '#64748B' }
               }
               onMouseEnter={e => { if (!active) { (e.currentTarget as HTMLElement).style.background = '#F8FAFC'; (e.currentTarget as HTMLElement).style.color = '#1E293B' } }}
               onMouseLeave={e => { if (!active) { (e.currentTarget as HTMLElement).style.background = ''; (e.currentTarget as HTMLElement).style.color = '#64748B' } }}
             >
-              <span style={active ? { color: '#4338CA' } : { color: '#94A3B8' }}>{item.icon}</span>
+              <span style={active ? { color: '#9A7A5A' } : { color: '#94A3B8' }}>{item.icon}</span>
               {item.label}
             </Link>
           )

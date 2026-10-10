@@ -8,7 +8,7 @@ import { Pagination } from '@/components/ui/Pagination'
 import type { Product } from '@/lib/types'
 import ProductFormModal from './ProductFormModal'
 
-const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500'
+const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand'
 
 export default function CMSProductsPage() {
   const { user, loading: authLoading } = useCmsAuth()
@@ -79,7 +79,7 @@ export default function CMSProductsPage() {
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
             Loading...
           </div>
         ) : items.length === 0 ? (
@@ -110,7 +110,7 @@ export default function CMSProductsPage() {
                       )}
                       <div>
                         <p className="font-medium text-slate-900 line-clamp-1">{p.title}</p>
-                        {p.is_trending && <span className="text-xs text-indigo-600 font-medium">Trending</span>}
+                        {p.is_trending && <span className="text-xs text-brand font-medium">Trending</span>}
                       </div>
                     </div>
                   </td>
@@ -122,7 +122,7 @@ export default function CMSProductsPage() {
                   <td className="px-5 py-3.5"><ProductStatusBadge status={p.status} /></td>
                   <td className="px-5 py-3.5 text-right">
                     <div className="flex items-center justify-end gap-3">
-                      <button onClick={() => { setEditProduct(p); setShowForm(true) }} className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors">Edit</button>
+                      <button onClick={() => { setEditProduct(p); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Edit</button>
                       <button onClick={() => handleDelete(p.id)} disabled={deleting === p.id} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
                     </div>
                   </td>

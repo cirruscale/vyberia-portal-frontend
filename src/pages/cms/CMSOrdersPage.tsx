@@ -7,7 +7,7 @@ import { Pagination } from '@/components/ui/Pagination'
 import { Button } from '@/components/ui/Button'
 import type { Order } from '@/lib/types'
 
-const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500'
+const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand'
 
 export default function CMSOrdersPage() {
   const { user, loading: authLoading } = useCmsAuth()
@@ -69,7 +69,7 @@ export default function CMSOrdersPage() {
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
             Loading...
           </div>
         ) : items.length === 0 ? (
@@ -100,7 +100,7 @@ export default function CMSOrdersPage() {
                   <td className="px-5 py-3.5"><AdvanceStatusBadge status={o.advance_payment_status} /></td>
                   <td className="px-5 py-3.5 text-xs text-slate-400">{new Date(o.created_at).toLocaleDateString()}</td>
                   <td className="px-5 py-3.5 text-right">
-                    <button onClick={() => setSelectedOrder(o)} className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors">Manage</button>
+                    <button onClick={() => setSelectedOrder(o)} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Manage</button>
                   </td>
                 </tr>
               ))}
@@ -127,7 +127,7 @@ function OrderManageModal({ order, onClose, onSaved }: { order: Order; onClose: 
   const [updatingAdvance, setUpdatingAdvance] = useState(false)
   const [msg, setMsg] = useState('')
 
-  const inputCls = 'w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+  const inputCls = 'w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand'
 
   const handleStatusUpdate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -190,10 +190,10 @@ function OrderManageModal({ order, onClose, onSaved }: { order: Order; onClose: 
 
           {/* Advance verification */}
           {['submitted', 'pending'].includes(order.advance_payment_status) && order.payment_method === 'delivery_advance_cod' && (
-            <form onSubmit={handleAdvanceVerify} className="border border-indigo-200 rounded-xl p-4" style={{ background: '#EEF2FF' }}>
-              <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-3">Verify Advance Payment</p>
+            <form onSubmit={handleAdvanceVerify} className="rounded-xl p-4" style={{ background: '#F5EDE0', border: '1px solid #C4A87A' }}>
+              <p className="text-xs font-semibold uppercase tracking-wide mb-3" style={{ color: '#9A7A5A' }}>Verify Advance Payment</p>
               {order.advance_transaction_id && (
-                <p className="text-xs text-indigo-600 mb-3 font-medium">TRX: {order.advance_transaction_id} via {order.advance_payment_method}</p>
+                <p className="text-xs text-brand mb-3 font-medium">TRX: {order.advance_transaction_id} via {order.advance_payment_method}</p>
               )}
               <select value={advanceStatus} onChange={e => setAdvanceStatus(e.target.value as 'verified' | 'rejected')} className={`${inputCls} mb-3`}>
                 <option value="verified">Verified</option>

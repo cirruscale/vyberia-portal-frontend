@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Pagination } from '@/components/ui/Pagination'
 import type { User, UserRole } from '@/lib/types'
 
-const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500'
+const inputCls = 'border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand'
 
 const roleColors: Record<string, 'blue' | 'purple' | 'orange' | 'green' | 'gray'> = {
   admin: 'blue', operator: 'purple', merchant: 'orange', customer: 'green',
@@ -70,7 +70,7 @@ export default function CMSUsersPage() {
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
             Loading...
           </div>
         ) : items.length === 0 ? (
@@ -92,8 +92,8 @@ export default function CMSUsersPage() {
                 <tr key={u.id} className="hover:bg-slate-50 transition-colors">
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                        <span className="text-indigo-700 text-xs font-bold">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#F5EDE0' }}>
+                        <span className="text-xs font-bold" style={{ color: '#9A7A5A' }}>
                           {u.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
                         </span>
                       </div>
@@ -105,7 +105,7 @@ export default function CMSUsersPage() {
                   <td className="px-5 py-3.5"><Badge variant={roleColors[u.role] ?? 'gray'}>{u.role}</Badge></td>
                   <td className="px-5 py-3.5"><Badge variant={u.is_active ? 'green' : 'red'}>{u.is_active ? 'Active' : 'Inactive'}</Badge></td>
                   <td className="px-5 py-3.5 text-right">
-                    <button onClick={() => { setEditUser(u); setShowForm(true) }} className="text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors mr-4">Edit</button>
+                    <button onClick={() => { setEditUser(u); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors mr-4">Edit</button>
                     <button onClick={async () => { if (confirm('Delete user?')) { await cmsUsers.delete(u.id); load() } }} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
                   </td>
                 </tr>
@@ -140,7 +140,7 @@ function UserFormModal({ user, onClose, onSaved }: { user: User | null; onClose:
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const inputCls = 'mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500'
+  const inputCls = 'mt-1 w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand'
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -198,7 +198,7 @@ function UserFormModal({ user, onClose, onSaved }: { user: User | null; onClose:
             </select>
           </div>
           <label className="flex items-center gap-2.5 cursor-pointer">
-            <input type="checkbox" checked={form.is_active} onChange={e => setForm(p => ({ ...p, is_active: e.target.checked }))} className="w-4 h-4 rounded text-indigo-600" />
+            <input type="checkbox" checked={form.is_active} onChange={e => setForm(p => ({ ...p, is_active: e.target.checked }))} className="w-4 h-4 rounded text-brand" />
             <span className="text-sm text-slate-700">Active account</span>
           </label>
           {error && <div className="rounded-lg px-4 py-3 text-sm text-red-700" style={{ background: '#FEF2F2', border: '1px solid #FECACA' }}>{error}</div>}

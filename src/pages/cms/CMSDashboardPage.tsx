@@ -50,8 +50,8 @@ export default function CMSDashboardPage() {
       <div className="mb-8">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">Financials</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-indigo-600 rounded-xl p-5 shadow-sm text-white">
-            <p className="text-xs font-medium text-indigo-200 uppercase tracking-wide">Total Revenue</p>
+          <div className="rounded-xl p-5 shadow-sm text-white" style={{ background: '#C4A87A' }}>
+            <p className="text-xs font-medium uppercase tracking-wide" style={{ color: '#F5EDE0' }}>Total Revenue</p>
             <p className="text-3xl font-bold mt-1.5">৳{stats.financials.total_revenue.toLocaleString()}</p>
           </div>
           <StatCard label="Advance Collected" value={`৳${stats.financials.total_advance_collected.toLocaleString()}`} color="#16A34A" />
@@ -63,7 +63,7 @@ export default function CMSDashboardPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Orders</p>
-          <Link to="/cms/orders" className="text-xs text-indigo-600 hover:underline">View all →</Link>
+          <Link to="/cms/orders" className="text-xs text-brand hover:underline">View all →</Link>
         </div>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
           {[
@@ -82,7 +82,7 @@ export default function CMSDashboardPage() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Products</p>
-            <Link to="/cms/products" className="text-xs text-indigo-600 hover:underline">View all →</Link>
+            <Link to="/cms/products" className="text-xs text-brand hover:underline">View all →</Link>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <StatCard label="Total" value={stats.products.total} />
@@ -94,7 +94,7 @@ export default function CMSDashboardPage() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Users</p>
-            <Link to="/cms/users" className="text-xs text-indigo-600 hover:underline">View all →</Link>
+            <Link to="/cms/users" className="text-xs text-brand hover:underline">View all →</Link>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <StatCard label="Total" value={stats.users.total} />
@@ -110,7 +110,7 @@ export default function CMSDashboardPage() {
         <div>
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Recent Orders</p>
-            <Link to="/cms/orders" className="text-xs text-indigo-600 hover:underline">View all →</Link>
+            <Link to="/cms/orders" className="text-xs text-brand hover:underline">View all →</Link>
           </div>
           <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
             <table className="w-full text-sm">
