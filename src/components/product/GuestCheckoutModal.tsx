@@ -195,7 +195,7 @@ export default function GuestCheckoutModal({ product, initialQty, isOpen, onClos
                 <label className="flex items-start gap-3 p-3 border rounded-xl cursor-pointer border-brand bg-brand/5">
                   <input type="radio" name="payment_method" value="delivery_advance_cod" checked readOnly className="mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Advance + COD <span className="text-brand">(Recommended)</span></p>
+                    <p className="text-sm font-medium text-gray-900">Advance + COD</p>
                     <p className="text-xs text-gray-500">Send ৳150 advance via bKash/Nagad, rest on delivery</p>
                   </div>
                 </label>
