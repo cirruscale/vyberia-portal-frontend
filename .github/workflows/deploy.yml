@@ -1,0 +1,101 @@
+name: CI/CD — Frontend
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  AWS_REGION:    ap-southeast-1
+  ECR_REPO:      vyberia-frontend
+  EKS_CLUSTER:   vyberia-prod-cluster
+  K8S_NAMESPACE: vyberia
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  # ─── Job 1: Build & Lint ─────────────────────────────────────────────────────
+  lint-and-build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Test build
+        env:
+          VITE_API_URL: https://vyberia.com
+        run: npm run build
+
+  # ─── Job 2: Build Docker image & Deploy (main branch only) ───────────────────
+  build-and-deploy:
+    name: Build & Deploy
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # VITE_API_URL is baked into the JS bundle — must be the production URL
+      - name: Build, tag, and push image
+        id: build
+        env:
+          REGISTRY:  ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE="$REGISTRY/$ECR_REPO:$IMAGE_TAG"
+          LATEST="$REGISTRY/$ECR_REPO:latest"
+
+          docker build \
+            --build-arg VITE_API_URL="${{ secrets.VITE_API_URL }}" \
+            -t "$IMAGE" \
+            -t "$LATEST" \
+            .
+
+          docker push "$IMAGE"
+          docker push "$LATEST"
+
+          echo "image=$IMAGE" >> $GITHUB_OUTPUT
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name $EKS_CLUSTER --region $AWS_REGION
+
+      - name: Deploy to EKS
+        env:
+          IMAGE: ${{ steps.build.outputs.image }}
+        run: |
+          kubectl set image deployment/frontend \
+            frontend="$IMAGE" \
+            -n $K8S_NAMESPACE
+
+          kubectl rollout status deployment/frontend \
+            -n $K8S_NAMESPACE \
+            --timeout=5m
+
+      - name: Show running pods
+        run: kubectl get pods -n $K8S_NAMESPACE -l app=frontend
