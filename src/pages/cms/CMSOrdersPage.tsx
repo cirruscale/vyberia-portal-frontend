@@ -29,7 +29,7 @@ export default function CMSOrdersPage() {
     setLoading(true)
     try {
       const res = await cmsOrders.list({
-        page, page_size: 20,
+        page, page_size: 10,
         ...(statusFilter && { status: statusFilter }),
         ...(advanceFilter && { advance_status: advanceFilter }),
       })
@@ -42,13 +42,13 @@ export default function CMSOrdersPage() {
   useEffect(() => { if (user) load() }, [user, load])
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-6">
+    <div className="flex flex-col h-full overflow-hidden px-6 py-5">
+      <div className="mb-4 flex-shrink-0">
         <h1 className="text-2xl font-bold text-slate-900">Orders</h1>
         <p className="text-slate-500 text-sm mt-0.5">{total} total orders</p>
       </div>
 
-      <div className="flex gap-3 mb-5">
+      <div className="flex gap-3 mb-4 flex-shrink-0">
         <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1) }} className={inputCls}>
           <option value="">All Statuses</option>
           <option value="pending">Pending</option>
@@ -66,50 +66,56 @@ export default function CMSOrdersPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
         {loading ? (
-          <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
-            Loading...
+          <div className="flex-1 flex items-center justify-center text-slate-400">
+            <div className="text-center">
+              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
+              Loading...
+            </div>
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center text-slate-400">No orders found.</div>
+          <div className="flex-1 flex items-center justify-center text-slate-400">No orders found.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead style={{ background: '#F8FAFC' }}>
-              <tr>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Order #</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Customer</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Total</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Advance</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Date</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {items.map(o => (
-                <tr key={o.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-3.5 font-mono text-xs text-slate-500">{o.order_number}</td>
-                  <td className="px-5 py-3.5">
-                    <p className="font-medium text-slate-900">{o.shipping_address?.full_name}</p>
-                    <p className="text-xs text-slate-400">{o.shipping_address?.phone}</p>
-                  </td>
-                  <td className="px-5 py-3.5 text-right font-semibold text-slate-900">৳{o.total_amount.toLocaleString()}</td>
-                  <td className="px-5 py-3.5"><OrderStatusBadge status={o.status} /></td>
-                  <td className="px-5 py-3.5"><AdvanceStatusBadge status={o.advance_payment_status} /></td>
-                  <td className="px-5 py-3.5 text-xs text-slate-400">{new Date(o.created_at).toLocaleDateString()}</td>
-                  <td className="px-5 py-3.5 text-right">
-                    <button onClick={() => setSelectedOrder(o)} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Manage</button>
-                  </td>
+          <div className="flex-1 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0" style={{ background: '#F8FAFC' }}>
+                <tr>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Order #</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Customer</th>
+                  <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Total</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Advance</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Date</th>
+                  <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {items.map(o => (
+                  <tr key={o.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-5 py-3.5 font-mono text-xs text-slate-500">{o.order_number}</td>
+                    <td className="px-5 py-3.5">
+                      <p className="font-medium text-slate-900">{o.shipping_address?.full_name}</p>
+                      <p className="text-xs text-slate-400">{o.shipping_address?.phone}</p>
+                    </td>
+                    <td className="px-5 py-3.5 text-right font-semibold text-slate-900">৳{o.total_amount.toLocaleString()}</td>
+                    <td className="px-5 py-3.5"><OrderStatusBadge status={o.status} /></td>
+                    <td className="px-5 py-3.5"><AdvanceStatusBadge status={o.advance_payment_status} /></td>
+                    <td className="px-5 py-3.5 text-xs text-slate-400">{new Date(o.created_at).toLocaleDateString()}</td>
+                    <td className="px-5 py-3.5 text-right">
+                      <button onClick={() => setSelectedOrder(o)} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Manage</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
-      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      <div className="flex-shrink-0">
+        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      </div>
 
       {selectedOrder && (
         <OrderManageModal order={selectedOrder} onClose={() => setSelectedOrder(null)} onSaved={() => { setSelectedOrder(null); load() }} />

@@ -32,7 +32,7 @@ export default function CMSProductsPage() {
     setLoading(true)
     try {
       const res = await cmsProducts.list({
-        page, page_size: 20,
+        page, page_size: 10,
         ...(search && { name: search }),
         ...(statusFilter && { status: statusFilter as 'active' | 'draft' | 'archived' }),
       })
@@ -53,8 +53,8 @@ export default function CMSProductsPage() {
   const handleSaved = () => { setShowForm(false); setEditProduct(null); load() }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+    <div className="flex flex-col h-full overflow-hidden px-6 py-5">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Products</h1>
           <p className="text-slate-500 text-sm mt-0.5">{total} total products</p>
@@ -62,7 +62,7 @@ export default function CMSProductsPage() {
         <Button onClick={() => { setEditProduct(null); setShowForm(true) }}>+ Add Product</Button>
       </div>
 
-      <div className="flex gap-3 mb-5">
+      <div className="flex gap-3 mb-4 flex-shrink-0">
         <input
           type="text" placeholder="Search products..." value={search}
           onChange={e => { setSearch(e.target.value); setPage(1) }}
@@ -76,64 +76,72 @@ export default function CMSProductsPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
         {loading ? (
-          <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
-            Loading...
+          <div className="flex-1 flex items-center justify-center text-slate-400">
+            <div className="text-center">
+              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
+              Loading...
+            </div>
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center text-slate-400">No products found.</div>
+          <div className="flex-1 flex items-center justify-center text-slate-400">No products found.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead style={{ background: '#F8FAFC' }}>
-              <tr>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Product</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">SKU</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Price</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Stock</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {items.map(p => (
-                <tr key={p.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      {p.image_url && (
-                        <img
-                          src={p.image_url.startsWith('http') ? p.image_url : `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}${p.image_url}`}
-                          alt={p.title}
-                          className="w-9 h-9 rounded-lg object-cover flex-shrink-0 border border-slate-100"
-                        />
-                      )}
-                      <div>
-                        <p className="font-medium text-slate-900 line-clamp-1">{p.title}</p>
-                        {p.is_trending && <span className="text-xs text-brand font-medium">Trending</span>}
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 font-mono text-xs text-slate-400">{p.sku}</td>
-                  <td className="px-5 py-3.5 text-right font-semibold text-slate-800">৳{p.price.toLocaleString()}</td>
-                  <td className="px-5 py-3.5 text-right">
-                    <span className={`font-semibold ${p.stock_quantity < 5 ? 'text-red-600' : 'text-slate-700'}`}>{p.stock_quantity}</span>
-                  </td>
-                  <td className="px-5 py-3.5"><ProductStatusBadge status={p.status} /></td>
-                  <td className="px-5 py-3.5 text-right">
-                    <div className="flex items-center justify-end gap-3">
-                      <button onClick={() => { setEditProduct(p); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Edit</button>
-                      <button onClick={() => handleDelete(p.id)} disabled={deleting === p.id} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <>
+            <div className="flex-1 overflow-hidden">
+              <table className="w-full text-sm">
+                <thead className="sticky top-0" style={{ background: '#F8FAFC' }}>
+                  <tr>
+                    <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Product</th>
+                    <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">SKU</th>
+                    <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Price</th>
+                    <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Stock</th>
+                    <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
+                    <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {items.map(p => (
+                    <tr key={p.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-5 py-3.5">
+                        <div className="flex items-center gap-3">
+                          {p.image_url && (
+                            <img
+                              src={p.image_url.startsWith('http') ? p.image_url : `${import.meta.env.VITE_API_URL || 'http://localhost:8080'}${p.image_url}`}
+                              alt={p.title}
+                              className="w-9 h-9 rounded-lg object-cover flex-shrink-0 border border-slate-100"
+                            />
+                          )}
+                          <div>
+                            <p className="font-medium text-slate-900 line-clamp-1">{p.title}</p>
+                            {p.is_trending && <span className="text-xs text-brand font-medium">Trending</span>}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3.5 font-mono text-xs text-slate-400">{p.sku}</td>
+                      <td className="px-5 py-3.5 text-right font-semibold text-slate-800">৳{p.price.toLocaleString()}</td>
+                      <td className="px-5 py-3.5 text-right">
+                        <span className={`font-semibold ${p.stock_quantity < 5 ? 'text-red-600' : 'text-slate-700'}`}>{p.stock_quantity}</span>
+                      </td>
+                      <td className="px-5 py-3.5"><ProductStatusBadge status={p.status} /></td>
+                      <td className="px-5 py-3.5 text-right">
+                        <div className="flex items-center justify-end gap-3">
+                          <button onClick={() => { setEditProduct(p); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors">Edit</button>
+                          <button onClick={() => handleDelete(p.id)} disabled={deleting === p.id} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
-      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      <div className="flex-shrink-0">
+        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      </div>
 
       {showForm && (
         <ProductFormModal

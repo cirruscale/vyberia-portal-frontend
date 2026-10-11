@@ -34,7 +34,7 @@ export default function CMSUsersPage() {
     setLoading(true)
     try {
       const res = await cmsUsers.list({
-        page, page_size: 20,
+        page, page_size: 10,
         ...(search && { search }),
         ...(roleFilter && { role: roleFilter }),
       })
@@ -47,8 +47,8 @@ export default function CMSUsersPage() {
   useEffect(() => { if (user) load() }, [user, load])
 
   return (
-    <div className="p-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+    <div className="flex flex-col h-full overflow-hidden px-6 py-5">
+      <div className="flex items-center justify-between mb-4 flex-shrink-0">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Users</h1>
           <p className="text-slate-500 text-sm mt-0.5">{total} total users</p>
@@ -56,7 +56,7 @@ export default function CMSUsersPage() {
         <Button onClick={() => { setEditUser(null); setShowForm(true) }}>+ Add User</Button>
       </div>
 
-      <div className="flex gap-3 mb-5">
+      <div className="flex gap-3 mb-4 flex-shrink-0">
         <input type="text" placeholder="Search name, email, phone..." value={search} onChange={e => { setSearch(e.target.value); setPage(1) }} className={`flex-1 ${inputCls}`} />
         <select value={roleFilter} onChange={e => { setRoleFilter(e.target.value); setPage(1) }} className={inputCls}>
           <option value="">All Roles</option>
@@ -67,55 +67,61 @@ export default function CMSUsersPage() {
         </select>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="flex-1 min-h-0 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
         {loading ? (
-          <div className="p-12 text-center text-slate-400">
-            <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
-            Loading...
+          <div className="flex-1 flex items-center justify-center text-slate-400">
+            <div className="text-center">
+              <div className="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mx-auto mb-3" style={{ borderColor: '#C4A87A', borderTopColor: 'transparent' }} />
+              Loading...
+            </div>
           </div>
         ) : items.length === 0 ? (
-          <div className="p-12 text-center text-slate-400">No users found.</div>
+          <div className="flex-1 flex items-center justify-center text-slate-400">No users found.</div>
         ) : (
-          <table className="w-full text-sm">
-            <thead style={{ background: '#F8FAFC' }}>
-              <tr>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">User</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Email</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Phone</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Role</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
-                <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-50">
-              {items.map(u => (
-                <tr key={u.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#F5EDE0' }}>
-                        <span className="text-xs font-bold" style={{ color: '#9A7A5A' }}>
-                          {u.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
-                        </span>
-                      </div>
-                      <span className="font-medium text-slate-900">{u.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 text-slate-500">{u.email || '—'}</td>
-                  <td className="px-5 py-3.5 text-slate-500">{u.phone || '—'}</td>
-                  <td className="px-5 py-3.5"><Badge variant={roleColors[u.role] ?? 'gray'}>{u.role}</Badge></td>
-                  <td className="px-5 py-3.5"><Badge variant={u.is_active ? 'green' : 'red'}>{u.is_active ? 'Active' : 'Inactive'}</Badge></td>
-                  <td className="px-5 py-3.5 text-right">
-                    <button onClick={() => { setEditUser(u); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors mr-4">Edit</button>
-                    <button onClick={async () => { if (confirm('Delete user?')) { await cmsUsers.delete(u.id); load() } }} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
-                  </td>
+          <div className="flex-1 overflow-hidden">
+            <table className="w-full text-sm">
+              <thead className="sticky top-0" style={{ background: '#F8FAFC' }}>
+                <tr>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">User</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Email</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Phone</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Role</th>
+                  <th className="text-left px-5 py-3.5 text-xs font-semibold text-slate-500">Status</th>
+                  <th className="text-right px-5 py-3.5 text-xs font-semibold text-slate-500">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-slate-50">
+                {items.map(u => (
+                  <tr key={u.id} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-5 py-3.5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: '#F5EDE0' }}>
+                          <span className="text-xs font-bold" style={{ color: '#9A7A5A' }}>
+                            {u.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()}
+                          </span>
+                        </div>
+                        <span className="font-medium text-slate-900">{u.name}</span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-3.5 text-slate-500">{u.email || '—'}</td>
+                    <td className="px-5 py-3.5 text-slate-500">{u.phone || '—'}</td>
+                    <td className="px-5 py-3.5"><Badge variant={roleColors[u.role] ?? 'gray'}>{u.role}</Badge></td>
+                    <td className="px-5 py-3.5"><Badge variant={u.is_active ? 'green' : 'red'}>{u.is_active ? 'Active' : 'Inactive'}</Badge></td>
+                    <td className="px-5 py-3.5 text-right">
+                      <button onClick={() => { setEditUser(u); setShowForm(true) }} className="text-xs font-medium text-brand hover:text-brand-dark transition-colors mr-4">Edit</button>
+                      <button onClick={async () => { if (confirm('Delete user?')) { await cmsUsers.delete(u.id); load() } }} className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
-      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      <div className="flex-shrink-0">
+        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      </div>
 
       {showForm && (
         <UserFormModal

@@ -21,6 +21,18 @@ body {
   zoom: 0.75;
 }
 
+/* On CMS pages: reset body zoom to 1 so heights are predictable */
+body:has(.cms-root) {
+  zoom: 1;
+  background: #F1F5F9;
+}
+
+/* CMS panel: larger font for readability */
+.cms-root {
+  font-size: 15px;
+}
+
+
 input,
 select,
 textarea,
