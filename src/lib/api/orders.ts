@@ -42,6 +42,9 @@ export const orders = {
 
   cancel: (id: string) =>
     api.post<ApiResponse<Order>>(`/api/v1/orders/${id}/cancel`, {}, { auth: true }),
+
+  updateShippingAddress: (id: string, shipping_address: ShippingAddress) =>
+    api.put<ApiResponse<Order>>(`/api/v1/orders/${id}/shipping-address`, { shipping_address }, { auth: true }),
 }
 
 // CMS

@@ -1,6 +1,11 @@
 import { api } from './client'
 import type { ApiResponse, AuthOutput, User } from '../types'
 
+export interface CheckPhoneOutput {
+  user_exists: boolean
+  has_password: boolean
+}
+
 // Portal Auth
 export const portalAuth = {
   register: (data: { name: string; phone: string; email?: string; password: string }) =>
@@ -20,6 +25,13 @@ export const portalAuth = {
 
   changePassword: (data: { old_password: string; new_password: string }) =>
     api.put<ApiResponse<void>>('/api/v1/auth/change-password', data, { auth: true }),
+
+  checkPhone: (phone: string) =>
+    api.post<ApiResponse<CheckPhoneOutput>>('/api/v1/auth/check-phone', { phone }),
+
+  setPassword: (data: { phone: string; password: string }) =>
+    api.post<ApiResponse<AuthOutput>>('/api/v1/auth/set-password', data),
+
 }
 
 // CMS Auth

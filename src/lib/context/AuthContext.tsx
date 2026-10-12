@@ -8,6 +8,7 @@ interface AuthContextType {
   loading: boolean
   login: (phone: string, password: string) => Promise<void>
   register: (name: string, phone: string, password: string, email?: string) => Promise<void>
+  loginWithOutput: (output: { user: User; tokens: { access_token: string; refresh_token: string } }) => void
   logout: () => void
 }
 
@@ -47,13 +48,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const loginWithOutput = (output: { user: User; tokens: { access_token: string; refresh_token: string } }) => {
+    setToken(output.tokens.access_token, false)
+    setRefreshToken(output.tokens.refresh_token, false)
+    setUser(output.user)
+  }
+
   const logout = () => {
     clearTokens(false)
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, loginWithOutput, logout }}>
       {children}
     </AuthContext.Provider>
   )

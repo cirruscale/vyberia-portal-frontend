@@ -4,7 +4,7 @@ import { orders } from '@/lib/api/orders'
 import { useAuth } from '@/lib/context/AuthContext'
 import { OrderStatusBadge, AdvanceStatusBadge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import type { Order } from '@/lib/types'
+import type { Order, ShippingAddress } from '@/lib/types'
 
 function SuccessBanner({ orderId }: { orderId: string }) {
   const [searchParams] = useSearchParams()
@@ -34,6 +34,12 @@ export default function OrderDetailPage() {
   const [submitting, setSubmitting] = useState(false)
   const [msg, setMsg] = useState('')
 
+  // Edit shipping address
+  const [editingAddress, setEditingAddress] = useState(false)
+  const [addrForm, setAddrForm] = useState<ShippingAddress | null>(null)
+  const [savingAddr, setSavingAddr] = useState(false)
+  const [addrMsg, setAddrMsg] = useState('')
+
   const load = () => {
     if (!id) return
     orders.get(id).then(r => { if (r.data) setOrder(r.data) }).finally(() => setLoading(false))
@@ -58,6 +64,26 @@ export default function OrderDetailPage() {
       const res = await orders.submitAdvance(id, { advance_payment_method: advanceMethod, advance_transaction_id: advanceTrxId })
       if (res.data) { setOrder(res.data); setMsg('Advance payment submitted!') }
     } finally { setSubmitting(false) }
+  }
+
+  const openEditAddress = () => {
+    if (!order) return
+    setAddrForm({ ...order.shipping_address })
+    setAddrMsg('')
+    setEditingAddress(true)
+  }
+
+  const handleSaveAddress = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!id || !addrForm) return
+    setSavingAddr(true)
+    setAddrMsg('')
+    try {
+      const res = await orders.updateShippingAddress(id, addrForm)
+      if (res.data) { setOrder(res.data); setEditingAddress(false); setAddrMsg('Address updated!') }
+    } catch (err: unknown) {
+      setAddrMsg(err instanceof Error ? err.message : 'Failed to update address')
+    } finally { setSavingAddr(false) }
   }
 
   if (loading) return <div className="max-w-3xl mx-auto px-4 py-12 text-center">Loading...</div>
@@ -95,13 +121,75 @@ export default function OrderDetailPage() {
 
       {/* Shipping */}
       <div className="bg-white rounded-lg border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-3">Shipping Address</h2>
-        <p className="text-sm text-gray-700">
-          {order.shipping_address.full_name} · {order.shipping_address.phone}<br />
-          {order.shipping_address.address_line1}{order.shipping_address.address_line2 && `, ${order.shipping_address.address_line2}`}<br />
-          {order.shipping_address.city}, {order.shipping_address.state} {order.shipping_address.postal_code}<br />
-          {order.shipping_address.country}
-        </p>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-semibold text-gray-900">Shipping Address</h2>
+          {order.status === 'pending' && !editingAddress && (
+            <button onClick={openEditAddress} className="text-xs text-brand hover:underline">Edit</button>
+          )}
+        </div>
+
+        {addrMsg && !editingAddress && <p className="text-xs text-green-700 mb-2">{addrMsg}</p>}
+
+        {editingAddress && addrForm ? (
+          <form onSubmit={handleSaveAddress} className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Full name</label>
+                <input required value={addrForm.full_name} onChange={e => setAddrForm({ ...addrForm, full_name: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Phone</label>
+                <input required value={addrForm.phone} onChange={e => setAddrForm({ ...addrForm, phone: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Address line 1</label>
+              <input required value={addrForm.address_line1} onChange={e => setAddrForm({ ...addrForm, address_line1: e.target.value })}
+                className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Address line 2 (optional)</label>
+              <input value={addrForm.address_line2 ?? ''} onChange={e => setAddrForm({ ...addrForm, address_line2: e.target.value })}
+                className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">City</label>
+                <input required value={addrForm.city} onChange={e => setAddrForm({ ...addrForm, city: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">State</label>
+                <input required value={addrForm.state} onChange={e => setAddrForm({ ...addrForm, state: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">Postal code</label>
+                <input required value={addrForm.postal_code} onChange={e => setAddrForm({ ...addrForm, postal_code: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Country</label>
+              <input required value={addrForm.country} onChange={e => setAddrForm({ ...addrForm, country: e.target.value })}
+                className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+            </div>
+            {addrMsg && <p className="text-xs text-red-600">{addrMsg}</p>}
+            <div className="flex gap-2">
+              <Button type="submit" size="sm" loading={savingAddr}>Save</Button>
+              <Button type="button" size="sm" variant="secondary" onClick={() => { setEditingAddress(false); setAddrMsg('') }}>Cancel</Button>
+            </div>
+          </form>
+        ) : (
+          <p className="text-sm text-gray-700">
+            {order.shipping_address.full_name} · {order.shipping_address.phone}<br />
+            {order.shipping_address.address_line1}{order.shipping_address.address_line2 && `, ${order.shipping_address.address_line2}`}<br />
+            {order.shipping_address.city}, {order.shipping_address.state} {order.shipping_address.postal_code}<br />
+            {order.shipping_address.country}
+          </p>
+        )}
       </div>
 
       {/* Payment */}
