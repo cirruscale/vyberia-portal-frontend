@@ -29,16 +29,20 @@ export default function OrderDetailPage() {
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [cancelling, setCancelling] = useState(false)
-  const [advanceTrxId, setAdvanceTrxId] = useState('')
-  const [advanceMethod, setAdvanceMethod] = useState('bkash')
-  const [submitting, setSubmitting] = useState(false)
-  const [msg, setMsg] = useState('')
 
   // Edit shipping address
   const [editingAddress, setEditingAddress] = useState(false)
   const [addrForm, setAddrForm] = useState<ShippingAddress | null>(null)
   const [savingAddr, setSavingAddr] = useState(false)
   const [addrMsg, setAddrMsg] = useState('')
+
+  // Edit payment
+  const [editingPayment, setEditingPayment] = useState(false)
+  const [payMethod, setPayMethod] = useState<string>('cash_on_delivery')
+  const [payAdvanceMethod, setPayAdvanceMethod] = useState('bkash')
+  const [payTrxId, setPayTrxId] = useState('')
+  const [savingPayment, setSavingPayment] = useState(false)
+  const [payMsg, setPayMsg] = useState('')
 
   const load = () => {
     if (!id) return
@@ -54,16 +58,6 @@ export default function OrderDetailPage() {
       const res = await orders.cancel(id)
       if (res.data) setOrder(res.data)
     } finally { setCancelling(false) }
-  }
-
-  const handleSubmitAdvance = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!id) return
-    setSubmitting(true)
-    try {
-      const res = await orders.submitAdvance(id, { advance_payment_method: advanceMethod, advance_transaction_id: advanceTrxId })
-      if (res.data) { setOrder(res.data); setMsg('Advance payment submitted!') }
-    } finally { setSubmitting(false) }
   }
 
   const openEditAddress = () => {
@@ -84,6 +78,32 @@ export default function OrderDetailPage() {
     } catch (err: unknown) {
       setAddrMsg(err instanceof Error ? err.message : 'Failed to update address')
     } finally { setSavingAddr(false) }
+  }
+
+  const openEditPayment = () => {
+    if (!order) return
+    setPayMethod(order.payment_method)
+    setPayAdvanceMethod(order.advance_payment_method || 'bkash')
+    setPayTrxId(order.advance_transaction_id || '')
+    setPayMsg('')
+    setEditingPayment(true)
+  }
+
+  const handleSavePayment = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!id) return
+    setSavingPayment(true)
+    setPayMsg('')
+    try {
+      const res = await orders.updatePaymentDetails(id, {
+        payment_method: payMethod as Order['payment_method'],
+        advance_payment_method: payAdvanceMethod,
+        advance_transaction_id: payTrxId,
+      })
+      if (res.data) { setOrder(res.data); setEditingPayment(false); setPayMsg('Payment details updated!') }
+    } catch (err: unknown) {
+      setPayMsg(err instanceof Error ? err.message : 'Failed to update payment')
+    } finally { setSavingPayment(false) }
   }
 
   if (loading) return <div className="max-w-3xl mx-auto px-4 py-12 text-center">Loading...</div>
@@ -124,7 +144,7 @@ export default function OrderDetailPage() {
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-semibold text-gray-900">Shipping Address</h2>
           {order.status === 'pending' && !editingAddress && (
-            <button onClick={openEditAddress} className="text-xs text-brand hover:underline">Edit</button>
+            <Button size="sm" variant="outline" onClick={openEditAddress}>Edit</Button>
           )}
         </div>
 
@@ -194,36 +214,65 @@ export default function OrderDetailPage() {
 
       {/* Payment */}
       <div className="bg-white rounded-lg border border-gray-200 p-5 mb-4">
-        <h2 className="font-semibold text-gray-900 mb-3">Payment</h2>
-        <div className="text-sm space-y-1 text-gray-700">
-          <div className="flex justify-between"><span>Method</span><span>{order.payment_method.replace(/_/g, ' ')}</span></div>
-          <div className="flex justify-between"><span>Advance status</span><span><AdvanceStatusBadge status={order.advance_payment_status} /></span></div>
-          {order.advance_transaction_id && (
-            <div className="flex justify-between"><span>Advance TRX ID</span><span>{order.advance_transaction_id}</span></div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-semibold text-gray-900">Payment</h2>
+          {order.status === 'pending' && order.advance_payment_status !== 'verified' && !editingPayment && (
+            <Button size="sm" variant="outline" onClick={openEditPayment}>Edit</Button>
           )}
-          {order.delivery_advance_amount > 0 && (
-            <div className="flex justify-between"><span>Advance amount</span><span>৳{order.delivery_advance_amount.toLocaleString()}</span></div>
-          )}
-          <div className="flex justify-between font-medium"><span>Due on delivery</span><span>৳{order.due_amount.toLocaleString()}</span></div>
         </div>
-      </div>
 
-      {/* Submit advance if needed */}
-      {order.payment_method === 'delivery_advance_cod' && order.advance_payment_status === 'pending' && (
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-5 mb-4">
-          <h2 className="font-semibold text-yellow-900 mb-3">Submit Advance Payment</h2>
-          <form onSubmit={handleSubmitAdvance} className="space-y-3">
-            <select value={advanceMethod} onChange={e => setAdvanceMethod(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black">
-              <option value="bkash">bKash</option>
-              <option value="nagad">Nagad</option>
-              <option value="rocket">Rocket</option>
-            </select>
-            <input required value={advanceTrxId} onChange={e => setAdvanceTrxId(e.target.value)} placeholder="Transaction ID" className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black" />
-            <Button type="submit" loading={submitting} size="sm">Submit</Button>
+        {payMsg && !editingPayment && <p className="text-xs text-green-700 mb-2">{payMsg}</p>}
+
+        {editingPayment ? (
+          <form onSubmit={handleSavePayment} className="space-y-3">
+            <div>
+              <label className="block text-xs font-medium text-gray-700 mb-1">Payment method</label>
+              <select value={payMethod} onChange={e => setPayMethod(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black">
+                <option value="cash_on_delivery">Cash on Delivery</option>
+                <option value="delivery_advance_cod">Delivery Advance + COD</option>
+              </select>
+            </div>
+            {payMethod === 'delivery_advance_cod' && (
+              <>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Advance payment via</label>
+                  <select value={payAdvanceMethod} onChange={e => setPayAdvanceMethod(e.target.value)} className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black">
+                    <option value="bkash">bKash</option>
+                    <option value="nagad">Nagad</option>
+                    <option value="rocket">Rocket</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-700 mb-1">Transaction ID</label>
+                  <input value={payTrxId} onChange={e => setPayTrxId(e.target.value)}
+                    placeholder="e.g. 8N7A3KD2F1"
+                    className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm text-black" />
+                </div>
+              </>
+            )}
+            {payMsg && <p className="text-xs text-red-600">{payMsg}</p>}
+            <div className="flex gap-2">
+              <Button type="submit" size="sm" loading={savingPayment}>Save</Button>
+              <Button type="button" size="sm" variant="secondary" onClick={() => { setEditingPayment(false); setPayMsg('') }}>Cancel</Button>
+            </div>
           </form>
-          {msg && <p className="text-sm text-green-700 mt-2">{msg}</p>}
-        </div>
-      )}
+        ) : (
+          <div className="text-sm space-y-1 text-gray-700">
+            <div className="flex justify-between"><span>Method</span><span className="capitalize">{order.payment_method.replace(/_/g, ' ')}</span></div>
+            <div className="flex justify-between"><span>Advance status</span><span><AdvanceStatusBadge status={order.advance_payment_status} /></span></div>
+            {order.advance_payment_method && (
+              <div className="flex justify-between"><span>Advance via</span><span className="capitalize">{order.advance_payment_method}</span></div>
+            )}
+            {order.advance_transaction_id && (
+              <div className="flex justify-between"><span>TRX ID</span><span className="font-mono text-xs">{order.advance_transaction_id}</span></div>
+            )}
+            {order.delivery_advance_amount > 0 && (
+              <div className="flex justify-between"><span>Advance amount</span><span>৳{order.delivery_advance_amount.toLocaleString()}</span></div>
+            )}
+            <div className="flex justify-between font-medium"><span>Due on delivery</span><span>৳{order.due_amount.toLocaleString()}</span></div>
+          </div>
+        )}
+      </div>
 
       {/* Actions */}
       <div className="flex gap-3 items-center">

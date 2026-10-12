@@ -45,6 +45,9 @@ export const orders = {
 
   updateShippingAddress: (id: string, shipping_address: ShippingAddress) =>
     api.put<ApiResponse<Order>>(`/api/v1/orders/${id}/shipping-address`, { shipping_address }, { auth: true }),
+
+  updatePaymentDetails: (id: string, data: { payment_method: PaymentMethod; advance_payment_method?: string; advance_transaction_id?: string; delivery_advance_amount?: number }) =>
+    api.put<ApiResponse<Order>>(`/api/v1/orders/${id}/payment`, data, { auth: true }),
 }
 
 // CMS
