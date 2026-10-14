@@ -82,7 +82,7 @@ export function Header() {
                   <span className="hidden lg:block text-sm text-stone-300">{user.name.split(' ')[0]}</span>
                 </button>
                 {menuOpen && (
-                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-2xl shadow-black/15 border border-stone-100 overflow-hidden animate-fade-in">
+                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-2xl shadow-black/15 border border-stone-100 overflow-hidden animate-slide-up">
                     <div className="px-4 py-3 border-b border-stone-100">
                       <p className="text-sm font-semibold text-stone-900">{user.name}</p>
                       <p className="text-xs text-muted truncate">{user.email}</p>

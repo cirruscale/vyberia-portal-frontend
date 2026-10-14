@@ -12,7 +12,7 @@ function productImageUrl(url?: string): string {
   return `${BASE_URL}${url}`
 }
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const { addItem } = useCart()
   const [added, setAdded] = useState(false)
   const [buyNowOpen, setBuyNowOpen] = useState(false)
@@ -35,7 +35,10 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 border border-stone-100">
+      <div
+        className="bg-white rounded-lg overflow-hidden shadow-sm border border-stone-100 card-hover animate-card-enter"
+        style={{ animationDelay: `${index * 60}ms` }}
+      >
         {/* Image */}
         <Link to={`/products/${product.slug}`} className="block relative aspect-square bg-stone-100 overflow-hidden">
           <img
@@ -84,13 +87,13 @@ export function ProductCard({ product }: { product: Product }) {
             <div className="flex gap-2">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-dark text-white text-xs font-semibold py-2 rounded-lg hover:bg-brand active:scale-[0.97] transition-all cursor-pointer"
+                className="flex-1 bg-white text-stone-900 text-xs font-semibold py-2 rounded-lg border border-stone-200 hover:border-stone-400 active:scale-[0.97] transition-all cursor-pointer"
               >
-                {added ? '✓ Added' : 'Add to Cart'}
+                {added ? <span className="animate-checkmark inline-block">✓ Added</span> : 'Add to Cart'}
               </button>
               <button
                 onClick={handleBuyNow}
-                className="bg-brand text-white text-xs font-semibold px-3.5 py-2 rounded-lg hover:bg-brand-hover active:scale-[0.97] transition-all cursor-pointer"
+                className="bg-white text-stone-900 text-xs font-semibold px-3.5 py-2 rounded-lg border border-stone-200 hover:border-stone-400 active:scale-[0.97] transition-all cursor-pointer"
               >
                 Buy Now
               </button>

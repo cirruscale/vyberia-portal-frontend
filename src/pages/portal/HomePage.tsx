@@ -10,12 +10,12 @@ function SkeletonGrid({ count = 8 }: { count?: number }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="bg-white rounded-2xl border border-gray-200 overflow-hidden animate-pulse">
-          <div className="aspect-square bg-gray-200" />
-          <div className="p-4 space-y-3">
-            <div className="h-3 bg-gray-200 rounded w-1/3" />
-            <div className="h-4 bg-gray-200 rounded w-3/4" />
-            <div className="h-5 bg-gray-200 rounded w-1/2" />
+        <div key={i} className="bg-white rounded-lg border border-stone-100 overflow-hidden">
+          <div className="aspect-square skeleton-shimmer" />
+          <div className="p-3 space-y-2.5">
+            <div className="h-3 skeleton-shimmer rounded w-1/3" />
+            <div className="h-3.5 skeleton-shimmer rounded w-3/4" />
+            <div className="h-4 skeleton-shimmer rounded w-1/2" />
           </div>
         </div>
       ))}
@@ -87,7 +87,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {trending.map(p => <ProductCard key={p.id} product={p} />)}
+                {trending.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
               </div>
             </section>
           )}
@@ -105,7 +105,7 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                {others.map(p => <ProductCard key={p.id} product={p} />)}
+                {others.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
               </div>
 
               {hasMore && (

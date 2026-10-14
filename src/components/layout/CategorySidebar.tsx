@@ -68,7 +68,7 @@ export function CategorySidebar() {
   const allActive = !activeCatId && !activeSubId
 
   return (
-    <aside className="hidden md:block w-52 flex-shrink-0">
+    <aside className="hidden md:block w-52 flex-shrink-0 animate-slide-in-right">
       <div className="sticky top-16">
         <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest px-4 mb-3">Categories</h3>
         <nav>
