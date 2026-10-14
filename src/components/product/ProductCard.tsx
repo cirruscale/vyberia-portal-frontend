@@ -1,40 +1,33 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/lib/context/CartContext'
-import { useAuth } from '@/lib/context/AuthContext'
 import GuestCheckoutModal from '@/components/product/GuestCheckoutModal'
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 
 function productImageUrl(url?: string): string {
-  if (!url) return 'https://placehold.co/400x400/e2e8f0/94a3b8?text=No+Image'
+  if (!url) return 'https://placehold.co/400x400/f5f5f4/a8a29e?text=No+Image'
   if (url.startsWith('http')) return url
   return `${BASE_URL}${url}`
 }
 
 export function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart()
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  const [adding, setAdding] = useState(false)
+  const [added, setAdded] = useState(false)
   const [buyNowOpen, setBuyNowOpen] = useState(false)
 
-  const handleAddToCart = async (e: React.MouseEvent) => {
+  const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
-    if (!user) { navigate('/login'); return }
-    setAdding(true)
-    try {
-      await addItem(product.id, 1)
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setAdding(false)
-    }
+    e.stopPropagation()
+    addItem(product, 1)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 1500)
   }
 
   const handleBuyNow = (e: React.MouseEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setBuyNowOpen(true)
   }
 
@@ -42,41 +35,64 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <Link to={`/products/${product.slug}`} className="group block rounded-lg border border-blue-200 overflow-hidden hover:shadow-lg transition-shadow" style={{ background: 'rgba(255,255,255,0.88)' }}>
-        <div className="relative aspect-square bg-gray-50 overflow-hidden">
+      <Link
+        to={`/products/${product.slug}`}
+        className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+      >
+        <div className="relative aspect-square bg-stone-100 overflow-hidden">
           <img
             src={productImageUrl(product.image_url)}
             alt={product.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
-          {product.is_trending && (
-            <span className="absolute top-2 left-2 text-white text-xs px-2 py-0.5 rounded-full" style={{ background: '#C4A87A' }}>
-              Trending
-            </span>
+
+          {(product.is_trending || outOfStock) && (
+            <div className="absolute top-2 left-2 flex flex-col gap-1">
+              {product.is_trending && (
+                <span className="bg-dark text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                  Trending
+                </span>
+              )}
+              {outOfStock && (
+                <span className="bg-white/90 text-stone-600 text-[9px] font-bold px-2 py-0.5 rounded">
+                  Sold Out
+                </span>
+              )}
+            </div>
+          )}
+
+          {!outOfStock && (
+            <div className="absolute inset-x-0 bottom-0 p-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <div className="flex gap-1.5">
+                <button
+                  onClick={handleAddToCart}
+                  className="flex-1 bg-dark text-white text-[11px] font-semibold py-2 rounded-lg hover:bg-brand transition-colors duration-200 cursor-pointer"
+                >
+                  {added ? 'Added!' : 'Add to Cart'}
+                </button>
+                <button
+                  onClick={handleBuyNow}
+                  className="bg-white text-dark text-[11px] font-semibold px-3 py-2 rounded-lg hover:bg-brand hover:text-white transition-colors duration-200 cursor-pointer"
+                >
+                  Buy
+                </button>
+              </div>
+            </div>
           )}
         </div>
-        <div className="p-4">
-          <p className="text-xs text-gray-500 mb-1">{product.category?.name}</p>
-          <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-2">{product.title}</h3>
-          <span className="text-lg font-bold text-gray-900 block mb-3">৳{product.price.toLocaleString()}</span>
-          <div className="flex gap-2">
-            <button
-              onClick={handleBuyNow}
-              disabled={outOfStock}
-              className="flex-1 text-xs text-white px-3 py-1.5 rounded disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold"
-              style={{ background: '#C4A87A' }}
-            >
-              {outOfStock ? 'Out of stock' : 'Buy Now'}
-            </button>
-            <button
-              onClick={handleAddToCart}
-              disabled={adding || outOfStock}
-              className="flex-1 text-xs px-3 py-1.5 rounded border-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-semibold"
-              style={{ borderColor: '#C4A87A', color: '#C4A87A' }}
-            >
-              {adding ? '...' : 'Add to cart'}
-            </button>
-          </div>
+
+        <div className="p-3">
+          {product.category?.name && (
+            <p className="text-[10px] font-medium text-muted uppercase tracking-wider mb-0.5">
+              {product.category.name}
+            </p>
+          )}
+          <h3 className="text-[13px] font-medium text-stone-900 line-clamp-2 leading-snug mb-1.5">
+            {product.title}
+          </h3>
+          <span className="text-sm font-bold text-stone-900">
+            ৳{product.price.toLocaleString()}
+          </span>
         </div>
       </Link>
 

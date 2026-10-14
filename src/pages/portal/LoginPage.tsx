@@ -4,6 +4,8 @@ import { useAuth } from '@/lib/context/AuthContext'
 import { portalAuth } from '@/lib/api/auth'
 import { Button } from '@/components/ui/Button'
 
+const inputClass = 'w-full border border-stone-200 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all'
+
 type Step = 'phone' | 'password' | 'set-password'
 
 export default function LoginPage() {
@@ -26,31 +28,20 @@ export default function LoginPage() {
     try {
       const res = await portalAuth.checkPhone(phone)
       if (!res.data) { setError('Something went wrong'); return }
-      if (!res.data.user_exists) {
-        // New user — go through register
-        navigate(`/register?phone=${encodeURIComponent(phone)}`)
-        return
-      }
+      if (!res.data.user_exists) { navigate(`/register?phone=${encodeURIComponent(phone)}`); return }
       setStep(res.data.has_password ? 'password' : 'set-password')
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to check phone')
-    } finally {
-      setLoading(false)
-    }
+    } finally { setLoading(false) }
   }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
-    try {
-      await login(phone, password)
-      navigate('/')
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Login failed')
-    } finally {
-      setLoading(false)
-    }
+    try { await login(phone, password); navigate('/') }
+    catch (err: unknown) { setError(err instanceof Error ? err.message : 'Login failed') }
+    finally { setLoading(false) }
   }
 
   const handleSetPassword = async (e: React.FormEvent) => {
@@ -61,110 +52,73 @@ export default function LoginPage() {
     setLoading(true)
     try {
       const res = await portalAuth.setPassword({ phone, password: newPassword })
-      if (res.data) {
-        loginWithOutput(res.data)
-        navigate('/')
-      }
+      if (res.data) { loginWithOutput(res.data); navigate('/') }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to set password')
-    } finally {
-      setLoading(false)
-    }
+    } finally { setLoading(false) }
   }
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
-      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm p-8" style={{ border: '1px solid #D4B88A' }}>
+    <div className="min-h-[60vh] flex items-center justify-center px-4 animate-fade-in">
+      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-stone-200 p-8">
 
         {step === 'phone' && (
           <>
-            <h1 className="text-2xl font-bold text-black mb-2 text-center">Sign in</h1>
-            <p className="text-sm text-gray-600 text-center mb-8">
+            <h1 className="text-xl font-bold mb-1 text-center">Sign in</h1>
+            <p className="text-sm text-muted text-center mb-6">
               New customer?{' '}
-              <Link to="/register" className="text-brand hover:underline">Create account</Link>
+              <Link to="/register" className="text-brand hover:text-brand-hover font-medium">Create account</Link>
             </p>
             <form onSubmit={handleCheckPhone} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-black mb-1">Phone number</label>
-                <input
-                  type="tel" required value={phone} onChange={e => setPhone(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand"
-                  placeholder="+8801700000004"
-                />
+                <label className="block text-sm font-medium text-stone-700 mb-1">Phone number</label>
+                <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)} className={inputClass} placeholder="+8801700000004" />
               </div>
               {error && <p className="text-sm text-red-600">{error}</p>}
-              <Button type="submit" size="lg" className="w-full" loading={loading}>
-                Continue
-              </Button>
+              <Button type="submit" size="lg" className="w-full" loading={loading}>Continue</Button>
             </form>
           </>
         )}
 
         {step === 'password' && (
           <>
-            <button onClick={() => { setStep('phone'); setError('') }} className="text-sm text-brand hover:underline mb-4 block">← Change number</button>
-            <h1 className="text-2xl font-bold text-black mb-2 text-center">Enter password</h1>
-            <p className="text-sm text-gray-500 text-center mb-8">{phone}</p>
+            <button onClick={() => { setStep('phone'); setError('') }} className="text-sm text-brand hover:text-brand-hover font-medium mb-4 block cursor-pointer">&larr; Change number</button>
+            <h1 className="text-xl font-bold mb-1 text-center">Enter password</h1>
+            <p className="text-sm text-muted text-center mb-6">{phone}</p>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-black mb-1">Password</label>
-                <input
-                  type="password" required value={password} onChange={e => setPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand"
-                  autoFocus
-                />
+                <label className="block text-sm font-medium text-stone-700 mb-1">Password</label>
+                <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className={inputClass} autoFocus />
               </div>
               {error && <p className="text-sm text-red-600">{error}</p>}
-              <Button type="submit" size="lg" className="w-full" loading={loading}>
-                Sign in
-              </Button>
+              <Button type="submit" size="lg" className="w-full" loading={loading}>Sign in</Button>
             </form>
           </>
         )}
 
         {step === 'set-password' && (
           <>
-            <button onClick={() => { setStep('phone'); setError('') }} className="text-sm text-brand hover:underline mb-4 block">← Change number</button>
-            <h1 className="text-2xl font-bold text-black mb-2 text-center">Set your password</h1>
-            <p className="text-sm text-gray-500 text-center mb-2">{phone}</p>
-            <p className="text-sm text-gray-600 text-center mb-6">
-              You placed an order with this number. Set a password to access your account.
-            </p>
+            <button onClick={() => { setStep('phone'); setError('') }} className="text-sm text-brand hover:text-brand-hover font-medium mb-4 block cursor-pointer">&larr; Change number</button>
+            <h1 className="text-xl font-bold mb-1 text-center">Set your password</h1>
+            <p className="text-sm text-muted text-center mb-1">{phone}</p>
+            <p className="text-sm text-muted text-center mb-6">You placed an order with this number. Set a password to access your account.</p>
             <form onSubmit={handleSetPassword} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-black mb-1">New password</label>
-                <input
-                  type="password" required value={newPassword} onChange={e => setNewPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand"
-                  placeholder="At least 6 characters"
-                  autoFocus
-                />
+                <label className="block text-sm font-medium text-stone-700 mb-1">New password</label>
+                <input type="password" required value={newPassword} onChange={e => setNewPassword(e.target.value)} className={inputClass} placeholder="At least 6 characters" autoFocus />
               </div>
               <div>
-                <label className="block text-sm font-medium text-black mb-1">Confirm password</label>
-                <input
-                  type="password" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)}
-                  className="w-full border border-gray-300 rounded-md px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand"
-                />
+                <label className="block text-sm font-medium text-stone-700 mb-1">Confirm password</label>
+                <input type="password" required value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className={inputClass} />
               </div>
               {error && <p className="text-sm text-red-600">{error}</p>}
-              <Button type="submit" size="lg" className="w-full" loading={loading}>
-                Set Password & Sign In
-              </Button>
+              <Button type="submit" size="lg" className="w-full" loading={loading}>Set Password & Sign In</Button>
             </form>
           </>
         )}
 
         <div className="mt-4 text-center">
-          <Link
-            to="/cms/login"
-            className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            Admin
-          </Link>
+          <Link to="/cms/login" className="text-[11px] text-stone-400 hover:text-stone-600 transition-colors">Admin</Link>
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import { useAuth } from '@/lib/context/AuthContext'
 import { Button } from '@/components/ui/Button'
 import { portalAuth } from '@/lib/api/auth'
 
+const inputClass = 'mt-1 w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition-all'
+
 export default function ProfilePage() {
   const { user, loading, loginWithOutput } = useAuth()
   const [name, setName] = useState('')
@@ -17,10 +19,10 @@ export default function ProfilePage() {
   const [passMsg, setPassMsg] = useState('')
   const [err, setErr] = useState('')
 
-  if (loading) return <div className="max-w-2xl mx-auto px-4 py-12 text-center">Loading...</div>
+  if (loading) return <div className="max-w-2xl mx-auto py-12 text-center text-muted">Loading...</div>
   if (!user) return (
-    <div className="max-w-2xl mx-auto px-4 py-20 text-center">
-      <Link to="/login" className="text-brand hover:underline">Sign in</Link>
+    <div className="max-w-2xl mx-auto py-20 text-center animate-fade-in">
+      <Link to="/login" className="text-brand hover:text-brand-hover font-medium transition-colors">Sign in</Link>
     </div>
   )
 
@@ -67,74 +69,78 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-12">
+    <div className="max-w-2xl mx-auto py-8 animate-fade-in">
       <h1 className="text-2xl font-bold text-gray-900 mb-8">My Profile</h1>
 
-      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-        <p className="text-sm text-gray-500 mb-1">Account</p>
-        <p className="font-medium">{user.name}</p>
-        {user.email && <p className="text-sm text-gray-600">{user.email}</p>}
-        <p className="text-xs text-gray-400 mt-1">Role: {user.role}</p>
+      {/* Account info card */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-brand/10 text-brand flex items-center justify-center text-xl font-bold">
+            {user.name.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <p className="font-semibold text-gray-900">{user.name}</p>
+            {user.email && <p className="text-sm text-muted">{user.email}</p>}
+            <p className="text-xs text-muted mt-0.5 capitalize">Role: {user.role}</p>
+          </div>
+        </div>
       </div>
 
       {/* Update profile */}
-      <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+      <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
         <h2 className="font-semibold text-gray-900 mb-4">Update Profile</h2>
         <form onSubmit={handleProfile} className="space-y-4">
           <div>
-            <label className="text-sm font-medium text-black">Name</label>
-            <input value={name || user.name} onChange={e => setName(e.target.value)} className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+            <label className="text-sm font-medium text-gray-700">Name</label>
+            <input value={name || user.name} onChange={e => setName(e.target.value)} className={inputClass} />
           </div>
           <div>
-            <label className="text-sm font-medium text-black">Phone</label>
-            <input value={phone || user.phone || ''} onChange={e => setPhone(e.target.value)} className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+            <label className="text-sm font-medium text-gray-700">Phone</label>
+            <input value={phone || user.phone || ''} onChange={e => setPhone(e.target.value)} className={inputClass} />
           </div>
-          {msg && <p className="text-sm text-green-600">{msg}</p>}
-          {err && <p className="text-sm text-red-600">{err}</p>}
+          {msg && <p className="text-sm text-green-600 bg-green-50 px-3 py-2 rounded-lg">{msg}</p>}
+          {err && <p className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded-lg">{err}</p>}
           <Button type="submit" loading={saving} size="sm">Save changes</Button>
         </form>
       </div>
 
-      {/* Password section — set if auto-created, change if normal user */}
+      {/* Password section */}
       {!user.has_password ? (
-        <div className="bg-amber-50 rounded-lg border border-amber-200 p-6">
+        <div className="bg-amber-50/50 rounded-2xl border border-amber-200 p-6">
           <h2 className="font-semibold text-gray-900 mb-1">Set Password</h2>
-          <p className="text-sm text-gray-600 mb-4">Your account was created automatically. Set a password to secure it.</p>
+          <p className="text-sm text-muted mb-4">Your account was created automatically. Set a password to secure it.</p>
           <form onSubmit={handleSetPassword} className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-black">New Password</label>
+              <label className="text-sm font-medium text-gray-700">New Password</label>
               <input type="password" required value={newPass} onChange={e => setNewPass(e.target.value)}
-                placeholder="At least 6 characters"
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+                placeholder="At least 6 characters" className={inputClass} />
             </div>
             <div>
-              <label className="text-sm font-medium text-black">Confirm Password</label>
-              <input type="password" required value={confirmPass} onChange={e => setConfirmPass(e.target.value)}
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+              <label className="text-sm font-medium text-gray-700">Confirm Password</label>
+              <input type="password" required value={confirmPass} onChange={e => setConfirmPass(e.target.value)} className={inputClass} />
             </div>
-            {passMsg && <p className={`text-sm ${passMsg.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{passMsg}</p>}
+            {passMsg && <p className={`text-sm px-3 py-2 rounded-lg ${passMsg.includes('success') ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'}`}>{passMsg}</p>}
             <Button type="submit" loading={changingPass} size="sm">Set Password</Button>
           </form>
         </div>
       ) : (
-        <div className="bg-white rounded-lg border border-gray-200 p-6">
+        <div className="bg-white rounded-2xl border border-gray-200 p-6">
           <h2 className="font-semibold text-gray-900 mb-4">Change Password</h2>
           <form onSubmit={handleChangePassword} className="space-y-4">
             <div>
-              <label className="text-sm font-medium text-black">Current Password</label>
-              <input type="password" required value={oldPass} onChange={e => setOldPass(e.target.value)} className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+              <label className="text-sm font-medium text-gray-700">Current Password</label>
+              <input type="password" required value={oldPass} onChange={e => setOldPass(e.target.value)} className={inputClass} />
             </div>
             <div>
-              <label className="text-sm font-medium text-black">New Password</label>
+              <label className="text-sm font-medium text-gray-700">New Password</label>
               <input type="password" required value={newPass} onChange={e => setNewPass(e.target.value)}
-                placeholder="At least 6 characters"
-                className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+                placeholder="At least 6 characters" className={inputClass} />
             </div>
             <div>
-              <label className="text-sm font-medium text-black">Confirm New Password</label>
-              <input type="password" required value={confirmPass} onChange={e => setConfirmPass(e.target.value)} className="mt-1 w-full border border-gray-300 rounded-md px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-brand" />
+              <label className="text-sm font-medium text-gray-700">Confirm New Password</label>
+              <input type="password" required value={confirmPass} onChange={e => setConfirmPass(e.target.value)} className={inputClass} />
             </div>
-            {passMsg && <p className={`text-sm ${passMsg.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{passMsg}</p>}
+            {passMsg && <p className={`text-sm px-3 py-2 rounded-lg ${passMsg.includes('success') ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50'}`}>{passMsg}</p>}
             <Button type="submit" loading={changingPass} size="sm">Change password</Button>
           </form>
         </div>

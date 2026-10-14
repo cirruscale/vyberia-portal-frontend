@@ -1,40 +1,33 @@
-import { ButtonHTMLAttributes } from 'react'
-import { clsx } from 'clsx'
-
-type Variant = 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline'
-type Size = 'sm' | 'md' | 'lg'
+import { type ButtonHTMLAttributes } from 'react'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: Variant
-  size?: Size
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'outline'
+  size?: 'sm' | 'md' | 'lg'
   loading?: boolean
 }
 
-const variants: Record<Variant, string> = {
-  primary: 'text-white focus:ring-brand bg-brand hover:bg-brand-dark',
-  secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-400',
-  danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-  ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-400',
-  outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-400',
+const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none rounded-lg cursor-pointer'
+
+const variants: Record<string, string> = {
+  primary: 'bg-dark text-white hover:bg-brand focus:ring-brand/40 shadow-sm',
+  secondary: 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 focus:ring-stone-200',
+  danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-300',
+  ghost: 'text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:ring-stone-200',
+  outline: 'border border-stone-300 text-stone-700 hover:border-dark hover:text-dark focus:ring-stone-300',
 }
 
-const sizes: Record<Size, string> = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-sm',
-  lg: 'px-6 py-3 text-base',
+const sizes: Record<string, string> = {
+  sm: 'text-xs px-3 py-1.5 gap-1.5',
+  md: 'text-sm px-4 py-2 gap-2',
+  lg: 'text-sm px-5 py-2.5 gap-2',
 }
 
-export function Button({ variant = 'primary', size = 'md', loading, className, children, disabled, ...props }: ButtonProps) {
+export function Button({ variant = 'primary', size = 'md', loading, children, className = '', ...props }: ButtonProps) {
   return (
     <button
+      className={`${base} ${variants[variant]} ${sizes[size]} ${className}`}
+      disabled={loading || props.disabled}
       {...props}
-      disabled={disabled || loading}
-      className={clsx(
-        'inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
-        variants[variant],
-        sizes[size],
-        className
-      )}
     >
       {loading && (
         <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">

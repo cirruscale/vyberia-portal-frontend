@@ -3,10 +3,6 @@ import { Link, useSearchParams, useLocation } from 'react-router-dom'
 import { categories } from '@/lib/api/categories'
 import type { Category } from '@/lib/types'
 
-const BRAND = '#C4A87A'
-const BRAND_DARK = '#9A7A5A'
-const BRAND_LIGHT = '#F5EDE0'
-
 function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; activeCatId: string; activeSubId: string }) {
   const hasSubs = (cat.subcategories?.length ?? 0) > 0
   const isActive = activeCatId === cat.id && !activeSubId
@@ -15,44 +11,41 @@ function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; active
 
   return (
     <div>
-      <div className="flex items-center border-t border-gray-100">
+      <div className="flex items-center">
         <Link
           to={`/products?category_id=${cat.id}`}
-          className="flex-1 px-4 py-2.5 text-sm transition-colors"
-          style={isActive ? { background: BRAND_LIGHT, color: BRAND_DARK, fontWeight: 600 } : { color: '#374151' }}
-          onMouseEnter={e => { if (!isActive) { (e.currentTarget as HTMLElement).style.background = BRAND_LIGHT; (e.currentTarget as HTMLElement).style.color = BRAND_DARK } }}
-          onMouseLeave={e => { if (!isActive) { (e.currentTarget as HTMLElement).style.background = ''; (e.currentTarget as HTMLElement).style.color = '#374151' } }}
+          className={`flex-1 px-4 py-2 text-[13px] transition-all ${
+            isActive
+              ? 'text-brand font-semibold bg-brand-light'
+              : 'text-stone-600 hover:text-stone-900 hover:bg-stone-50'
+          }`}
         >
           {cat.name}
         </Link>
         {hasSubs && (
           <button
             onClick={() => setOpen(o => !o)}
-            className="px-3 py-2.5 text-gray-400 hover:text-gray-700 transition-colors"
-            aria-label={open ? 'Collapse' : 'Expand'}
+            className="px-3 py-2 text-stone-400 hover:text-stone-600 transition-colors cursor-pointer"
           >
-            <svg
-              className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-90' : ''}`}
-              fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            >
+            <svg className={`w-3 h-3 transition-transform duration-200 ${open ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         )}
       </div>
-
       {hasSubs && open && (
-        <div className="bg-gray-50">
+        <div className="ml-4 border-l border-stone-200">
           {cat.subcategories!.map(sub => (
             <Link
               key={sub.id}
               to={`/products?subcategory_id=${sub.id}`}
-              className="block pl-7 pr-4 py-2 text-xs border-t border-gray-100 transition-colors"
-              style={activeSubId === sub.id ? { color: BRAND_DARK, fontWeight: 600, background: BRAND_LIGHT } : { color: '#4B5563' }}
-              onMouseEnter={e => { if (activeSubId !== sub.id) { (e.currentTarget as HTMLElement).style.color = BRAND_DARK; (e.currentTarget as HTMLElement).style.background = BRAND_LIGHT } }}
-              onMouseLeave={e => { if (activeSubId !== sub.id) { (e.currentTarget as HTMLElement).style.color = '#4B5563'; (e.currentTarget as HTMLElement).style.background = '' } }}
+              className={`block pl-3 pr-4 py-1.5 text-xs transition-all ${
+                activeSubId === sub.id
+                  ? 'text-brand font-semibold'
+                  : 'text-stone-500 hover:text-stone-800'
+              }`}
             >
-              ↳ {sub.name}
+              {sub.name}
             </Link>
           ))}
         </div>
@@ -72,21 +65,18 @@ export function CategorySidebar() {
     categories.tree().then(r => { if (r.data) setCats(r.data) })
   }, [pathname])
 
-  const allActive = !activeCatId
+  const allActive = !activeCatId && !activeSubId
 
   return (
-    <aside className="hidden md:block w-52 flex-shrink-0" style={{ zoom: 1.4 }}>
-      <div className="bg-white rounded-xl border overflow-hidden sticky top-20" style={{ borderColor: '#D4B88A' }}>
-        <div className="px-4 py-3" style={{ background: `linear-gradient(135deg, ${BRAND} 0%, ${BRAND_DARK} 100%)` }}>
-          <h2 className="text-sm font-bold text-white tracking-wide uppercase">Categories</h2>
-        </div>
+    <aside className="hidden md:block w-52 flex-shrink-0">
+      <div className="sticky top-16">
+        <h3 className="text-xs font-bold text-stone-400 uppercase tracking-widest px-4 mb-3">Categories</h3>
         <nav>
           <Link
             to="/products"
-            className="flex items-center px-4 py-2.5 text-sm font-medium transition-colors"
-            style={allActive ? { background: BRAND_LIGHT, color: BRAND_DARK } : { color: '#1F2937' }}
-            onMouseEnter={e => { if (!allActive) { (e.currentTarget as HTMLElement).style.background = BRAND_LIGHT; (e.currentTarget as HTMLElement).style.color = BRAND_DARK } }}
-            onMouseLeave={e => { if (!allActive) { (e.currentTarget as HTMLElement).style.background = ''; (e.currentTarget as HTMLElement).style.color = '#1F2937' } }}
+            className={`flex items-center px-4 py-2 text-[13px] font-medium transition-all ${
+              allActive ? 'text-brand bg-brand-light' : 'text-stone-700 hover:text-stone-900 hover:bg-stone-50'
+            }`}
           >
             All Products
           </Link>
