@@ -35,17 +35,14 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <Link
-        to={`/products/${product.slug}`}
-        className="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-      >
-        <div className="relative aspect-square bg-stone-100 overflow-hidden">
+      <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-200 border border-stone-100">
+        {/* Image */}
+        <Link to={`/products/${product.slug}`} className="block relative aspect-square bg-stone-100 overflow-hidden">
           <img
             src={productImageUrl(product.image_url)}
             alt={product.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
           />
-
           {(product.is_trending || outOfStock) && (
             <div className="absolute top-2 left-2 flex flex-col gap-1">
               {product.is_trending && (
@@ -54,47 +51,53 @@ export function ProductCard({ product }: { product: Product }) {
                 </span>
               )}
               {outOfStock && (
-                <span className="bg-white/90 text-stone-600 text-[9px] font-bold px-2 py-0.5 rounded">
+                <span className="bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded">
                   Sold Out
                 </span>
               )}
             </div>
           )}
+        </Link>
 
-          {!outOfStock && (
-            <div className="absolute inset-x-0 bottom-0 p-2.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-              <div className="flex gap-1.5">
-                <button
-                  onClick={handleAddToCart}
-                  className="flex-1 bg-dark text-white text-[11px] font-semibold py-2 rounded-lg hover:bg-brand transition-colors duration-200 cursor-pointer"
-                >
-                  {added ? 'Added!' : 'Add to Cart'}
-                </button>
-                <button
-                  onClick={handleBuyNow}
-                  className="bg-white text-dark text-[11px] font-semibold px-3 py-2 rounded-lg hover:bg-brand hover:text-white transition-colors duration-200 cursor-pointer"
-                >
-                  Buy
-                </button>
-              </div>
+        {/* Info */}
+        <div className="p-3">
+          <Link to={`/products/${product.slug}`} className="block">
+            {product.category?.name && (
+              <p className="text-[10px] font-medium text-muted uppercase tracking-wider mb-0.5">
+                {product.category.name}
+              </p>
+            )}
+            <h3 className="text-[13px] font-semibold text-stone-900 line-clamp-2 leading-snug mb-1">
+              {product.title}
+            </h3>
+            <span className="text-base font-bold text-stone-900 block mb-2.5">
+              ৳{product.price.toLocaleString()}
+            </span>
+          </Link>
+
+          {/* Always visible buttons */}
+          {outOfStock ? (
+            <div className="text-center py-2 text-xs font-semibold text-stone-400 border border-stone-200 rounded-lg bg-stone-50">
+              Out of Stock
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <button
+                onClick={handleAddToCart}
+                className="flex-1 bg-dark text-white text-xs font-semibold py-2 rounded-lg hover:bg-brand active:scale-[0.97] transition-all cursor-pointer"
+              >
+                {added ? '✓ Added' : 'Add to Cart'}
+              </button>
+              <button
+                onClick={handleBuyNow}
+                className="bg-brand text-white text-xs font-semibold px-3.5 py-2 rounded-lg hover:bg-brand-hover active:scale-[0.97] transition-all cursor-pointer"
+              >
+                Buy Now
+              </button>
             </div>
           )}
         </div>
-
-        <div className="p-3">
-          {product.category?.name && (
-            <p className="text-[10px] font-medium text-muted uppercase tracking-wider mb-0.5">
-              {product.category.name}
-            </p>
-          )}
-          <h3 className="text-[13px] font-medium text-stone-900 line-clamp-2 leading-snug mb-1.5">
-            {product.title}
-          </h3>
-          <span className="text-sm font-bold text-stone-900">
-            ৳{product.price.toLocaleString()}
-          </span>
-        </div>
-      </Link>
+      </div>
 
       <GuestCheckoutModal
         product={product}
