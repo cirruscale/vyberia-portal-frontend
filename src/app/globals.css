@@ -5,10 +5,12 @@
   --color-brand-hover: #0F766E;
   --color-brand-light: #F0FDFA;
   --color-brand-dark: #115E59;
-  --color-dark: #0C0C0C;
-  --color-surface: #F7F6F3;
-  --color-muted: #78716C;
-  --color-warm: #FAF9F7;
+  --color-dark: #111111;
+  --color-surface: #FAFAFA;
+  --color-muted: #888888;
+  --color-warm: #FAFAF8;
+  --color-accent: #F59E0B;
+  --color-accent-light: #FFFBEB;
 }
 
 * {
@@ -24,9 +26,10 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #1C1917;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #111111;
   background-color: #FFFFFF;
+  letter-spacing: -0.01em;
 }
 
 /* CMS pages */
@@ -39,19 +42,33 @@ body:has(.cms-root) {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #D6D3D1; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #A8A29E; }
+::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #bbb; }
 
-/* Animations */
+/* Selection */
+::selection {
+  background: #0D9488;
+  color: white;
+}
+
+/* ─── Animations ─── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 @keyframes cartPop {
   0%, 100% { transform: scale(1); }
@@ -63,16 +80,12 @@ body:has(.cms-root) {
   100% { transform: scale(1); }
 }
 @keyframes cardEnter {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
-}
-@keyframes pulse-soft {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
 }
 @keyframes badgeBounce {
   0% { transform: scale(1); }
@@ -84,31 +97,67 @@ body:has(.cms-root) {
   from { opacity: 0; transform: translateX(-12px); }
   to { opacity: 1; transform: translateX(0); }
 }
+@keyframes slideInPanel {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+@keyframes revealText {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 
-.animate-fade-in { animation: fadeIn 0.35s ease-out; }
+.animate-fade-in { animation: fadeIn 0.4s ease-out; }
+.animate-fade-up { animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
 .animate-slide-up { animation: slideUp 0.4s ease-out; }
+.animate-scale-in { animation: scaleIn 0.3s ease-out; }
 .animate-cart-pop { animation: badgeBounce 0.4s ease-in-out; }
 .animate-checkmark { animation: checkmark 0.4s ease-out; }
-.animate-card-enter { animation: cardEnter 0.45s ease-out both; }
+.animate-card-enter { animation: cardEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .animate-slide-in-right { animation: slideInRight 0.3s ease-out; }
+.animate-slide-in-panel { animation: slideInPanel 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
 
-/* Staggered card entrance — apply via style={{ animationDelay }} */
+/* Staggered card entrance */
 .animate-card-enter { opacity: 0; }
 
-/* Skeleton shimmer */
+/* Skeleton */
 .skeleton-shimmer {
-  background: linear-gradient(90deg, #e7e5e4 25%, #d6d3d1 50%, #e7e5e4 75%);
+  background: linear-gradient(90deg, #f3f3f3 25%, #e8e8e8 50%, #f3f3f3 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
-/* Smooth hover lift for cards */
+/* Card hover */
 .card-hover {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.08);
+}
+
+/* Image */
+.img-hover img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.img-hover:hover img {
+  transform: scale(1.06);
+}
+
+/* Marquee */
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  width: max-content;
 }
 
 input, select, textarea, button { color: inherit; }
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid #0D9488;
+  outline-offset: 2px;
+}

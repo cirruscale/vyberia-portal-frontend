@@ -2,17 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '@/lib/context/CartContext'
 import { useAuth } from '@/lib/context/AuthContext'
-import { Button } from '@/components/ui/Button'
 import { orders, type CheckoutPayload } from '@/lib/api/orders'
 import type { PaymentMethod } from '@/lib/types'
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
 function imgUrl(url?: string) {
-  if (!url) return 'https://placehold.co/60x60/f5f5f4/a8a29e?text=?'
+  if (!url) return 'https://placehold.co/60x60/f5f5f5/ccc?text=+'
   return url.startsWith('http') ? url : `${BASE_URL}${url}`
 }
 
-const inputClass = 'mt-1 w-full border border-stone-200 rounded-lg px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all'
+const inputClass = 'mt-1.5 w-full border border-[#ddd] rounded-[3px] px-4 py-3 text-[14px] bg-white outline-none focus:border-dark transition-colors'
 
 export default function CheckoutPage() {
   const { items, cartTotal, syncToServer, clearCart } = useCart()
@@ -31,18 +30,18 @@ export default function CheckoutPage() {
   const [error, setError] = useState('')
 
   if (!user) return (
-    <div className="max-w-2xl mx-auto py-20 text-center animate-fade-in">
-      <h2 className="text-lg font-bold mb-2">Sign in to checkout</h2>
-      <p className="text-sm text-muted mb-4">You need an account to place an order from your cart.</p>
-      <Link to="/login" className="text-sm font-medium text-brand hover:text-brand-hover">Sign in &rarr;</Link>
-      <p className="mt-2 text-xs text-muted">Or use "Buy Now" on any product to order as guest.</p>
+    <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-24 text-center animate-fade-in">
+      <p className="text-[22px] font-semibold tracking-[-0.02em] mb-2">Sign in to checkout</p>
+      <p className="text-[14px] text-muted mb-8">You need an account to place an order from your cart.</p>
+      <Link to="/login" className="inline-flex items-center gap-2 px-7 py-3 bg-dark text-white text-[13px] font-medium rounded-full hover:bg-brand transition-colors">Sign in</Link>
+      <p className="mt-4 text-[12px] text-muted">Or use "Buy Now" on any product to order as guest.</p>
     </div>
   )
 
   if (items.length === 0) return (
-    <div className="max-w-2xl mx-auto py-20 text-center animate-fade-in">
+    <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-24 text-center animate-fade-in">
       <p className="text-muted mb-4">Your cart is empty.</p>
-      <Link to="/products" className="text-sm font-medium text-brand">Browse products</Link>
+      <Link to="/products" className="text-[13px] text-dark underline underline-offset-4">Browse products</Link>
     </div>
   )
 
@@ -71,78 +70,107 @@ export default function CheckoutPage() {
     setForm(f => ({ ...f, [key]: e.target.value }))
 
   return (
-    <div className="max-w-4xl mx-auto py-6 animate-fade-in">
-      <h1 className="text-xl font-bold mb-6">Checkout</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-5">
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="font-semibold mb-4">Shipping Address</h2>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="col-span-2"><label className="text-sm font-medium text-stone-600">Full Name *</label><input required value={form.full_name} onChange={field('full_name')} className={inputClass} /></div>
-                <div className="col-span-2 sm:col-span-1"><label className="text-sm font-medium text-stone-600">Phone *</label><input required value={form.phone} onChange={field('phone')} className={inputClass} /></div>
-                <div className="col-span-2"><label className="text-sm font-medium text-stone-600">Address *</label><input required value={form.address_line1} onChange={field('address_line1')} className={inputClass} /></div>
-                <div className="col-span-2"><label className="text-sm font-medium text-stone-600">Address Line 2</label><input value={form.address_line2} onChange={field('address_line2')} className={inputClass} /></div>
-                <div><label className="text-sm font-medium text-stone-600">City *</label><input required value={form.city} onChange={field('city')} className={inputClass} /></div>
-                <div><label className="text-sm font-medium text-stone-600">Postal Code</label><input value={form.postal_code} onChange={field('postal_code')} className={inputClass} /></div>
-              </div>
-            </div>
+    <div className="max-w-[1000px] mx-auto px-5 sm:px-8 lg:px-12 py-8 animate-fade-in">
+      <h1 className="text-[26px] font-semibold tracking-[-0.02em] mb-10">Checkout</h1>
 
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <h2 className="font-semibold mb-4">Payment</h2>
-              <label className="flex items-start gap-3 p-3 border border-brand/30 bg-brand-light/40 rounded-lg cursor-pointer">
-                <input type="radio" name="payment" checked readOnly className="mt-0.5 accent-brand" />
+      <form onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="lg:col-span-2 space-y-8">
+            {/* Shipping */}
+            <section>
+              <h2 className="text-[14px] font-semibold uppercase tracking-[0.06em] mb-5">Shipping Address</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="text-[13px] text-[#555]">Full Name *</label>
+                  <input required value={form.full_name} onChange={field('full_name')} className={inputClass} />
+                </div>
+                <div className="col-span-2 sm:col-span-1">
+                  <label className="text-[13px] text-[#555]">Phone *</label>
+                  <input required value={form.phone} onChange={field('phone')} className={inputClass} />
+                </div>
+                <div className="col-span-2">
+                  <label className="text-[13px] text-[#555]">Address *</label>
+                  <input required value={form.address_line1} onChange={field('address_line1')} placeholder="House, Road, Area" className={inputClass} />
+                </div>
+                <div className="col-span-2">
+                  <label className="text-[13px] text-[#555]">Address Line 2</label>
+                  <input value={form.address_line2} onChange={field('address_line2')} placeholder="Apartment, Floor (optional)" className={inputClass} />
+                </div>
                 <div>
-                  <p className="text-sm font-medium">Advance + Cash on Delivery</p>
-                  <p className="text-xs text-muted">Send ৳150 advance, pay the rest on delivery</p>
+                  <label className="text-[13px] text-[#555]">City *</label>
+                  <input required value={form.city} onChange={field('city')} className={inputClass} />
+                </div>
+                <div>
+                  <label className="text-[13px] text-[#555]">Postal Code</label>
+                  <input value={form.postal_code} onChange={field('postal_code')} className={inputClass} />
+                </div>
+              </div>
+            </section>
+
+            {/* Payment */}
+            <section className="pt-8 border-t border-[#eee]">
+              <h2 className="text-[14px] font-semibold uppercase tracking-[0.06em] mb-5">Payment</h2>
+              <label className="flex items-start gap-3 p-4 border border-dark rounded-[3px] cursor-pointer">
+                <input type="radio" name="payment" checked readOnly className="mt-0.5 accent-dark" />
+                <div>
+                  <p className="text-[14px] font-medium">Advance + Cash on Delivery</p>
+                  <p className="text-[12px] text-muted mt-0.5">Send ৳150 advance, pay the rest on delivery</p>
                 </div>
               </label>
-              <div className="mt-3 p-4 bg-stone-50 rounded-lg space-y-3">
-                <p className="text-sm font-semibold text-brand-dark">Advance (৳150)</p>
+              <div className="mt-4 p-5 bg-[#fafafa] rounded-[3px] space-y-4">
+                <p className="text-[13px] font-semibold">Advance Payment — ৳150</p>
                 <div>
-                  <label className="text-sm font-medium text-stone-600">Send via</label>
+                  <label className="text-[13px] text-[#555]">Send via</label>
                   <select value={advanceMethod} onChange={e => setAdvanceMethod(e.target.value)} className={inputClass}>
                     <option value="bkash">bKash</option><option value="nagad">Nagad</option><option value="rocket">Rocket</option>
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-stone-600">Transaction ID (optional)</label>
+                  <label className="text-[13px] text-[#555]">Transaction ID (optional)</label>
                   <input value={advanceTrxId} onChange={e => setAdvanceTrxId(e.target.value)} placeholder="TRX123456789" className={inputClass} />
                 </div>
               </div>
-            </div>
+            </section>
 
-            <div className="bg-white rounded-xl shadow-sm p-5">
-              <label className="text-sm font-medium block mb-2">Order Notes (optional)</label>
+            {/* Notes */}
+            <section className="pt-8 border-t border-[#eee]">
+              <label className="text-[13px] text-[#555] block mb-2">Order Notes (optional)</label>
               <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} className={`${inputClass} resize-none`} placeholder="Delivery instructions..." />
-            </div>
+            </section>
           </div>
 
+          {/* Summary */}
           <div>
-            <div className="bg-white rounded-xl shadow-sm p-5 sticky top-20">
-              <h2 className="font-semibold mb-4">Order Summary</h2>
-              <div className="space-y-3 mb-4">
+            <div className="sticky top-20 bg-[#fafafa] p-6 rounded-[4px]">
+              <h2 className="text-[14px] font-semibold uppercase tracking-[0.06em] mb-5">Order Summary</h2>
+              <div className="space-y-3 mb-5">
                 {items.map(item => (
-                  <div key={item.product_id} className="flex items-center gap-2.5">
-                    <div className="relative w-9 h-9 rounded-lg overflow-hidden bg-stone-100 flex-shrink-0">
+                  <div key={item.product_id} className="flex items-center gap-3">
+                    <div className="relative w-11 h-11 rounded-[3px] overflow-hidden bg-[#eee] flex-shrink-0">
                       <img src={imgUrl(item.product.image_url)} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                      <span className="absolute -top-1 -right-1 w-[18px] h-[18px] bg-dark text-white text-[9px] font-medium rounded-full flex items-center justify-center">{item.quantity}</span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs truncate">{item.product.title}</p>
-                      <p className="text-[10px] text-muted">x{item.quantity}</p>
+                      <p className="text-[13px] truncate">{item.product.title}</p>
                     </div>
-                    <span className="text-xs font-medium">৳{(item.product.price * item.quantity).toLocaleString()}</span>
+                    <span className="text-[13px] font-medium flex-shrink-0">৳{(item.product.price * item.quantity).toLocaleString()}</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-stone-100 pt-3 space-y-1.5 text-sm">
-                <div className="flex justify-between text-muted"><span>Subtotal</span><span>৳{cartTotal.toLocaleString()}</span></div>
-                <div className="flex justify-between text-muted"><span>Delivery</span><span>৳150</span></div>
+              <div className="border-t border-[#ddd] pt-4 space-y-2.5 text-[14px]">
+                <div className="flex justify-between text-[#666]"><span>Subtotal</span><span>৳{cartTotal.toLocaleString()}</span></div>
+                <div className="flex justify-between text-[#666]"><span>Delivery</span><span>৳150</span></div>
                 <div className="flex justify-between text-brand font-medium"><span>Advance</span><span>৳150</span></div>
-                <div className="flex justify-between font-bold border-t border-stone-100 pt-2 mt-1"><span>Total</span><span>৳{(cartTotal + 150).toLocaleString()}</span></div>
+                <div className="flex justify-between text-[16px] font-semibold border-t border-[#ddd] pt-3 mt-1"><span>Total</span><span>৳{(cartTotal + 150).toLocaleString()}</span></div>
               </div>
-              {error && <p className="text-sm text-red-600 mt-3">{error}</p>}
-              <Button type="submit" size="lg" className="w-full mt-5" loading={loading}>Place Order</Button>
+              {error && <p className="text-[13px] text-red-600 mt-4">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full h-[50px] bg-dark text-white text-[13px] font-medium rounded-full hover:bg-brand transition-colors cursor-pointer uppercase tracking-[0.05em] mt-6 disabled:opacity-50"
+              >
+                {loading ? 'Processing...' : 'Place Order'}
+              </button>
             </div>
           </div>
         </div>

@@ -6,20 +6,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
-const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 disabled:opacity-50 disabled:pointer-events-none rounded-lg cursor-pointer'
+const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer'
 
 const variants: Record<string, string> = {
-  primary: 'bg-dark text-white hover:bg-brand focus:ring-brand/40 shadow-sm',
-  secondary: 'bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 focus:ring-stone-200',
-  danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-300',
-  ghost: 'text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:ring-stone-200',
-  outline: 'border border-stone-300 text-stone-700 hover:border-dark hover:text-dark focus:ring-stone-300',
+  primary: 'bg-dark text-white hover:bg-brand rounded-full',
+  secondary: 'bg-white text-dark border border-[#ddd] hover:border-dark rounded-full',
+  danger: 'bg-red-600 text-white hover:bg-red-700 rounded-full',
+  ghost: 'text-[#666] hover:text-dark hover:bg-[#f5f5f5] rounded-[3px]',
+  outline: 'border border-[#ddd] text-dark hover:border-dark rounded-full',
 }
 
 const sizes: Record<string, string> = {
-  sm: 'text-xs px-3 py-1.5 gap-1.5',
-  md: 'text-sm px-4 py-2 gap-2',
-  lg: 'text-sm px-5 py-2.5 gap-2',
+  sm: 'text-[12px] px-4 py-2 gap-1.5',
+  md: 'text-[13px] px-5 py-2.5 gap-2',
+  lg: 'text-[13px] px-7 py-3 gap-2',
 }
 
 export function Button({ variant = 'primary', size = 'md', loading, children, className = '', ...props }: ButtonProps) {
@@ -30,8 +30,8 @@ export function Button({ variant = 'primary', size = 'md', loading, children, cl
       {...props}
     >
       {loading && (
-        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+        <svg className="animate-spin h-3.5 w-3.5" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
       )}

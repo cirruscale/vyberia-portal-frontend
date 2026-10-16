@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/lib/context/AuthContext'
-import { Button } from '@/components/ui/Button'
 
-const inputClass = 'w-full border border-stone-200 rounded-lg px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand/20 focus:border-brand transition-all'
+const inputClass = 'w-full border border-[#ddd] rounded-[3px] px-4 py-3 text-[14px] bg-white outline-none focus:border-dark transition-colors'
 
 export default function RegisterPage() {
   const { register, user } = useAuth()
@@ -31,14 +30,18 @@ export default function RegisterPage() {
     setForm(f => ({ ...f, [k]: e.target.value }))
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4 py-12 animate-fade-in">
-      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-stone-200 p-8">
-        <h1 className="text-xl font-bold mb-1 text-center">Create account</h1>
-        <p className="text-sm text-muted text-center mb-6">
+    <div className="min-h-[70vh] flex items-center justify-center px-5 py-16 animate-fade-in">
+      <div className="w-full max-w-[380px]">
+        <div className="text-center mb-10">
+          <Link to="/" className="text-[22px] font-semibold tracking-[-0.04em]">VYBERIA</Link>
+        </div>
+
+        <h1 className="text-[28px] font-semibold tracking-[-0.02em] text-center mb-2">Create account</h1>
+        <p className="text-[14px] text-muted text-center mb-8">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand hover:text-brand-hover font-medium">Sign in</Link>
+          <Link to="/login" className="text-dark underline underline-offset-4 hover:no-underline">Sign in</Link>
         </p>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {[
             { key: 'name', label: 'Full Name', type: 'text', required: true, placeholder: 'Your name' },
             { key: 'phone', label: 'Phone', type: 'tel', required: true, placeholder: '+8801700000000' },
@@ -46,12 +49,14 @@ export default function RegisterPage() {
             { key: 'password', label: 'Password', type: 'password', required: true, placeholder: 'At least 6 characters' },
           ].map(({ key, label, type, required, placeholder }) => (
             <div key={key}>
-              <label className="block text-sm font-medium text-stone-700 mb-1">{label}</label>
+              <label className="block text-[13px] text-[#555] mb-1.5">{label}</label>
               <input type={type} required={required} value={form[key as keyof typeof form]} onChange={field(key as keyof typeof form)} placeholder={placeholder} className={inputClass} />
             </div>
           ))}
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button type="submit" size="lg" className="w-full" loading={loading}>Create account</Button>
+          {error && <p className="text-[13px] text-red-600">{error}</p>}
+          <button type="submit" disabled={loading} className="w-full h-[50px] bg-dark text-white text-[13px] font-medium rounded-full hover:bg-brand transition-colors cursor-pointer disabled:opacity-50 uppercase tracking-[0.05em]">
+            {loading ? 'Creating...' : 'Create account'}
+          </button>
         </form>
       </div>
     </div>
