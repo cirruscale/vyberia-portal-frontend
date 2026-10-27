@@ -78,9 +78,9 @@ export function Header() {
 
               {/* Desktop nav */}
               <nav className="hidden lg:flex items-center gap-7 ml-8">
-                <Link to="/products?sort_by=newest" className="text-[13px] text-[#555] hover:text-dark transition-colors">New Arrivals</Link>
-                <Link to="/products?sort_by=trending" className="text-[13px] text-[#555] hover:text-dark transition-colors">Trending</Link>
-                <Link to="/products" className="text-[13px] text-[#555] hover:text-dark transition-colors">All Products</Link>
+                <Link to="/products?sort_by=newest" className="text-[13px] font-bold text-dark hover:opacity-70 transition-opacity">New Arrivals</Link>
+                <Link to="/products?sort_by=trending" className="text-[13px] font-bold text-dark hover:opacity-70 transition-opacity">Trending</Link>
+                <Link to="/products" className="text-[13px] font-bold text-dark hover:opacity-70 transition-opacity">All Products</Link>
               </nav>
             </div>
 

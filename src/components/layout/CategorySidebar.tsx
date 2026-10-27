@@ -14,8 +14,8 @@ function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; active
       <div className="flex items-center">
         <Link
           to={`/products?category_id=${cat.id}`}
-          className={`flex-1 py-2 text-[13px] transition-colors ${
-            isActive ? 'text-dark font-medium' : 'text-[#888] hover:text-dark'
+          className={`flex-1 py-2 text-[15px] font-bold text-dark transition-colors ${
+            isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'
           }`}
         >
           {cat.name}
@@ -37,7 +37,7 @@ function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; active
             <Link
               key={sub.id}
               to={`/products?subcategory_id=${sub.id}`}
-              className={`block py-1.5 text-[12px] transition-colors ${
+              className={`block py-1.5 text-[14px] transition-colors ${
                 activeSubId === sub.id ? 'text-dark font-medium' : 'text-[#aaa] hover:text-dark'
               }`}
             >
@@ -66,12 +66,12 @@ export function CategorySidebar() {
   return (
     <aside className="hidden md:block w-48 flex-shrink-0 animate-slide-in-right">
       <div className="sticky top-[76px]">
-        <h3 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#aaa] mb-4">Categories</h3>
+        <h3 className="text-[15px] font-semibold uppercase tracking-[0.12em] text-[#aaa] mb-4">Categories</h3>
         <nav className="space-y-0.5">
           <Link
             to="/products"
-            className={`block py-2 text-[13px] transition-colors ${
-              allActive ? 'text-dark font-medium' : 'text-[#888] hover:text-dark'
+            className={`block py-2 text-[15px] font-bold text-dark transition-colors ${
+              allActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'
             }`}
           >
             All Products
