@@ -11,7 +11,7 @@ function imgUrl(url?: string) {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`
 }
 
-const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] text-[#1A2E24] outline-none focus:border-[#2D6A4F] transition-colors placeholder:text-[#C8BFB3]'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] text-[#1A2E24] outline-none focus:border-[#065084] transition-colors placeholder:text-[#C8BFB3]'
 const labelClass = 'block text-[10px] tracking-[0.12em] uppercase text-[#7A7067] mb-2'
 
 export default function CheckoutPage() {
@@ -37,14 +37,14 @@ export default function CheckoutPage() {
         You need an account to place an order from your cart.
       </p>
       <Link to="/login" className="btn-primary">Sign in</Link>
-      <p className="mt-6 text-[12px] text-[#2D6A4F]">Or use "Buy Now" on any product to order as guest.</p>
+      <p className="mt-6 text-[12px] text-[#065084]">Or use "Buy Now" on any product to order as guest.</p>
     </div>
   )
 
   if (items.length === 0) return (
     <div className="max-w-[520px] mx-auto px-6 sm:px-8 py-28 text-center animate-fade-in">
       <p className="font-display text-[26px] font-light text-[#7A7067] mb-4">Your cart is empty.</p>
-      <Link to="/products" className="text-[12px] tracking-[0.08em] uppercase text-[#2D6A4F] hover:text-[#1B4332] underline underline-offset-4">Browse products</Link>
+      <Link to="/products" className="text-[12px] tracking-[0.08em] uppercase text-[#065084] hover:text-[#1B4332] underline underline-offset-4">Browse products</Link>
     </div>
   )
 
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
   return (
     <div className="max-w-[1100px] mx-auto px-6 sm:px-10 lg:px-16 py-12 animate-fade-in">
       <div className="mb-12">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Complete your order</p>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-3">Complete your order</p>
         <h1 className="font-display text-[36px] font-light text-[#1A2E24]">Checkout</h1>
       </div>
 
@@ -84,7 +84,7 @@ export default function CheckoutPage() {
 
             {/* Shipping */}
             <section>
-              <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-6">Shipping address</p>
+              <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-6">Shipping address</p>
               <div className="grid grid-cols-2 gap-5">
                 <div className="col-span-2 sm:col-span-1">
                   <label className={labelClass}>Full name *</label>
@@ -115,11 +115,11 @@ export default function CheckoutPage() {
 
             {/* Payment */}
             <section className="pt-8 border-t border-[#E0D8CE]">
-              <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-6">Payment</p>
-              <div className="border border-[#2D6A4F]/40 p-5 bg-[#FAF7F2] mb-5">
+              <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-6">Payment</p>
+              <div className="border border-[#065084]/40 p-5 bg-[#FAF7F2] mb-5">
                 <div className="flex items-start gap-3">
-                  <div className="w-4 h-4 border-2 border-[#2D6A4F] rounded-full mt-0.5 flex items-center justify-center flex-shrink-0">
-                    <div className="w-2 h-2 bg-[#2D6A4F] rounded-full" />
+                  <div className="w-4 h-4 border-2 border-[#065084] rounded-full mt-0.5 flex items-center justify-center flex-shrink-0">
+                    <div className="w-2 h-2 bg-[#065084] rounded-full" />
                   </div>
                   <div>
                     <p className="text-[13px] font-medium text-[#1A2E24]">Advance + Cash on Delivery</p>
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
               <div className="bg-[#FAF9F7] border border-[#E0D8CE] p-5 space-y-5">
-                <p className="text-[11px] tracking-[0.08em] uppercase text-[#2D6A4F]">Advance payment — ৳150</p>
+                <p className="text-[11px] tracking-[0.08em] uppercase text-[#065084]">Advance payment — ৳150</p>
                 <div>
                   <label className={labelClass}>Send via</label>
                   <select value={advanceMethod} onChange={e => setAdvanceMethod(e.target.value)} className={inputClass}>
@@ -151,7 +151,7 @@ export default function CheckoutPage() {
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
                 rows={3}
-                className="w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] text-[#1A2E24] outline-none focus:border-[#2D6A4F] transition-colors resize-none placeholder:text-[#C8BFB3]"
+                className="w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] text-[#1A2E24] outline-none focus:border-[#065084] transition-colors resize-none placeholder:text-[#C8BFB3]"
                 placeholder="Delivery instructions, preferred time..."
               />
             </section>
@@ -160,14 +160,14 @@ export default function CheckoutPage() {
           {/* Summary */}
           <div>
             <div className="sticky top-[112px] border border-[#E0D8CE] bg-[#FAF9F7] p-7">
-              <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-6">Order Summary</p>
+              <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-6">Order Summary</p>
 
               <div className="space-y-4 mb-6 pb-6 border-b border-[#E0D8CE]">
                 {items.map(item => (
                   <div key={item.product_id} className="flex items-center gap-3">
                     <div className="relative w-11 h-14 bg-[#F2EDE5] flex-shrink-0 overflow-hidden">
                       <img src={imgUrl(item.product.image_url)} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                      <span className="absolute -top-1 -right-1 w-[16px] h-[16px] bg-[#2D6A4F] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 w-[16px] h-[16px] bg-[#065084] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
                         {item.quantity}
                       </span>
                     </div>
@@ -188,7 +188,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between text-[#7A7067]">
                   <span>Delivery</span><span>৳150</span>
                 </div>
-                <div className="flex justify-between text-[#2D6A4F]">
+                <div className="flex justify-between text-[#065084]">
                   <span>Advance due now</span><span>৳150</span>
                 </div>
               </div>
@@ -203,7 +203,7 @@ export default function CheckoutPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40"
+                className="w-full h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40"
               >
                 {loading ? 'Processing...' : 'Place Order'}
               </button>

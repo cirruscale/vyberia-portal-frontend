@@ -30,7 +30,7 @@ export default function CartPage() {
     <div className="max-w-[1100px] mx-auto px-6 sm:px-10 lg:px-16 py-10 animate-fade-in">
       {/* Header */}
       <div className="mb-12">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Review</p>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-3">Review</p>
         <h1 className="font-display text-[38px] font-light tracking-[-0.01em] text-[#0C0B0A]">Your Cart</h1>
         <p className="text-[13px] text-[#7A7067] mt-2 font-light">{items.length} item{items.length > 1 ? 's' : ''}</p>
       </div>
@@ -40,9 +40,9 @@ export default function CartPage() {
         <div className="lg:col-span-2">
           {/* Column labels */}
           <div className="hidden sm:grid grid-cols-[1fr_120px_100px] gap-4 pb-4 border-b border-[#E0D8CE]">
-            <span className="text-[9px] tracking-[0.15em] uppercase text-[#2D6A4F]">Product</span>
-            <span className="text-[9px] tracking-[0.15em] uppercase text-[#2D6A4F] text-center">Qty</span>
-            <span className="text-[9px] tracking-[0.15em] uppercase text-[#2D6A4F] text-right">Total</span>
+            <span className="text-[9px] tracking-[0.15em] uppercase text-[#065084]">Product</span>
+            <span className="text-[9px] tracking-[0.15em] uppercase text-[#065084] text-center">Qty</span>
+            <span className="text-[9px] tracking-[0.15em] uppercase text-[#065084] text-right">Total</span>
           </div>
 
           {items.map((item, i) => (
@@ -65,12 +65,12 @@ export default function CartPage() {
                 <div className="min-w-0">
                   <Link
                     to={`/products/${item.product.slug}`}
-                    className="text-[13px] font-medium text-[#0C0B0A] block truncate hover:text-[#2D6A4F] transition-colors"
+                    className="text-[13px] font-medium text-[#0C0B0A] block truncate hover:text-[#065084] transition-colors"
                   >
                     {item.product.title}
                   </Link>
                   {item.product.category?.name && (
-                    <p className="text-[9px] tracking-[0.1em] uppercase text-[#2D6A4F] mt-1">
+                    <p className="text-[9px] tracking-[0.1em] uppercase text-[#065084] mt-1">
                       {item.product.category.name}
                     </p>
                   )}
@@ -116,7 +116,7 @@ export default function CartPage() {
         {/* Summary */}
         <div>
           <div className="sticky top-[112px] border border-[#E0D8CE] bg-[#FAF9F7] p-7">
-            <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-6">Order Summary</p>
+            <p className="text-[9px] tracking-[0.2em] uppercase text-[#065084] mb-6">Order Summary</p>
 
             <div className="space-y-4 mb-6 pb-6 border-b border-[#E0D8CE]">
               <div className="flex justify-between text-[13px]">
@@ -125,7 +125,7 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between text-[13px]">
                 <span className="text-[#7A7067]">Delivery</span>
-                <span className="text-[11px] tracking-[0.04em] text-[#2D6A4F]">Calculated at checkout</span>
+                <span className="text-[11px] tracking-[0.04em] text-[#065084]">Calculated at checkout</span>
               </div>
             </div>
 
@@ -136,14 +136,14 @@ export default function CartPage() {
 
             <button
               onClick={() => navigate('/checkout')}
-              className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer mb-4"
+              className="w-full h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer mb-4"
             >
               Proceed to Checkout
             </button>
 
             <Link
               to="/products"
-              className="block text-center text-[11px] tracking-[0.08em] uppercase text-[#A0907E] hover:text-[#2D6A4F] transition-colors"
+              className="block text-center text-[11px] tracking-[0.08em] uppercase text-[#A0907E] hover:text-[#065084] transition-colors"
             >
               Continue Shopping
             </Link>
@@ -151,11 +151,11 @@ export default function CartPage() {
             {/* Trust note */}
             <div className="mt-8 pt-6 border-t border-[#E0D8CE]">
               <div className="flex items-center gap-2.5 mb-3">
-                <span className="text-[#2D6A4F] text-[10px]">◈</span>
+                <span className="text-[#065084] text-[10px]">◈</span>
                 <span className="text-[11px] text-[#7A7067]">Secure checkout</span>
               </div>
               <div className="flex items-center gap-2.5">
-                <span className="text-[#2D6A4F] text-[10px]">◇</span>
+                <span className="text-[#065084] text-[10px]">◇</span>
                 <span className="text-[11px] text-[#7A7067]">bKash · Nagad · Rocket · COD</span>
               </div>
             </div>

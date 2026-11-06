@@ -26,7 +26,7 @@ export function Pagination({ page, totalPages, onChange }: PaginationProps) {
       <button
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
-        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#2D6A4F] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#065084] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -43,7 +43,7 @@ export function Pagination({ page, totalPages, onChange }: PaginationProps) {
             className={`w-9 h-9 flex items-center justify-center text-[12px] tracking-[0.04em] transition-colors cursor-pointer ${
               p === page
                 ? 'bg-[#0C0B0A] text-[#FAF9F7] font-medium'
-                : 'text-[#7A7067] hover:text-[#2D6A4F] border border-transparent hover:border-[#E0D8CE]'
+                : 'text-[#7A7067] hover:text-[#065084] border border-transparent hover:border-[#E0D8CE]'
             }`}
           >
             {p}
@@ -54,7 +54,7 @@ export function Pagination({ page, totalPages, onChange }: PaginationProps) {
       <button
         disabled={page >= totalPages}
         onClick={() => onChange(page + 1)}
-        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#2D6A4F] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#065084] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

@@ -36,14 +36,14 @@ export default function PortalLayout() {
                   <span className="font-display text-[26px] font-light tracking-[0.25em] uppercase text-[#1A2E24]">
                     Vyberia
                   </span>
-                  <div className="w-8 h-px bg-[#2D6A4F] mt-5 mb-5" />
+                  <div className="w-8 h-px bg-[#065084] mt-5 mb-5" />
                   <p className="text-[13px] text-[#9A9088] leading-relaxed max-w-[280px] font-light">
                     Curated pieces for modern living. Quality craftsmanship, delivered to your door.
                   </p>
                   <div className="flex items-center gap-4 mt-8">
                     {/* Social placeholders */}
                     {['IG', 'FB', 'TW'].map(s => (
-                      <div key={s} className="w-8 h-8 border border-[#D8CEC4] flex items-center justify-center text-[9px] tracking-[0.1em] text-[#A0907E] hover:border-[#2D6A4F] hover:text-[#2D6A4F] transition-colors cursor-pointer">
+                      <div key={s} className="w-8 h-8 border border-[#D8CEC4] flex items-center justify-center text-[9px] tracking-[0.1em] text-[#A0907E] hover:border-[#065084] hover:text-[#065084] transition-colors cursor-pointer">
                         {s}
                       </div>
                     ))}
@@ -52,7 +52,7 @@ export default function PortalLayout() {
 
                 {/* Shop */}
                 <div>
-                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#2D6A4F] mb-6">Shop</h3>
+                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#065084] mb-6">Shop</h3>
                   <ul className="space-y-4">
                     {[
                       { to: '/products', label: 'All Products' },
@@ -60,7 +60,7 @@ export default function PortalLayout() {
                       { to: '/products?sort_by=newest', label: 'New Arrivals' },
                     ].map(item => (
                       <li key={item.label}>
-                        <Link to={item.to} className="text-[12px] text-[#8A7A6E] hover:text-[#2D6A4F] transition-colors tracking-[0.03em]">
+                        <Link to={item.to} className="text-[12px] text-[#8A7A6E] hover:text-[#065084] transition-colors tracking-[0.03em]">
                           {item.label}
                         </Link>
                       </li>
@@ -70,7 +70,7 @@ export default function PortalLayout() {
 
                 {/* Account */}
                 <div>
-                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#2D6A4F] mb-6">Account</h3>
+                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#065084] mb-6">Account</h3>
                   <ul className="space-y-4">
                     {[
                       { to: '/profile', label: 'Profile' },
@@ -78,7 +78,7 @@ export default function PortalLayout() {
                       { to: '/cart', label: 'Cart' },
                     ].map(item => (
                       <li key={item.label}>
-                        <Link to={item.to} className="text-[12px] text-[#8A7A6E] hover:text-[#2D6A4F] transition-colors tracking-[0.03em]">
+                        <Link to={item.to} className="text-[12px] text-[#8A7A6E] hover:text-[#065084] transition-colors tracking-[0.03em]">
                           {item.label}
                         </Link>
                       </li>
@@ -88,7 +88,7 @@ export default function PortalLayout() {
 
                 {/* Contact */}
                 <div>
-                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#2D6A4F] mb-6">Contact</h3>
+                  <h3 className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#065084] mb-6">Contact</h3>
                   <ul className="space-y-4">
                     <li className="text-[12px] text-[#8A7A6E] tracking-[0.03em]">support@vyberia.com</li>
                     <li className="text-[12px] text-[#8A7A6E] tracking-[0.03em]">+880 1700-000000</li>
@@ -111,7 +111,7 @@ export default function PortalLayout() {
                 </p>
                 <div className="flex items-center gap-6">
                   {['bKash', 'Nagad', 'Rocket', 'COD'].map(p => (
-                    <span key={p} className="text-[10px] tracking-[0.1em] uppercase text-[#A0907E] hover:text-[#2D6A4F] transition-colors cursor-default">
+                    <span key={p} className="text-[10px] tracking-[0.1em] uppercase text-[#A0907E] hover:text-[#065084] transition-colors cursor-default">
                       {p}
                     </span>
                   ))}

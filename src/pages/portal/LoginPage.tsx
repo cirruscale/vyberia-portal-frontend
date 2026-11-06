@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/lib/context/AuthContext'
 import { portalAuth } from '@/lib/api/auth'
 
-const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3.5 text-[13px] outline-none focus:border-[#2D6A4F] transition-colors placeholder:text-[#C8BFB3] text-[#0C0B0A]'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3.5 text-[13px] outline-none focus:border-[#065084] transition-colors placeholder:text-[#C8BFB3] text-[#0C0B0A]'
 
 type Step = 'phone' | 'password' | 'set-password'
 
@@ -65,7 +65,7 @@ export default function LoginPage() {
           <Link to="/" className="font-display text-[24px] font-light tracking-[0.3em] uppercase text-[#0C0B0A]">
             Vyberia
           </Link>
-          <div className="w-6 h-px bg-[#2D6A4F] mx-auto mt-4" />
+          <div className="w-6 h-px bg-[#065084] mx-auto mt-4" />
         </div>
 
         {step === 'phone' && (
@@ -74,7 +74,7 @@ export default function LoginPage() {
               <h1 className="font-display text-[32px] font-light text-[#0C0B0A] mb-2">Welcome back</h1>
               <p className="text-[13px] text-[#7A7067] font-light">
                 New here?{' '}
-                <Link to="/register" className="text-[#2D6A4F] hover:text-[#0C0B0A] transition-colors underline underline-offset-4">
+                <Link to="/register" className="text-[#065084] hover:text-[#0C0B0A] transition-colors underline underline-offset-4">
                   Create an account
                 </Link>
               </p>
@@ -93,7 +93,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
+                className="w-full h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
               >
                 {loading ? 'Loading...' : 'Continue'}
               </button>
@@ -105,7 +105,7 @@ export default function LoginPage() {
           <>
             <button
               onClick={() => { setStep('phone'); setError('') }}
-              className="flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#2D6A4F] mb-10 cursor-pointer transition-colors"
+              className="flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#065084] mb-10 cursor-pointer transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -114,7 +114,7 @@ export default function LoginPage() {
             </button>
             <div className="text-center mb-10">
               <h1 className="font-display text-[32px] font-light text-[#0C0B0A] mb-2">Enter password</h1>
-              <p className="text-[13px] text-[#2D6A4F] font-light">{phone}</p>
+              <p className="text-[13px] text-[#065084] font-light">{phone}</p>
             </div>
             <form onSubmit={handleLogin} className="space-y-5">
               <div>
@@ -125,7 +125,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
+                className="w-full h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
@@ -137,7 +137,7 @@ export default function LoginPage() {
           <>
             <button
               onClick={() => { setStep('phone'); setError('') }}
-              className="flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#2D6A4F] mb-10 cursor-pointer transition-colors"
+              className="flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#065084] mb-10 cursor-pointer transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -147,7 +147,7 @@ export default function LoginPage() {
             <div className="text-center mb-10">
               <h1 className="font-display text-[32px] font-light text-[#0C0B0A] mb-2">Set your password</h1>
               <p className="text-[13px] text-[#7A7067] font-light max-w-[300px] mx-auto">
-                You placed an order with <span className="text-[#2D6A4F]">{phone}</span>. Set a password to access your account.
+                You placed an order with <span className="text-[#065084]">{phone}</span>. Set a password to access your account.
               </p>
             </div>
             <form onSubmit={handleSetPassword} className="space-y-5">
@@ -163,7 +163,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
+                className="w-full h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
               >
                 {loading ? 'Setting...' : 'Set Password & Sign In'}
               </button>
@@ -172,7 +172,7 @@ export default function LoginPage() {
         )}
 
         <div className="mt-10 text-center">
-          <Link to="/cms/login" className="text-[10px] tracking-[0.08em] text-[#D4CCBf] hover:text-[#2D6A4F] transition-colors">
+          <Link to="/cms/login" className="text-[10px] tracking-[0.08em] text-[#D4CCBf] hover:text-[#065084] transition-colors">
             Admin access
           </Link>
         </div>

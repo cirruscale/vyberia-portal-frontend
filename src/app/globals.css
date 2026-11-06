@@ -3,7 +3,7 @@
 
 @theme inline {
   --color-ink:          #0C0B0A;
-  --color-gold:         #2D6A4F;
+  --color-gold:         #065084;
   --color-gold-light:   #C8E6D4;
   --color-gold-muted:   #52796F;
   --color-cream:        #FAF9F7;
@@ -13,7 +13,7 @@
   --color-surface:      #FFFFFF;
 
   /* legacy compat */
-  --color-brand:        #2D6A4F;
+  --color-brand:        #065084;
   --color-brand-hover:  #1B4332;
   --color-dark:         #0C0B0A;
   --color-muted:        #7A7067;
@@ -58,7 +58,7 @@ body:has(.cms-root) {
 
 /* Selection */
 ::selection {
-  background: #2D6A4F;
+  background: #065084;
   color: #FAF9F7;
 }
 
@@ -174,7 +174,7 @@ body:has(.cms-root) {
   left: 0;
   width: 0;
   height: 1px;
-  background: #2D6A4F;
+  background: #065084;
   transition: width 0.3s ease;
 }
 .link-gold:hover::after { width: 100%; }
@@ -188,8 +188,8 @@ body:has(.cms-root) {
 
 /* Announcement bar */
 .announcement-bar {
-  background: #E8F4EE;
-  color: #2D6A4F;
+  background: #065084;
+  color: #ffffff;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -202,7 +202,7 @@ body:has(.cms-root) {
 /* Accent divider */
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #2D6A4F 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #065084 50%, transparent 100%);
   opacity: 0.4;
 }
 
@@ -212,7 +212,7 @@ body:has(.cms-root) {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #2D6A4F;
+  background: #065084;
   color: #FAF9F7;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
@@ -220,7 +220,7 @@ body:has(.cms-root) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 14px 32px;
-  border: 1px solid #2D6A4F;
+  border: 1px solid #065084;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
@@ -242,19 +242,19 @@ body:has(.cms-root) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 14px 32px;
-  border: 1px solid #2D6A4F;
+  border: 1px solid #065084;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 .btn-secondary:hover {
-  background: #2D6A4F;
+  background: #065084;
   color: #FAF9F7;
-  border-color: #2D6A4F;
+  border-color: #065084;
 }
 
 /* Focus */
 :focus-visible {
-  outline: 1px solid #2D6A4F;
+  outline: 1px solid #065084;
   outline-offset: 3px;
 }
 
