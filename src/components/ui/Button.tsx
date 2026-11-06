@@ -9,11 +9,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer uppercase tracking-[0.1em]'
 
 const variants: Record<string, string> = {
-  primary:   'bg-[#B8956A] text-[#FAF9F7] border border-[#B8956A] hover:bg-[#9A7A54] hover:border-[#9A7A54]',
-  secondary: 'bg-transparent text-[#2A1F14] border border-[#B8956A] hover:bg-[#B8956A] hover:text-[#FAF9F7]',
+  primary:   'bg-[#2D6A4F] text-[#FAF9F7] border border-[#2D6A4F] hover:bg-[#1B4332] hover:border-[#1B4332]',
+  secondary: 'bg-transparent text-[#1A2E24] border border-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-[#FAF9F7]',
   danger:    'bg-red-600 text-white border border-red-600 hover:bg-red-700 hover:border-red-700',
   ghost:     'text-[#7A7067] hover:text-[#0C0B0A] hover:bg-[#F2EDE5] border border-transparent',
-  outline:   'border border-[#E0D8CE] text-[#0C0B0A] hover:border-[#B8956A] hover:text-[#B8956A]',
+  outline:   'border border-[#E0D8CE] text-[#0C0B0A] hover:border-[#2D6A4F] hover:text-[#2D6A4F]',
 }
 
 const sizes: Record<string, string> = {

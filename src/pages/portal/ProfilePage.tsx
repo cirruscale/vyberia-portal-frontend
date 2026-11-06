@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '@/lib/context/AuthContext'
 import { portalAuth } from '@/lib/api/auth'
 
-const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] outline-none focus:border-[#B8956A] transition-colors placeholder:text-[#C8BFB3] text-[#2A1F14]'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] outline-none focus:border-[#2D6A4F] transition-colors placeholder:text-[#C8BFB3] text-[#1A2E24]'
 const labelClass = 'block text-[10px] tracking-[0.12em] uppercase text-[#7A7067] mb-2'
 
 export default function ProfilePage() {
@@ -21,13 +21,13 @@ export default function ProfilePage() {
 
   if (loading) return (
     <div className="max-w-[600px] mx-auto px-6 sm:px-8 py-16 text-center">
-      <p className="text-[13px] text-[#B8956A] tracking-[0.08em]">Loading...</p>
+      <p className="text-[13px] text-[#2D6A4F] tracking-[0.08em]">Loading...</p>
     </div>
   )
 
   if (!user) return (
     <div className="max-w-[500px] mx-auto px-6 sm:px-8 py-28 text-center animate-fade-in">
-      <p className="font-display text-[26px] font-light text-[#2A1F14] mb-3">Sign in required</p>
+      <p className="font-display text-[26px] font-light text-[#1A2E24] mb-3">Sign in required</p>
       <p className="text-[13px] text-[#7A7067] mb-10 font-light">Please sign in to view your profile.</p>
       <Link to="/login" className="btn-primary">Sign in</Link>
     </div>
@@ -72,24 +72,24 @@ export default function ProfilePage() {
     <div className="max-w-[580px] mx-auto px-6 sm:px-8 lg:px-12 py-12 animate-fade-in">
       {/* Page heading */}
       <div className="mb-12">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Account</p>
-        <h1 className="font-display text-[36px] font-light text-[#2A1F14]">Profile</h1>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Account</p>
+        <h1 className="font-display text-[36px] font-light text-[#1A2E24]">Profile</h1>
       </div>
 
       {/* Avatar + name */}
       <div className="flex items-center gap-5 pb-10 border-b border-[#E0D8CE] mb-10">
-        <div className="w-14 h-14 bg-[#B8956A] flex items-center justify-center text-[#FAF9F7] font-display text-[20px] font-light flex-shrink-0">
+        <div className="w-14 h-14 bg-[#2D6A4F] flex items-center justify-center text-[#FAF9F7] font-display text-[20px] font-light flex-shrink-0">
           {user.name.charAt(0).toUpperCase()}
         </div>
         <div>
-          <p className="text-[15px] font-medium text-[#2A1F14]">{user.name}</p>
+          <p className="text-[15px] font-medium text-[#1A2E24]">{user.name}</p>
           <p className="text-[12px] text-[#7A7067] mt-0.5">{user.email || user.phone}</p>
         </div>
       </div>
 
       {/* Update profile */}
       <section className="pb-10 border-b border-[#E0D8CE] mb-10">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-6">Personal details</p>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-6">Personal details</p>
         <form onSubmit={handleProfile} className="space-y-5">
           <div>
             <label className={labelClass}>Full name</label>
@@ -104,7 +104,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={saving}
-            className="h-[46px] px-8 bg-[#B8956A] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#9A7A54] transition-colors cursor-pointer disabled:opacity-40"
+            className="h-[46px] px-8 bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
@@ -113,10 +113,10 @@ export default function ProfilePage() {
 
       {/* Password */}
       <section>
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-2">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-2">
           {!user.has_password ? 'Set password' : 'Security'}
         </p>
-        <p className="font-display text-[20px] font-light text-[#2A1F14] mb-6">
+        <p className="font-display text-[20px] font-light text-[#1A2E24] mb-6">
           {!user.has_password ? 'Create a password' : 'Change password'}
         </p>
         {!user.has_password && (
@@ -147,7 +147,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={changingPass}
-            className="h-[46px] px-8 border border-[#B8956A] text-[#B8956A] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#B8956A] hover:text-[#FAF9F7] transition-colors cursor-pointer disabled:opacity-40"
+            className="h-[46px] px-8 border border-[#2D6A4F] text-[#2D6A4F] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#2D6A4F] hover:text-[#FAF9F7] transition-colors cursor-pointer disabled:opacity-40"
           >
             {changingPass ? 'Saving...' : user.has_password ? 'Change Password' : 'Set Password'}
           </button>

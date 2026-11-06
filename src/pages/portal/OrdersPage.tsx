@@ -32,7 +32,7 @@ export default function OrdersPage() {
 
   if (!user) return (
     <div className="max-w-[500px] mx-auto px-6 sm:px-8 py-28 text-center animate-fade-in">
-      <p className="font-display text-[26px] font-light text-[#2A1F14] mb-3">Sign in required</p>
+      <p className="font-display text-[26px] font-light text-[#1A2E24] mb-3">Sign in required</p>
       <p className="text-[13px] text-[#7A7067] mb-10 font-light">Please sign in to view your orders.</p>
       <Link to="/login" className="btn-primary">Sign in</Link>
     </div>
@@ -41,8 +41,8 @@ export default function OrdersPage() {
   return (
     <div className="max-w-[760px] mx-auto px-6 sm:px-8 lg:px-12 py-12 animate-fade-in">
       <div className="mb-12">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Account</p>
-        <h1 className="font-display text-[36px] font-light text-[#2A1F14]">My Orders</h1>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Account</p>
+        <h1 className="font-display text-[36px] font-light text-[#1A2E24]">My Orders</h1>
       </div>
 
       {items.length === 0 ? (
@@ -62,11 +62,11 @@ export default function OrdersPage() {
             <Link
               key={order.id}
               to={`/orders/${order.id}`}
-              className="block border border-[#E0D8CE] bg-[#FAF9F7] hover:border-[#B8956A] hover:bg-[#FAF7F2] transition-all duration-200 p-6 group"
+              className="block border border-[#E0D8CE] bg-[#FAF9F7] hover:border-[#2D6A4F] hover:bg-[#FAF7F2] transition-all duration-200 p-6 group"
             >
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-[13px] font-medium text-[#2A1F14] group-hover:text-[#B8956A] transition-colors">
+                  <p className="text-[13px] font-medium text-[#1A2E24] group-hover:text-[#2D6A4F] transition-colors">
                     {order.order_number}
                   </p>
                   <p className="text-[11px] text-[#7A7067] mt-0.5">
@@ -77,7 +77,7 @@ export default function OrdersPage() {
               </div>
               <div className="flex flex-wrap items-center gap-4 text-[12px] text-[#7A7067]">
                 <span>{order.items.length} item{order.items.length > 1 ? 's' : ''}</span>
-                <span className="text-[#B8956A] font-medium">৳{order.total_amount.toLocaleString()}</span>
+                <span className="text-[#2D6A4F] font-medium">৳{order.total_amount.toLocaleString()}</span>
                 <AdvanceStatusBadge status={order.advance_payment_status} />
               </div>
             </Link>

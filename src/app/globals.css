@@ -3,9 +3,9 @@
 
 @theme inline {
   --color-ink:          #0C0B0A;
-  --color-gold:         #B8956A;
-  --color-gold-light:   #E8D9C0;
-  --color-gold-muted:   #7A6244;
+  --color-gold:         #2D6A4F;
+  --color-gold-light:   #C8E6D4;
+  --color-gold-muted:   #52796F;
   --color-cream:        #FAF9F7;
   --color-warm:         #F2EDE5;
   --color-stone:        #7A7067;
@@ -13,8 +13,8 @@
   --color-surface:      #FFFFFF;
 
   /* legacy compat */
-  --color-brand:        #B8956A;
-  --color-brand-hover:  #9A7A54;
+  --color-brand:        #2D6A4F;
+  --color-brand-hover:  #1B4332;
   --color-dark:         #0C0B0A;
   --color-muted:        #7A7067;
 }
@@ -58,7 +58,7 @@ body:has(.cms-root) {
 
 /* Selection */
 ::selection {
-  background: #B8956A;
+  background: #2D6A4F;
   color: #FAF9F7;
 }
 
@@ -119,7 +119,7 @@ body:has(.cms-root) {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-@keyframes goldPulse {
+@keyframes greenPulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.6; }
 }
@@ -162,7 +162,7 @@ body:has(.cms-root) {
   transform: scale(1.05);
 }
 
-/* Gold underline link */
+/* Accent underline link */
 .link-gold {
   position: relative;
   display: inline-block;
@@ -174,7 +174,7 @@ body:has(.cms-root) {
   left: 0;
   width: 0;
   height: 1px;
-  background: #B8956A;
+  background: #2D6A4F;
   transition: width 0.3s ease;
 }
 .link-gold:hover::after { width: 100%; }
@@ -188,8 +188,8 @@ body:has(.cms-root) {
 
 /* Announcement bar */
 .announcement-bar {
-  background: #F0E6D6;
-  color: #7A6244;
+  background: #E8F4EE;
+  color: #2D6A4F;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -199,10 +199,10 @@ body:has(.cms-root) {
   font-weight: 400;
 }
 
-/* Gold divider */
+/* Accent divider */
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #B8956A 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #2D6A4F 50%, transparent 100%);
   opacity: 0.4;
 }
 
@@ -212,7 +212,7 @@ body:has(.cms-root) {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #B8956A;
+  background: #2D6A4F;
   color: #FAF9F7;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
@@ -220,13 +220,13 @@ body:has(.cms-root) {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 14px 32px;
-  border: 1px solid #B8956A;
+  border: 1px solid #2D6A4F;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 .btn-primary:hover {
-  background: #9A7A54;
-  border-color: #9A7A54;
+  background: #1B4332;
+  border-color: #1B4332;
 }
 
 .btn-secondary {
@@ -235,26 +235,26 @@ body:has(.cms-root) {
   justify-content: center;
   gap: 8px;
   background: transparent;
-  color: #2A1F14;
+  color: #1A2E24;
   font-family: 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 14px 32px;
-  border: 1px solid #B8956A;
+  border: 1px solid #2D6A4F;
   cursor: pointer;
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 .btn-secondary:hover {
-  background: #B8956A;
+  background: #2D6A4F;
   color: #FAF9F7;
-  border-color: #B8956A;
+  border-color: #2D6A4F;
 }
 
 /* Focus */
 :focus-visible {
-  outline: 1px solid #B8956A;
+  outline: 1px solid #2D6A4F;
   outline-offset: 3px;
 }
 

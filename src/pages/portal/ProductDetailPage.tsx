@@ -54,7 +54,7 @@ export default function ProductDetailPage() {
   if (!product) return (
     <div className="max-w-[1200px] mx-auto px-6 sm:px-10 lg:px-16 py-24 text-center">
       <p className="font-display text-[22px] font-light text-[#7A7067] mb-5">Product not found</p>
-      <Link to="/products" className="text-[11px] tracking-[0.1em] uppercase text-[#B8956A] hover:text-[#0C0B0A] transition-colors underline underline-offset-4">
+      <Link to="/products" className="text-[11px] tracking-[0.1em] uppercase text-[#2D6A4F] hover:text-[#0C0B0A] transition-colors underline underline-offset-4">
         Back to Products
       </Link>
     </div>
@@ -69,7 +69,7 @@ export default function ProductDetailPage() {
 
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2.5 mb-12">
-          <Link to="/" className="text-[11px] tracking-[0.06em] text-[#B8956A] hover:text-[#0C0B0A] transition-colors">Home</Link>
+          <Link to="/" className="text-[11px] tracking-[0.06em] text-[#2D6A4F] hover:text-[#0C0B0A] transition-colors">Home</Link>
           <span className="text-[#C8BFB3] text-[10px]">/</span>
           <Link to="/products" className="text-[11px] tracking-[0.06em] text-[#7A7067] hover:text-[#0C0B0A] transition-colors">Products</Link>
           {product.category?.name && (
@@ -95,11 +95,11 @@ export default function ProductDetailPage() {
                 className="absolute inset-0 w-full h-full object-cover"
               />
               {/* corner accents */}
-              <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-[#B8956A]/30 pointer-events-none" />
-              <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-[#B8956A]/30 pointer-events-none" />
+              <div className="absolute top-4 left-4 w-8 h-8 border-t border-l border-[#2D6A4F]/30 pointer-events-none" />
+              <div className="absolute bottom-4 right-4 w-8 h-8 border-b border-r border-[#2D6A4F]/30 pointer-events-none" />
               {product.is_trending && (
                 <div className="absolute top-4 right-4">
-                  <span className="bg-[#B8956A] text-[#FAF9F7] text-[9px] font-medium px-3 py-1.5 uppercase tracking-[0.1em]">
+                  <span className="bg-[#2D6A4F] text-[#FAF9F7] text-[9px] font-medium px-3 py-1.5 uppercase tracking-[0.1em]">
                     Trending
                   </span>
                 </div>
@@ -113,7 +113,7 @@ export default function ProductDetailPage() {
                     onClick={() => setActiveImg(i)}
                     className={`relative w-[76px] h-[76px] flex-shrink-0 overflow-hidden cursor-pointer transition-all duration-200 ${
                       i === activeImg
-                        ? 'ring-1 ring-[#B8956A] ring-offset-1 ring-offset-[#FAF9F7]'
+                        ? 'ring-1 ring-[#2D6A4F] ring-offset-1 ring-offset-[#FAF9F7]'
                         : 'opacity-50 hover:opacity-80'
                     }`}
                   >
@@ -127,14 +127,14 @@ export default function ProductDetailPage() {
           {/* Product info */}
           <div className="lg:py-6">
             {product.category?.name && (
-              <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-4">
+              <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-4">
                 {product.category.name}
               </p>
             )}
             <h1 className="font-display text-[32px] sm:text-[40px] font-light leading-[1.1] tracking-[-0.01em] text-[#0C0B0A] mb-3">
               {product.title}
             </h1>
-            <p className="text-[10px] text-[#B8956A]/70 uppercase tracking-[0.1em] mb-8">
+            <p className="text-[10px] text-[#2D6A4F]/70 uppercase tracking-[0.1em] mb-8">
               SKU · {product.sku}
             </p>
 
@@ -145,7 +145,7 @@ export default function ProductDetailPage() {
             </div>
 
             {product.description && (
-              <p className="text-[13px] text-[#7A7067] leading-[1.8] mb-9 font-light border-l-2 border-[#B8956A]/30 pl-5">
+              <p className="text-[13px] text-[#7A7067] leading-[1.8] mb-9 font-light border-l-2 border-[#2D6A4F]/30 pl-5">
                 {product.description}
               </p>
             )}
@@ -187,7 +187,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={outOfStock || added}
-                className="flex-1 h-[52px] bg-[#B8956A] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#9A7A54] transition-colors disabled:opacity-40 cursor-pointer"
+                className="flex-1 h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors disabled:opacity-40 cursor-pointer"
               >
                 {added ? (
                   <span className="flex items-center justify-center gap-2">
@@ -201,14 +201,14 @@ export default function ProductDetailPage() {
               <button
                 onClick={() => setBuyNowOpen(true)}
                 disabled={outOfStock}
-                className="flex-1 h-[52px] border border-[#B8956A] text-[#B8956A] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#B8956A] hover:text-[#FAF9F7] transition-colors disabled:opacity-40 cursor-pointer"
+                className="flex-1 h-[52px] border border-[#2D6A4F] text-[#2D6A4F] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#2D6A4F] hover:text-[#FAF9F7] transition-colors disabled:opacity-40 cursor-pointer"
               >
                 Buy Now
               </button>
             </div>
 
             {!outOfStock && (
-              <p className="text-[11px] text-center text-[#B8956A] tracking-[0.04em] mb-9">
+              <p className="text-[11px] text-center text-[#2D6A4F] tracking-[0.04em] mb-9">
                 No account needed — Buy Now to order instantly as guest
               </p>
             )}
@@ -221,7 +221,7 @@ export default function ProductDetailPage() {
                 { label: 'Easy returns within 7 days', icon: '◈' },
               ].map(item => (
                 <div key={item.label} className="flex items-center gap-4">
-                  <span className="text-[#B8956A] text-[11px] flex-shrink-0">{item.icon}</span>
+                  <span className="text-[#2D6A4F] text-[11px] flex-shrink-0">{item.icon}</span>
                   <span className="text-[12px] text-[#7A7067] tracking-[0.02em]">{item.label}</span>
                 </div>
               ))}

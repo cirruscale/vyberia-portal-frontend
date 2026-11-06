@@ -16,17 +16,17 @@ function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; active
           to={`/products?category_id=${cat.id}`}
           className={`flex-1 py-3.5 text-[12px] tracking-[0.06em] uppercase transition-colors ${
             isActive
-              ? 'text-[#B8956A] font-medium'
-              : 'text-[#0C0B0A] hover:text-[#B8956A] font-normal'
+              ? 'text-[#2D6A4F] font-medium'
+              : 'text-[#0C0B0A] hover:text-[#2D6A4F] font-normal'
           }`}
         >
           {cat.name}
         </Link>
-        {isActive && <span className="w-1 h-1 rounded-full bg-[#B8956A] mr-1" />}
+        {isActive && <span className="w-1 h-1 rounded-full bg-[#2D6A4F] mr-1" />}
         {hasSubs && (
           <button
             onClick={() => setOpen(o => !o)}
-            className="p-1.5 text-[#C8BFB3] hover:text-[#B8956A] transition-colors cursor-pointer"
+            className="p-1.5 text-[#C8BFB3] hover:text-[#2D6A4F] transition-colors cursor-pointer"
           >
             <svg
               className={`w-2.5 h-2.5 transition-transform duration-200 ${open ? 'rotate-90' : ''}`}
@@ -45,11 +45,11 @@ function CategoryItem({ cat, activeCatId, activeSubId }: { cat: Category; active
               to={`/products?subcategory_id=${sub.id}`}
               className={`flex items-center gap-2 py-2 text-[11px] tracking-[0.04em] transition-colors ${
                 activeSubId === sub.id
-                  ? 'text-[#B8956A] font-medium'
+                  ? 'text-[#2D6A4F] font-medium'
                   : 'text-[#7A7067] hover:text-[#0C0B0A]'
               }`}
             >
-              <span className={`w-1 h-1 rounded-full flex-shrink-0 ${activeSubId === sub.id ? 'bg-[#B8956A]' : 'bg-[#C8BFB3]'}`} />
+              <span className={`w-1 h-1 rounded-full flex-shrink-0 ${activeSubId === sub.id ? 'bg-[#2D6A4F]' : 'bg-[#C8BFB3]'}`} />
               {sub.name}
             </Link>
           ))}
@@ -75,13 +75,13 @@ export function CategorySidebar() {
   return (
     <aside className="hidden md:block w-44 flex-shrink-0 animate-slide-in-right">
       <div className="sticky top-[112px]">
-        <p className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#B8956A] mb-5">Browse</p>
+        <p className="text-[9px] font-medium tracking-[0.2em] uppercase text-[#2D6A4F] mb-5">Browse</p>
         <nav>
           <div className="border-b border-[#E0D8CE]/60">
             <Link
               to="/products"
               className={`block py-3.5 text-[12px] tracking-[0.06em] uppercase transition-colors ${
-                allActive ? 'text-[#B8956A] font-medium' : 'text-[#0C0B0A] hover:text-[#B8956A]'
+                allActive ? 'text-[#2D6A4F] font-medium' : 'text-[#0C0B0A] hover:text-[#2D6A4F]'
               }`}
             >
               All Products

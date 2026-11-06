@@ -93,7 +93,7 @@ export default function HomePage() {
 
               {/* Text */}
               <div className="py-16 lg:py-0 animate-fade-up">
-                <p className="text-[9px] tracking-[0.25em] uppercase text-[#B8956A] mb-6 font-medium">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-[#2D6A4F] mb-6 font-medium">
                   Featured Collection
                 </p>
                 <h1 className="font-display text-[clamp(42px,6vw,78px)] font-light leading-[1.05] tracking-[-0.01em] text-[#0C0B0A] mb-7">
@@ -113,7 +113,7 @@ export default function HomePage() {
                     </svg>
                   </Link>
                   <div>
-                    <p className="text-[9px] tracking-[0.1em] uppercase text-[#B8956A] mb-1">From</p>
+                    <p className="text-[9px] tracking-[0.1em] uppercase text-[#2D6A4F] mb-1">From</p>
                     <p className="text-[22px] font-display font-light tracking-[-0.01em] text-[#0C0B0A]">৳{heroProduct.price.toLocaleString()}</p>
                   </div>
                 </div>
@@ -129,8 +129,8 @@ export default function HomePage() {
                     <img src={heroImg} alt={heroProduct.title} className="w-full h-full object-cover" />
                   </div>
                   {/* gold corner accent */}
-                  <div className="absolute top-6 right-6 w-12 h-12 border-t border-r border-[#B8956A]/40 pointer-events-none" />
-                  <div className="absolute bottom-6 left-6 w-12 h-12 border-b border-l border-[#B8956A]/40 pointer-events-none" />
+                  <div className="absolute top-6 right-6 w-12 h-12 border-t border-r border-[#2D6A4F]/40 pointer-events-none" />
+                  <div className="absolute bottom-6 left-6 w-12 h-12 border-b border-l border-[#2D6A4F]/40 pointer-events-none" />
                 </div>
               )}
             </div>
@@ -150,7 +150,7 @@ export default function HomePage() {
                 { icon: '◇', label: 'Curated Quality', sub: 'Premium selection' },
               ].map(item => (
                 <div key={item.label} className="flex items-center gap-3">
-                  <span className="text-[#B8956A] text-[14px]">{item.icon}</span>
+                  <span className="text-[#2D6A4F] text-[14px]">{item.icon}</span>
                   <div>
                     <p className="text-[11px] font-medium tracking-[0.06em] uppercase text-[#0C0B0A]">{item.label}</p>
                     <p className="text-[10px] text-[#7A7067] mt-0.5">{item.sub}</p>
@@ -176,7 +176,7 @@ export default function HomePage() {
           <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 py-20">
             <div className="flex items-end justify-between mb-12">
               <div>
-                <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Explore</p>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Explore</p>
                 <h2 className="font-display text-[36px] sm:text-[44px] font-light tracking-[-0.01em] text-[#0C0B0A]">
                   Collections
                 </h2>
@@ -205,11 +205,11 @@ export default function HomePage() {
                     {/* Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0C0B0A]/70 via-[#0C0B0A]/10 to-transparent" />
                     {/* Gold corner */}
-                    <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-[#B8956A]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-3 right-3 w-6 h-6 border-t border-r border-[#2D6A4F]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 p-5">
                       <p className="font-display text-[16px] text-[#FAF9F7] font-light leading-tight">{cat.name}</p>
                       {cat.subcategories && cat.subcategories.length > 0 && (
-                        <p className="text-[9px] tracking-[0.1em] uppercase text-[#E8D9C0]/70 mt-1.5">{cat.subcategories.length} styles</p>
+                        <p className="text-[9px] tracking-[0.1em] uppercase text-[#C8E6D4]/70 mt-1.5">{cat.subcategories.length} styles</p>
                       )}
                     </div>
                   </Link>
@@ -233,7 +233,7 @@ export default function HomePage() {
               <section className="py-20 border-b border-[#E0D8CE]">
                 <div className="flex items-end justify-between mb-12">
                   <div>
-                    <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Most Wanted</p>
+                    <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Most Wanted</p>
                     <h2 className="font-display text-[36px] sm:text-[44px] font-light tracking-[-0.01em] text-[#0C0B0A]">
                       Trending Now
                     </h2>
@@ -251,15 +251,15 @@ export default function HomePage() {
             {/* Editorial banner */}
             {!loading && (
               <section className="py-20 border-b border-[#E0D8CE]">
-                <div className="bg-[#F0E6D6] px-10 py-16 sm:px-16 sm:py-20 relative overflow-hidden border border-[#E0D8CE]">
-                  <div className="absolute top-6 left-6 w-16 h-16 border-t border-l border-[#B8956A]/40" />
-                  <div className="absolute bottom-6 right-6 w-16 h-16 border-b border-r border-[#B8956A]/40" />
+                <div className="bg-[#E8F4EE] px-10 py-16 sm:px-16 sm:py-20 relative overflow-hidden border border-[#E0D8CE]">
+                  <div className="absolute top-6 left-6 w-16 h-16 border-t border-l border-[#2D6A4F]/40" />
+                  <div className="absolute bottom-6 right-6 w-16 h-16 border-b border-r border-[#2D6A4F]/40" />
                   <div className="max-w-[520px]">
-                    <p className="text-[9px] tracking-[0.25em] uppercase text-[#B8956A] mb-5">The Vyberia Standard</p>
-                    <h3 className="font-display text-[32px] sm:text-[46px] font-light text-[#2A1F14] leading-tight mb-7">
+                    <p className="text-[9px] tracking-[0.25em] uppercase text-[#2D6A4F] mb-5">The Vyberia Standard</p>
+                    <h3 className="font-display text-[32px] sm:text-[46px] font-light text-[#1A2E24] leading-tight mb-7">
                       Crafted for those who appreciate the finer things.
                     </h3>
-                    <Link to="/products" className="inline-flex items-center gap-3 text-[11px] tracking-[0.12em] uppercase font-medium text-[#B8956A] hover:text-[#9A7A54] transition-colors">
+                    <Link to="/products" className="inline-flex items-center gap-3 text-[11px] tracking-[0.12em] uppercase font-medium text-[#2D6A4F] hover:text-[#1B4332] transition-colors">
                       Explore Collection
                       <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -275,7 +275,7 @@ export default function HomePage() {
               <section className="py-20">
                 <div className="flex items-end justify-between mb-12">
                   <div>
-                    <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Complete Range</p>
+                    <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-3">Complete Range</p>
                     <h2 className="font-display text-[36px] sm:text-[44px] font-light tracking-[-0.01em] text-[#0C0B0A]">
                       All Products
                     </h2>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/lib/context/AuthContext'
 
-const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3.5 text-[13px] text-[#2A1F14] outline-none focus:border-[#B8956A] transition-colors placeholder:text-[#C8BFB3]'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3.5 text-[13px] text-[#1A2E24] outline-none focus:border-[#2D6A4F] transition-colors placeholder:text-[#C8BFB3]'
 const labelClass = 'block text-[10px] tracking-[0.12em] uppercase text-[#7A7067] mb-2'
 
 export default function RegisterPage() {
@@ -43,17 +43,17 @@ export default function RegisterPage() {
       <div className="w-full max-w-[400px]">
         {/* Logo */}
         <div className="text-center mb-14">
-          <Link to="/" className="font-display text-[24px] font-light tracking-[0.3em] uppercase text-[#2A1F14]">
+          <Link to="/" className="font-display text-[24px] font-light tracking-[0.3em] uppercase text-[#1A2E24]">
             Vyberia
           </Link>
-          <div className="w-6 h-px bg-[#B8956A] mx-auto mt-4" />
+          <div className="w-6 h-px bg-[#2D6A4F] mx-auto mt-4" />
         </div>
 
         <div className="text-center mb-10">
-          <h1 className="font-display text-[32px] font-light text-[#2A1F14] mb-2">Create account</h1>
+          <h1 className="font-display text-[32px] font-light text-[#1A2E24] mb-2">Create account</h1>
           <p className="text-[13px] text-[#7A7067] font-light">
             Already have an account?{' '}
-            <Link to="/login" className="text-[#B8956A] hover:text-[#9A7A54] transition-colors underline underline-offset-4">
+            <Link to="/login" className="text-[#2D6A4F] hover:text-[#1B4332] transition-colors underline underline-offset-4">
               Sign in
             </Link>
           </p>
@@ -77,7 +77,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-[52px] bg-[#B8956A] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#9A7A54] transition-colors cursor-pointer disabled:opacity-40 mt-2"
+            className="w-full h-[52px] bg-[#2D6A4F] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40 mt-2"
           >
             {loading ? 'Creating...' : 'Create Account'}
           </button>

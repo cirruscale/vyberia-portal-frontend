@@ -56,7 +56,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
             {product.is_trending && !outOfStock && (
-              <span className="bg-[#B8956A] text-[#FAF9F7] text-[9px] font-medium px-2.5 py-1 uppercase tracking-[0.1em]">
+              <span className="bg-[#2D6A4F] text-[#FAF9F7] text-[9px] font-medium px-2.5 py-1 uppercase tracking-[0.1em]">
                 Trending
               </span>
             )}
@@ -74,7 +74,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
                 <button
                   onClick={handleAddToCart}
                   disabled={added}
-                  className="flex-1 bg-[#B8956A] text-[#FAF9F7] text-[10px] font-medium py-3 uppercase tracking-[0.1em] hover:bg-[#9A7A54] transition-colors cursor-pointer"
+                  className="flex-1 bg-[#2D6A4F] text-[#FAF9F7] text-[10px] font-medium py-3 uppercase tracking-[0.1em] hover:bg-[#1B4332] transition-colors cursor-pointer"
                 >
                   {added ? (
                     <span className="flex items-center justify-center gap-1.5">
@@ -87,7 +87,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="bg-[#FAF9F7] text-[#2A1F14] text-[10px] font-medium px-4 py-3 uppercase tracking-[0.1em] hover:bg-[#B8956A] hover:text-[#FAF9F7] transition-colors cursor-pointer"
+                  className="bg-[#FAF9F7] text-[#1A2E24] text-[10px] font-medium px-4 py-3 uppercase tracking-[0.1em] hover:bg-[#2D6A4F] hover:text-[#FAF9F7] transition-colors cursor-pointer"
                 >
                   Buy
                 </button>
@@ -99,11 +99,11 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         {/* Product info */}
         <Link to={`/products/${product.slug}`} className="block">
           {product.category?.name && (
-            <p className="text-[9px] tracking-[0.14em] uppercase text-[#B8956A] mb-1.5">
+            <p className="text-[9px] tracking-[0.14em] uppercase text-[#2D6A4F] mb-1.5">
               {product.category.name}
             </p>
           )}
-          <h3 className="text-[13px] font-normal text-[#0C0B0A] leading-snug line-clamp-1 mb-2 hover:text-[#B8956A] transition-colors">
+          <h3 className="text-[13px] font-normal text-[#0C0B0A] leading-snug line-clamp-1 mb-2 hover:text-[#2D6A4F] transition-colors">
             {product.title}
           </h3>
           <p className="text-[13px] font-medium text-[#0C0B0A] tracking-[-0.01em]">

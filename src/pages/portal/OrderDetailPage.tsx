@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/context/AuthContext'
 import { OrderStatusBadge, AdvanceStatusBadge } from '@/components/ui/Badge'
 import type { Order, ShippingAddress } from '@/lib/types'
 
-const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-2.5 text-[13px] text-[#2A1F14] outline-none focus:border-[#B8956A] transition-colors'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-2.5 text-[13px] text-[#1A2E24] outline-none focus:border-[#2D6A4F] transition-colors'
 const labelClass = 'block text-[10px] tracking-[0.1em] uppercase text-[#7A7067] mb-1.5'
 
 function SuccessBanner({ orderId }: { orderId: string }) {
@@ -118,16 +118,16 @@ export default function OrderDetailPage() {
     </div>
   )
 
-  const ghost = 'h-[38px] px-5 border border-[#E0D8CE] text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:border-[#B8956A] hover:text-[#B8956A] transition-colors cursor-pointer bg-transparent'
-  const ghostSm = 'h-[34px] px-4 border border-[#E0D8CE] text-[10px] tracking-[0.08em] uppercase text-[#7A7067] hover:border-[#B8956A] hover:text-[#B8956A] transition-colors cursor-pointer bg-transparent'
-  const primary = 'h-[38px] px-5 bg-[#B8956A] text-[#FAF9F7] text-[11px] tracking-[0.08em] uppercase hover:bg-[#9A7A54] transition-colors cursor-pointer disabled:opacity-40'
+  const ghost = 'h-[38px] px-5 border border-[#E0D8CE] text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:border-[#2D6A4F] hover:text-[#2D6A4F] transition-colors cursor-pointer bg-transparent'
+  const ghostSm = 'h-[34px] px-4 border border-[#E0D8CE] text-[10px] tracking-[0.08em] uppercase text-[#7A7067] hover:border-[#2D6A4F] hover:text-[#2D6A4F] transition-colors cursor-pointer bg-transparent'
+  const primary = 'h-[38px] px-5 bg-[#2D6A4F] text-[#FAF9F7] text-[11px] tracking-[0.08em] uppercase hover:bg-[#1B4332] transition-colors cursor-pointer disabled:opacity-40'
 
   return (
     <div className="max-w-[680px] mx-auto px-6 sm:px-8 lg:px-12 py-12 animate-fade-in">
       {id && <SuccessBanner orderId={id} />}
 
       {/* Back */}
-      <Link to="/orders" className="inline-flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#B8956A] transition-colors mb-10">
+      <Link to="/orders" className="inline-flex items-center gap-2 text-[11px] tracking-[0.08em] uppercase text-[#7A7067] hover:text-[#2D6A4F] transition-colors mb-10">
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
@@ -137,8 +137,8 @@ export default function OrderDetailPage() {
       {/* Header */}
       <div className="flex items-start justify-between mb-10 pb-8 border-b border-[#E0D8CE]">
         <div>
-          <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-2">Order</p>
-          <h1 className="font-display text-[28px] font-light text-[#2A1F14]">{order.order_number}</h1>
+          <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-2">Order</p>
+          <h1 className="font-display text-[28px] font-light text-[#1A2E24]">{order.order_number}</h1>
           <p className="text-[12px] text-[#7A7067] mt-1">
             {new Date(order.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
@@ -148,15 +148,15 @@ export default function OrderDetailPage() {
 
       {/* Items */}
       <section className="mb-8 pb-8 border-b border-[#E0D8CE]">
-        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-5">Items</p>
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F] mb-5">Items</p>
         <div className="space-y-3">
           {order.items.map(item => (
             <div key={item.id} className="flex justify-between items-start text-[13px] py-2">
-              <span className="text-[#2A1F14]">
+              <span className="text-[#1A2E24]">
                 {item.product_title}
-                <span className="text-[#B8956A] ml-2">× {item.quantity}</span>
+                <span className="text-[#2D6A4F] ml-2">× {item.quantity}</span>
               </span>
-              <span className="font-medium text-[#2A1F14] ml-4 flex-shrink-0">৳{item.subtotal.toLocaleString()}</span>
+              <span className="font-medium text-[#1A2E24] ml-4 flex-shrink-0">৳{item.subtotal.toLocaleString()}</span>
             </div>
           ))}
         </div>
@@ -167,7 +167,7 @@ export default function OrderDetailPage() {
           <div className="flex justify-between text-[#7A7067]">
             <span>Delivery</span><span>৳{order.delivery_fee.toLocaleString()}</span>
           </div>
-          <div className="flex justify-between font-medium text-[#2A1F14] pt-3 border-t border-[#E0D8CE]">
+          <div className="flex justify-between font-medium text-[#1A2E24] pt-3 border-t border-[#E0D8CE]">
             <span>Total</span>
             <span className="font-display text-[18px] font-light">৳{order.total_amount.toLocaleString()}</span>
           </div>
@@ -177,7 +177,7 @@ export default function OrderDetailPage() {
       {/* Shipping */}
       <section className="mb-8 pb-8 border-b border-[#E0D8CE]">
         <div className="flex items-center justify-between mb-5">
-          <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A]">Shipping address</p>
+          <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F]">Shipping address</p>
           {order.status === 'pending' && !editingAddress && (
             <button onClick={openEditAddress} className={ghostSm}>Edit</button>
           )}
@@ -219,7 +219,7 @@ export default function OrderDetailPage() {
       {/* Payment */}
       <section className="mb-10 pb-8 border-b border-[#E0D8CE]">
         <div className="flex items-center justify-between mb-5">
-          <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A]">Payment</p>
+          <p className="text-[9px] tracking-[0.2em] uppercase text-[#2D6A4F]">Payment</p>
           {order.status === 'pending' && order.advance_payment_status !== 'verified' && !editingPayment && (
             <button onClick={openEditPayment} className={ghostSm}>Edit</button>
           )}
@@ -262,7 +262,7 @@ export default function OrderDetailPage() {
           <div className="space-y-3 text-[13px]">
             <div className="flex justify-between">
               <span className="text-[#7A7067]">Method</span>
-              <span className="capitalize text-[#2A1F14]">{order.payment_method.replace(/_/g, ' ')}</span>
+              <span className="capitalize text-[#1A2E24]">{order.payment_method.replace(/_/g, ' ')}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-[#7A7067]">Advance</span>
@@ -271,24 +271,24 @@ export default function OrderDetailPage() {
             {order.advance_payment_method && (
               <div className="flex justify-between">
                 <span className="text-[#7A7067]">Via</span>
-                <span className="capitalize text-[#2A1F14]">{order.advance_payment_method}</span>
+                <span className="capitalize text-[#1A2E24]">{order.advance_payment_method}</span>
               </div>
             )}
             {order.advance_transaction_id && (
               <div className="flex justify-between">
                 <span className="text-[#7A7067]">TRX ID</span>
-                <span className="font-mono text-[12px] text-[#2A1F14]">{order.advance_transaction_id}</span>
+                <span className="font-mono text-[12px] text-[#1A2E24]">{order.advance_transaction_id}</span>
               </div>
             )}
             {order.delivery_advance_amount > 0 && (
               <div className="flex justify-between">
                 <span className="text-[#7A7067]">Advance paid</span>
-                <span className="text-[#2A1F14]">৳{order.delivery_advance_amount.toLocaleString()}</span>
+                <span className="text-[#1A2E24]">৳{order.delivery_advance_amount.toLocaleString()}</span>
               </div>
             )}
             <div className="flex justify-between pt-3 border-t border-[#E0D8CE]">
-              <span className="font-medium text-[#2A1F14]">Due on delivery</span>
-              <span className="font-display text-[18px] font-light text-[#2A1F14]">৳{order.due_amount.toLocaleString()}</span>
+              <span className="font-medium text-[#1A2E24]">Due on delivery</span>
+              <span className="font-display text-[18px] font-light text-[#1A2E24]">৳{order.due_amount.toLocaleString()}</span>
             </div>
           </div>
         )}
