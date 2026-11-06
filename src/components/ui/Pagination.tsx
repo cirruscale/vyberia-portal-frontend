@@ -22,26 +22,28 @@ export function Pagination({ page, totalPages, onChange }: PaginationProps) {
   }
 
   return (
-    <div className="flex items-center justify-center gap-1 mt-12">
+    <div className="flex items-center justify-center gap-1 mt-14">
       <button
         disabled={page <= 1}
         onClick={() => onChange(page - 1)}
-        className="w-9 h-9 flex items-center justify-center text-[#999] hover:text-dark disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#B8956A] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </button>
 
       {getPages().map((p, i) =>
         p === '...' ? (
-          <span key={`dots-${i}`} className="w-9 h-9 flex items-center justify-center text-[#ccc] text-[13px]">...</span>
+          <span key={`dots-${i}`} className="w-9 h-9 flex items-center justify-center text-[#C8BFB3] text-[12px]">···</span>
         ) : (
           <button
             key={p}
             onClick={() => onChange(p)}
-            className={`w-9 h-9 flex items-center justify-center text-[13px] transition-colors cursor-pointer rounded-[3px] ${
-              p === page ? 'bg-dark text-white font-medium' : 'text-[#888] hover:text-dark'
+            className={`w-9 h-9 flex items-center justify-center text-[12px] tracking-[0.04em] transition-colors cursor-pointer ${
+              p === page
+                ? 'bg-[#0C0B0A] text-[#FAF9F7] font-medium'
+                : 'text-[#7A7067] hover:text-[#B8956A] border border-transparent hover:border-[#E0D8CE]'
             }`}
           >
             {p}
@@ -52,9 +54,9 @@ export function Pagination({ page, totalPages, onChange }: PaginationProps) {
       <button
         disabled={page >= totalPages}
         onClick={() => onChange(page + 1)}
-        className="w-9 h-9 flex items-center justify-center text-[#999] hover:text-dark disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+        className="w-9 h-9 flex items-center justify-center text-[#7A7067] hover:text-[#B8956A] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
       >
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>

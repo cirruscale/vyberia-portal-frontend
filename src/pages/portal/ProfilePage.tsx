@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/lib/context/AuthContext'
-import { Button } from '@/components/ui/Button'
 import { portalAuth } from '@/lib/api/auth'
 
-const inputClass = 'mt-1.5 w-full border border-[#ddd] rounded-[3px] px-4 py-3 text-[14px] text-dark bg-white outline-none focus:border-dark transition-colors'
+const inputClass = 'w-full border border-[#E0D8CE] bg-[#FAF9F7] px-4 py-3 text-[13px] outline-none focus:border-[#B8956A] transition-colors placeholder:text-[#C8BFB3] text-[#2A1F14]'
+const labelClass = 'block text-[10px] tracking-[0.12em] uppercase text-[#7A7067] mb-2'
 
 export default function ProfilePage() {
   const { user, loading, loginWithOutput } = useAuth()
@@ -19,18 +19,27 @@ export default function ProfilePage() {
   const [passMsg, setPassMsg] = useState('')
   const [err, setErr] = useState('')
 
-  if (loading) return <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-12 text-center text-muted">Loading...</div>
+  if (loading) return (
+    <div className="max-w-[600px] mx-auto px-6 sm:px-8 py-16 text-center">
+      <p className="text-[13px] text-[#B8956A] tracking-[0.08em]">Loading...</p>
+    </div>
+  )
+
   if (!user) return (
-    <div className="max-w-[600px] mx-auto px-5 sm:px-8 py-24 text-center animate-fade-in">
-      <Link to="/login" className="inline-flex items-center gap-2 px-7 py-3 bg-dark text-white text-[13px] font-medium rounded-full hover:bg-brand transition-colors">Sign in</Link>
+    <div className="max-w-[500px] mx-auto px-6 sm:px-8 py-28 text-center animate-fade-in">
+      <p className="font-display text-[26px] font-light text-[#2A1F14] mb-3">Sign in required</p>
+      <p className="text-[13px] text-[#7A7067] mb-10 font-light">Please sign in to view your profile.</p>
+      <Link to="/login" className="btn-primary">Sign in</Link>
     </div>
   )
 
   const handleProfile = async (e: React.FormEvent) => {
     e.preventDefault()
     setSaving(true); setMsg(''); setErr('')
-    try { await portalAuth.updateProfile({ name: name || user.name, phone: phone || undefined }); setMsg('Profile updated!') }
-    catch (e: unknown) { setErr(e instanceof Error ? e.message : 'Update failed') }
+    try {
+      await portalAuth.updateProfile({ name: name || user.name, phone: phone || undefined })
+      setMsg('Profile updated successfully.')
+    } catch (e: unknown) { setErr(e instanceof Error ? e.message : 'Update failed') }
     finally { setSaving(false) }
   }
 
@@ -39,8 +48,11 @@ export default function ProfilePage() {
     if (newPass !== confirmPass) { setPassMsg('Passwords do not match'); return }
     if (newPass.length < 6) { setPassMsg('Password must be at least 6 characters'); return }
     setChangingPass(true); setPassMsg('')
-    try { await portalAuth.changePassword({ old_password: oldPass, new_password: newPass }); setPassMsg('Password changed successfully!'); setOldPass(''); setNewPass(''); setConfirmPass('') }
-    catch (e: unknown) { setPassMsg(e instanceof Error ? e.message : 'Failed') }
+    try {
+      await portalAuth.changePassword({ old_password: oldPass, new_password: newPass })
+      setPassMsg('Password changed successfully.')
+      setOldPass(''); setNewPass(''); setConfirmPass('')
+    } catch (e: unknown) { setPassMsg(e instanceof Error ? e.message : 'Failed') }
     finally { setChangingPass(false) }
   }
 
@@ -51,67 +63,94 @@ export default function ProfilePage() {
     setChangingPass(true); setPassMsg('')
     try {
       const res = await portalAuth.setPassword({ phone: user.phone!, password: newPass })
-      if (res.data) { loginWithOutput(res.data); setPassMsg('Password set successfully!'); setNewPass(''); setConfirmPass('') }
+      if (res.data) { loginWithOutput(res.data); setPassMsg('Password set successfully.'); setNewPass(''); setConfirmPass('') }
     } catch (e: unknown) { setPassMsg(e instanceof Error ? e.message : 'Failed') }
     finally { setChangingPass(false) }
   }
 
   return (
-    <div className="max-w-[600px] mx-auto px-5 sm:px-8 lg:px-12 py-8 animate-fade-in">
-      <h1 className="text-[26px] font-semibold tracking-[-0.02em] mb-10">Profile</h1>
+    <div className="max-w-[580px] mx-auto px-6 sm:px-8 lg:px-12 py-12 animate-fade-in">
+      {/* Page heading */}
+      <div className="mb-12">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-3">Account</p>
+        <h1 className="font-display text-[36px] font-light text-[#2A1F14]">Profile</h1>
+      </div>
 
-      {/* Info */}
-      <div className="flex items-center gap-4 pb-8 border-b border-[#eee] mb-8">
-        <div className="w-14 h-14 rounded-full bg-dark text-white flex items-center justify-center text-[18px] font-semibold">
+      {/* Avatar + name */}
+      <div className="flex items-center gap-5 pb-10 border-b border-[#E0D8CE] mb-10">
+        <div className="w-14 h-14 bg-[#B8956A] flex items-center justify-center text-[#FAF9F7] font-display text-[20px] font-light flex-shrink-0">
           {user.name.charAt(0).toUpperCase()}
         </div>
         <div>
-          <p className="text-[16px] font-medium">{user.name}</p>
-          <p className="text-[13px] text-muted">{user.email || user.phone}</p>
+          <p className="text-[15px] font-medium text-[#2A1F14]">{user.name}</p>
+          <p className="text-[12px] text-[#7A7067] mt-0.5">{user.email || user.phone}</p>
         </div>
       </div>
 
       {/* Update profile */}
-      <section className="pb-8 border-b border-[#eee] mb-8">
-        <h2 className="text-[14px] font-semibold uppercase tracking-[0.06em] mb-5">Update Profile</h2>
-        <form onSubmit={handleProfile} className="space-y-4">
+      <section className="pb-10 border-b border-[#E0D8CE] mb-10">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-6">Personal details</p>
+        <form onSubmit={handleProfile} className="space-y-5">
           <div>
-            <label className="text-[13px] text-[#555]">Name</label>
+            <label className={labelClass}>Full name</label>
             <input value={name || user.name} onChange={e => setName(e.target.value)} className={inputClass} />
           </div>
           <div>
-            <label className="text-[13px] text-[#555]">Phone</label>
+            <label className={labelClass}>Phone</label>
             <input value={phone || user.phone || ''} onChange={e => setPhone(e.target.value)} className={inputClass} />
           </div>
-          {msg && <p className="text-[13px] text-green-600">{msg}</p>}
-          {err && <p className="text-[13px] text-red-600">{err}</p>}
-          <Button type="submit" loading={saving} size="sm">Save changes</Button>
+          {msg && <p className="text-[12px] text-[#6BAF7A] tracking-[0.02em]">{msg}</p>}
+          {err && <p className="text-[12px] text-red-500 tracking-[0.02em]">{err}</p>}
+          <button
+            type="submit"
+            disabled={saving}
+            className="h-[46px] px-8 bg-[#B8956A] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#9A7A54] transition-colors cursor-pointer disabled:opacity-40"
+          >
+            {saving ? 'Saving...' : 'Save Changes'}
+          </button>
         </form>
       </section>
 
       {/* Password */}
       <section>
-        <h2 className="text-[14px] font-semibold uppercase tracking-[0.06em] mb-5">
-          {!user.has_password ? 'Set Password' : 'Change Password'}
-        </h2>
-        {!user.has_password && <p className="text-[13px] text-muted mb-5">Your account was created automatically. Set a password to secure it.</p>}
-        <form onSubmit={user.has_password ? handleChangePassword : handleSetPassword} className="space-y-4">
+        <p className="text-[9px] tracking-[0.2em] uppercase text-[#B8956A] mb-2">
+          {!user.has_password ? 'Set password' : 'Security'}
+        </p>
+        <p className="font-display text-[20px] font-light text-[#2A1F14] mb-6">
+          {!user.has_password ? 'Create a password' : 'Change password'}
+        </p>
+        {!user.has_password && (
+          <p className="text-[13px] text-[#7A7067] mb-6 font-light leading-relaxed">
+            Your account was created automatically via a guest order. Set a password to secure it.
+          </p>
+        )}
+        <form onSubmit={user.has_password ? handleChangePassword : handleSetPassword} className="space-y-5">
           {user.has_password && (
             <div>
-              <label className="text-[13px] text-[#555]">Current Password</label>
+              <label className={labelClass}>Current password</label>
               <input type="password" required value={oldPass} onChange={e => setOldPass(e.target.value)} className={inputClass} />
             </div>
           )}
           <div>
-            <label className="text-[13px] text-[#555]">New Password</label>
+            <label className={labelClass}>New password</label>
             <input type="password" required value={newPass} onChange={e => setNewPass(e.target.value)} placeholder="At least 6 characters" className={inputClass} />
           </div>
           <div>
-            <label className="text-[13px] text-[#555]">Confirm Password</label>
+            <label className={labelClass}>Confirm password</label>
             <input type="password" required value={confirmPass} onChange={e => setConfirmPass(e.target.value)} className={inputClass} />
           </div>
-          {passMsg && <p className={`text-[13px] ${passMsg.includes('success') ? 'text-green-600' : 'text-red-600'}`}>{passMsg}</p>}
-          <Button type="submit" loading={changingPass} size="sm">{user.has_password ? 'Change password' : 'Set Password'}</Button>
+          {passMsg && (
+            <p className={`text-[12px] tracking-[0.02em] ${passMsg.includes('success') ? 'text-[#6BAF7A]' : 'text-red-500'}`}>
+              {passMsg}
+            </p>
+          )}
+          <button
+            type="submit"
+            disabled={changingPass}
+            className="h-[46px] px-8 border border-[#B8956A] text-[#B8956A] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#B8956A] hover:text-[#FAF9F7] transition-colors cursor-pointer disabled:opacity-40"
+          >
+            {changingPass ? 'Saving...' : user.has_password ? 'Change Password' : 'Set Password'}
+          </button>
         </form>
       </section>
     </div>

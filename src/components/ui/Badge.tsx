@@ -3,13 +3,13 @@ import { clsx } from 'clsx'
 type Variant = 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'purple' | 'orange'
 
 const variants: Record<Variant, string> = {
-  green: 'bg-green-50 text-green-700',
-  yellow: 'bg-amber-50 text-amber-700',
-  red: 'bg-red-50 text-red-700',
-  blue: 'bg-blue-50 text-blue-700',
-  gray: 'bg-[#f0f0f0] text-[#666]',
-  purple: 'bg-purple-50 text-purple-700',
-  orange: 'bg-orange-50 text-orange-700',
+  green:  'bg-[#EAF5EC] text-[#4A8A5A] border border-[#C4DFC8]',
+  yellow: 'bg-[#FBF5E6] text-[#9A7A30] border border-[#E8D9A0]',
+  red:    'bg-[#FAF0EE] text-[#A04040] border border-[#DDBCB8]',
+  blue:   'bg-[#EDF2FB] text-[#405A8A] border border-[#C0CEEA]',
+  gray:   'bg-[#F4F1EC] text-[#7A7067] border border-[#E0D8CE]',
+  purple: 'bg-[#F2EDF8] text-[#6A4A8A] border border-[#D0B8E8]',
+  orange: 'bg-[#FBF2E8] text-[#9A6030] border border-[#E8C8A0]',
 }
 
 interface BadgeProps {
@@ -20,7 +20,11 @@ interface BadgeProps {
 
 export function Badge({ children, variant = 'gray', className }: BadgeProps) {
   return (
-    <span className={clsx('inline-flex items-center rounded-sm px-2 py-0.5 text-[11px] font-medium uppercase tracking-[0.03em]', variants[variant], className)}>
+    <span className={clsx(
+      'inline-flex items-center px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.08em]',
+      variants[variant],
+      className
+    )}>
       {children}
     </span>
   )

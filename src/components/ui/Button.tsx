@@ -6,20 +6,20 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
-const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 outline-none disabled:opacity-50 disabled:pointer-events-none cursor-pointer'
+const base = 'inline-flex items-center justify-center font-medium transition-all duration-200 outline-none disabled:opacity-40 disabled:pointer-events-none cursor-pointer uppercase tracking-[0.1em]'
 
 const variants: Record<string, string> = {
-  primary: 'bg-dark text-white hover:bg-brand rounded-full',
-  secondary: 'bg-white text-dark border border-[#ddd] hover:border-dark rounded-full',
-  danger: 'bg-red-600 text-white hover:bg-red-700 rounded-full',
-  ghost: 'text-[#666] hover:text-dark hover:bg-[#f5f5f5] rounded-[3px]',
-  outline: 'border border-[#ddd] text-dark hover:border-dark rounded-full',
+  primary:   'bg-[#B8956A] text-[#FAF9F7] border border-[#B8956A] hover:bg-[#9A7A54] hover:border-[#9A7A54]',
+  secondary: 'bg-transparent text-[#2A1F14] border border-[#B8956A] hover:bg-[#B8956A] hover:text-[#FAF9F7]',
+  danger:    'bg-red-600 text-white border border-red-600 hover:bg-red-700 hover:border-red-700',
+  ghost:     'text-[#7A7067] hover:text-[#0C0B0A] hover:bg-[#F2EDE5] border border-transparent',
+  outline:   'border border-[#E0D8CE] text-[#0C0B0A] hover:border-[#B8956A] hover:text-[#B8956A]',
 }
 
 const sizes: Record<string, string> = {
-  sm: 'text-[12px] px-4 py-2 gap-1.5',
-  md: 'text-[13px] px-5 py-2.5 gap-2',
-  lg: 'text-[13px] px-7 py-3 gap-2',
+  sm: 'text-[10px] px-4 py-2 gap-1.5',
+  md: 'text-[11px] px-5 py-2.5 gap-2',
+  lg: 'text-[11px] px-7 py-3.5 gap-2.5',
 }
 
 export function Button({ variant = 'primary', size = 'md', loading, children, className = '', ...props }: ButtonProps) {
