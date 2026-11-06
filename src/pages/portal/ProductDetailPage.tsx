@@ -187,7 +187,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={outOfStock || added}
-                className="flex-1 h-[52px] bg-[#065084] text-[#FAF9F7] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors disabled:opacity-40 cursor-pointer"
+                className="flex-1 h-[62px] bg-[#065084] text-[#FAF9F7] text-[13px] font-semibold uppercase tracking-[0.12em] hover:bg-[#1B4332] transition-colors disabled:opacity-40 cursor-pointer"
               >
                 {added ? (
                   <span className="flex items-center justify-center gap-2">
@@ -201,7 +201,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={() => setBuyNowOpen(true)}
                 disabled={outOfStock}
-                className="flex-1 h-[52px] border border-[#065084] text-[#065084] text-[11px] font-medium uppercase tracking-[0.12em] hover:bg-[#065084] hover:text-[#FAF9F7] transition-colors disabled:opacity-40 cursor-pointer"
+                className="flex-1 h-[62px] border border-[#065084] text-[#065084] text-[13px] font-semibold uppercase tracking-[0.12em] hover:bg-[#065084] hover:text-[#FAF9F7] transition-colors disabled:opacity-40 cursor-pointer"
               >
                 Buy Now
               </button>

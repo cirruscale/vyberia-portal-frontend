@@ -74,11 +74,11 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
                 <button
                   onClick={handleAddToCart}
                   disabled={added}
-                  className="flex-1 bg-[#065084] text-[#FAF9F7] text-[10px] font-medium py-3 uppercase tracking-[0.1em] hover:bg-[#1B4332] transition-colors cursor-pointer"
+                  className="flex-1 bg-[#065084] text-[#FAF9F7] text-[11px] font-semibold py-4 uppercase tracking-[0.1em] hover:bg-[#1B4332] transition-colors cursor-pointer"
                 >
                   {added ? (
                     <span className="flex items-center justify-center gap-1.5">
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                       </svg>
                       Added
@@ -87,9 +87,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
                 </button>
                 <button
                   onClick={handleBuyNow}
-                  className="bg-[#FAF9F7] text-[#1A2E24] text-[10px] font-medium px-4 py-3 uppercase tracking-[0.1em] hover:bg-[#065084] hover:text-[#FAF9F7] transition-colors cursor-pointer"
+                  className="flex-1 bg-[#065084] text-[#FAF9F7] text-[11px] font-semibold py-4 uppercase tracking-[0.1em] hover:bg-[#1B4332] transition-colors cursor-pointer"
                 >
-                  Buy
+                  Buy Now
                 </button>
               </div>
             </div>
